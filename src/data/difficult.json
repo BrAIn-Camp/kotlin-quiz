@@ -1,0 +1,257 @@
+[
+  {
+    "id": "diff-001",
+    "topic": "higher-order functions",
+    "difficulty": "difficult",
+    "snippet": "fun applyTwice(x: Int, f: (Int) -> Int): Int = f(f(x))\nprintln(applyTwice(3) { it * 2 })",
+    "question": "What does this code print?",
+    "choices": [
+      "6",
+      "9",
+      "12",
+      "3"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "applyTwice takes a value and a function, and applies that function to the value twice. Functions can be passed as arguments in Kotlin.",
+      "lineByLine": [
+        "`f: (Int) -> Int` — f is a parameter that is itself a function: takes an Int, returns an Int.",
+        "`f(f(x))` — applies f to x, then applies f again to that result.",
+        "`applyTwice(3) { it * 2 }` — x is 3, and f is the lambda `{ it * 2 }` (multiply by 2).",
+        "First call: f(3) = 3 * 2 = 6.",
+        "Second call: f(6) = 6 * 2 = 12.",
+        "`println(12)` — prints 12."
+      ],
+      "tip": "Higher-order functions (functions that accept or return other functions) are central to AI-generated Kotlin. The trailing lambda syntax — `function(args) { lambda }` — means the last lambda argument moves outside the parentheses."
+    }
+  },
+  {
+    "id": "diff-002",
+    "topic": "sealed classes",
+    "difficulty": "difficult",
+    "snippet": "sealed class Result\ndata class Success(val value: Int) : Result()\ndata class Error(val msg: String) : Result()\n\nfun handle(r: Result) = when (r) {\n    is Success -> \"Got ${r.value}\"\n    is Error   -> \"Failed: ${r.msg}\"\n}\nprintln(handle(Success(42)))",
+    "question": "What does this code print?",
+    "choices": [
+      "Got 42",
+      "Failed: 42",
+      "Success(value=42)",
+      "Compilation error"
+    ],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "Sealed classes restrict which classes can extend them. This makes when expressions exhaustive — the compiler knows every possible subtype.",
+      "lineByLine": [
+        "`sealed class Result` — Result can only be subclassed within the same file.",
+        "`Success` and `Error` are the only two subtypes.",
+        "`when (r)` with `is Success` / `is Error` covers all cases — no else needed.",
+        "`handle(Success(42))` — r is a Success with value 42.",
+        "`is Success` matches, smart-casts r to Success, allowing `r.value`.",
+        "Returns \"Got 42\". `println(\"Got 42\")` — prints Got 42."
+      ],
+      "tip": "Sealed classes + when is how AI code models 'this result is either a success or a failure'. It's Kotlin's version of sum types / discriminated unions. The compiler ensures you handle every case."
+    }
+  },
+  {
+    "id": "diff-003",
+    "topic": "chained lambdas",
+    "difficulty": "difficult",
+    "snippet": "val result = listOf(1, 2, 3, 4, 5)\n    .filter { it % 2 != 0 }\n    .map { it * it }\n    .sum()\nprintln(result)",
+    "question": "What does this code print?",
+    "choices": [
+      "15",
+      "25",
+      "35",
+      "9"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "Collection operations can be chained in a pipeline. Each step processes the output of the previous step.",
+      "lineByLine": [
+        "`listOf(1, 2, 3, 4, 5)` — starts with [1, 2, 3, 4, 5].",
+        "`.filter { it % 2 != 0 }` — keeps only odd numbers: [1, 3, 5].",
+        "`.map { it * it }` — squares each: [1, 9, 25].",
+        "`.sum()` — adds them all: 1 + 9 + 25 = 35.",
+        "`println(35)` — prints 35."
+      ],
+      "tip": "Chained collection pipelines are the signature style of AI-generated Kotlin. Read them top-to-bottom, one transformation at a time. Each function receives the output of the one above it."
+    }
+  },
+  {
+    "id": "diff-004",
+    "topic": "scope functions",
+    "difficulty": "difficult",
+    "snippet": "val list = mutableListOf(1, 2, 3)\n    .also { println(\"Size: ${it.size}\") }\nlist.add(4)\nprintln(list.size)",
+    "question": "What is the full output of this code?",
+    "choices": [
+      "Size: 3 then 3",
+      "Size: 3 then 4",
+      "Size: 4 then 4",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "also executes a side-effect block (like logging) and returns the original object unchanged. It's useful for debugging pipelines without breaking the chain.",
+      "lineByLine": [
+        "`mutableListOf(1, 2, 3)` — creates a list with 3 items.",
+        "`.also { println(\"Size: ${it.size}\") }` — prints 'Size: 3' as a side effect, then returns the original list.",
+        "`it` inside also refers to the list itself.",
+        "`list` is now the 3-item mutable list.",
+        "`list.add(4)` — adds 4 to the list (now 4 items).",
+        "`println(list.size)` — prints 4."
+      ],
+      "tip": "also is used for logging, debugging, or validation in the middle of a chain. Unlike apply (which uses `this`), also uses `it` — useful when you need to distinguish the object from the outer scope."
+    }
+  },
+  {
+    "id": "diff-005",
+    "topic": "inline reified",
+    "difficulty": "difficult",
+    "snippet": "inline fun <reified T> isType(value: Any): Boolean = value is T\nprintln(isType<String>(\"hello\"))\nprintln(isType<Int>(\"hello\"))",
+    "question": "What does this code print?",
+    "choices": [
+      "false then true",
+      "true then true",
+      "true then false",
+      "Compilation error — cannot use is with generic types"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "reified type parameters allow you to use type information at runtime inside an inline function. Normally, generics are erased at runtime and you cannot do `value is T`.",
+      "lineByLine": [
+        "`inline fun <reified T>` — inline means the function is copy-pasted at call sites; reified preserves the type T at runtime.",
+        "`value is T` — normally impossible with generics, but reified makes it work.",
+        "`isType<String>(\"hello\")` — T is String, value is \"hello\". \"hello\" is a String → true.",
+        "`isType<Int>(\"hello\")` — T is Int, value is \"hello\". \"hello\" is not an Int → false.",
+        "Output: true then false."
+      ],
+      "tip": "You'll see `inline fun <reified T>` in AI code when a function needs to know the actual type at runtime — like JSON deserialization helpers, type-safe event listeners, or service locators."
+    }
+  },
+  {
+    "id": "diff-006",
+    "topic": "coroutines",
+    "difficulty": "difficult",
+    "snippet": "import kotlinx.coroutines.*\n\nfun main() = runBlocking {\n    val result = async { 6 * 7 }\n    println(result.await())\n}",
+    "question": "What does this code print?",
+    "choices": [
+      "0",
+      "13",
+      "42",
+      "Deferred"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "async launches a coroutine that computes a value asynchronously and returns a Deferred. await() suspends until the value is ready, then returns it.",
+      "lineByLine": [
+        "`runBlocking { ... }` — runs a coroutine scope, blocking the current thread until all coroutines inside complete.",
+        "`async { 6 * 7 }` — launches a coroutine that computes 6 * 7 = 42 and wraps it in a Deferred<Int>.",
+        "`result.await()` — suspends the coroutine until the result is ready, then unwraps it to 42.",
+        "`println(42)` — prints 42."
+      ],
+      "tip": "async/await is how AI-generated Kotlin handles concurrent work that produces a value. Think of Deferred as a 'promise' — async starts the work, await collects the result."
+    }
+  },
+  {
+    "id": "diff-007",
+    "topic": "fold",
+    "difficulty": "difficult",
+    "snippet": "val numbers = listOf(1, 2, 3, 4, 5)\nval result = numbers.fold(0) { acc, n -> acc + n }\nprintln(result)",
+    "question": "What does this code print?",
+    "choices": [
+      "0",
+      "5",
+      "15",
+      "[0, 1, 3, 6, 10, 15]"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "fold accumulates a single result by repeatedly applying a lambda to a running accumulator and each element. It starts with an initial value.",
+      "lineByLine": [
+        "`fold(0)` — starts the accumulator (acc) at 0.",
+        "Step 1: acc=0, n=1 → acc + n = 1.",
+        "Step 2: acc=1, n=2 → acc + n = 3.",
+        "Step 3: acc=3, n=3 → acc + n = 6.",
+        "Step 4: acc=6, n=4 → acc + n = 10.",
+        "Step 5: acc=10, n=5 → acc + n = 15.",
+        "`val result = 15`. `println(15)` — prints 15."
+      ],
+      "tip": "fold is the Swiss Army knife of collection operations. It can implement sum, product, string joining, building maps, and more. AI code often uses it when a simple map/filter chain isn't enough."
+    }
+  },
+  {
+    "id": "diff-008",
+    "topic": "flatMap",
+    "difficulty": "difficult",
+    "snippet": "val nested = listOf(listOf(1, 2), listOf(3, 4), listOf(5))\nval flat = nested.flatMap { it }\nprintln(flat)",
+    "question": "What does this code print?",
+    "choices": [
+      "[[1, 2], [3, 4], [5]]",
+      "[1, 2, 3, 4, 5]",
+      "[1, 2]",
+      "15"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "flatMap transforms each element into a collection, then flattens all those collections into a single list.",
+      "lineByLine": [
+        "`nested` is a List<List<Int>>: [[1,2], [3,4], [5]].",
+        "`flatMap { it }` — for each inner list, return it as-is, then flatten.",
+        "Inner lists: [1,2], [3,4], [5] — all flattened into one list.",
+        "`flat = [1, 2, 3, 4, 5]`.",
+        "`println([1, 2, 3, 4, 5])` — prints [1, 2, 3, 4, 5]."
+      ],
+      "tip": "flatMap is used in AI code when each item maps to multiple items. A common real example: a list of users, each with a list of roles — flatMap { it.roles } gives all roles in one flat list."
+    }
+  },
+  {
+    "id": "diff-009",
+    "topic": "object declaration",
+    "difficulty": "difficult",
+    "snippet": "object Counter {\n    private var count = 0\n    fun increment() = ++count\n}\nprintln(Counter.increment())\nprintln(Counter.increment())",
+    "question": "What does this code print?",
+    "choices": [
+      "1 then 1",
+      "0 then 1",
+      "1 then 2",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "An object declaration creates a singleton — exactly one instance exists for the lifetime of the program. State is shared across all calls.",
+      "lineByLine": [
+        "`object Counter` — declares a singleton. There is only ever one Counter instance.",
+        "`private var count = 0` — mutable state on that single instance, starts at 0.",
+        "`fun increment() = ++count` — pre-increment: increments count first, then returns the new value.",
+        "First call: count becomes 1, returns 1. Prints 1.",
+        "Second call: count becomes 2, returns 2. Prints 2."
+      ],
+      "tip": "object is Kotlin's built-in singleton pattern. AI code uses it for shared state, registries, factories, and companion objects. Unlike a class, you can't instantiate it with new — you access it directly by name."
+    }
+  },
+  {
+    "id": "diff-010",
+    "topic": "scope functions",
+    "difficulty": "difficult",
+    "snippet": "data class Config(var host: String = \"\", var port: Int = 0)\nval cfg = Config()\nwith(cfg) {\n    host = \"localhost\"\n    port = 8080\n}\nprintln(\"${cfg.host}:${cfg.port}\")",
+    "question": "What does this code print?",
+    "choices": [
+      ":0",
+      "localhost:0",
+      ":8080",
+      "localhost:8080"
+    ],
+    "correctIndex": 3,
+    "explanation": {
+      "summary": "with runs a block on an object, using the object as `this` inside the block. It does not return the object — it returns the block's last expression.",
+      "lineByLine": [
+        "`Config()` — creates a Config with default values: host=\"\", port=0.",
+        "`with(cfg) { ... }` — runs the block with cfg as `this`.",
+        "`host = \"localhost\"` — inside with, this is cfg, so cfg.host = \"localhost\".",
+        "`port = 8080` — cfg.port = 8080.",
+        "`cfg` itself is mutated (it uses var properties).",
+        "`println(\"localhost:8080\")` — prints localhost:8080."
+      ],
+      "tip": "with is used in AI code to avoid repeating an object name. Instead of cfg.host = ...; cfg.port = ..., you write with(cfg) { host = ...; port = ... }. It's a readability tool."
+    }
+  }
+]

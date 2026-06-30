@@ -1,0 +1,237 @@
+[
+  {
+    "id": "easy-001",
+    "topic": "val vs var",
+    "difficulty": "easy",
+    "snippet": "val x = 5\nx = 10\nprintln(x)",
+    "question": "What happens when this code is compiled?",
+    "choices": [
+      "Prints 5",
+      "Prints 10",
+      "Prints 15",
+      "Compilation error — val cannot be reassigned"
+    ],
+    "correctIndex": 3,
+    "explanation": {
+      "summary": "val declares an immutable (read-only) variable. Once assigned, it cannot be changed. This is one of Kotlin's core safety features.",
+      "lineByLine": [
+        "`val x = 5` — declares a read-only variable x with value 5.",
+        "`x = 10` — attempts to reassign x. This is illegal because x is a val.",
+        "The compiler rejects the file before it ever runs — it never reaches println."
+      ],
+      "tip": "AI-generated Kotlin heavily prefers val over var. When you see val, the value never changes after its first assignment. When you see var, it can change."
+    }
+  },
+  {
+    "id": "easy-002",
+    "topic": "string templates",
+    "difficulty": "easy",
+    "snippet": "val name = \"World\"\nprintln(\"Hello, $name!\")",
+    "question": "What does this code print?",
+    "choices": [
+      "Hello, $name!",
+      "Hello, World!",
+      "Hello, name!",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Kotlin string templates let you embed variable values directly inside strings using the $ prefix.",
+      "lineByLine": [
+        "`val name = \"World\"` — declares an immutable string variable with value \"World\".",
+        "`\"Hello, $name!\"` — the $ tells Kotlin to substitute the value of name into the string.",
+        "`println(...)` — prints the resulting string: Hello, World!"
+      ],
+      "tip": "You'll see $variableName constantly in AI-generated Kotlin. It's cleaner than Java's string concatenation with +."
+    }
+  },
+  {
+    "id": "easy-003",
+    "topic": "string templates",
+    "difficulty": "easy",
+    "snippet": "val price = 9.99\nprintln(\"Total: ${price * 2}\")",
+    "question": "What does this code print?",
+    "choices": [
+      "Total: ${price * 2}",
+      "Total: 9.99 * 2",
+      "Total: 19.98",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "String templates support full expressions inside ${ } curly braces, not just variable names.",
+      "lineByLine": [
+        "`val price = 9.99` — declares a Double variable.",
+        "`${price * 2}` — the curly braces let you embed an expression, not just a variable.",
+        "`price * 2` evaluates to 19.98, so the string becomes \"Total: 19.98\"."
+      ],
+      "tip": "Use $variable for simple values and ${expression} for anything more complex, like math, method calls, or property access."
+    }
+  },
+  {
+    "id": "easy-004",
+    "topic": "null safety",
+    "difficulty": "easy",
+    "snippet": "val name: String? = null\nprintln(name?.length)",
+    "question": "What does this code print?",
+    "choices": [
+      "Throws a NullPointerException",
+      "Prints 0",
+      "Prints null",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "The safe-call operator ?. returns null instead of throwing an exception when the receiver is null.",
+      "lineByLine": [
+        "`String?` — the ? after String means this variable is allowed to hold null.",
+        "`name?.length` — the ?. operator checks if name is null first.",
+        "Because name IS null, the entire expression evaluates to null (no crash).",
+        "`println(null)` — prints the word null."
+      ],
+      "tip": "In Kotlin, a NullPointerException requires deliberate effort. The ?. operator is one of the most common patterns you'll see in AI-generated code — it safely short-circuits to null."
+    }
+  },
+  {
+    "id": "easy-005",
+    "topic": "null safety",
+    "difficulty": "easy",
+    "snippet": "val name: String? = null\nprintln(name?.length ?: 0)",
+    "question": "What does this code print?",
+    "choices": [
+      "Throws a NullPointerException",
+      "Prints null",
+      "Prints 0",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "The Elvis operator ?: provides a fallback value when the left-hand side is null.",
+      "lineByLine": [
+        "`name?.length` — safe call: returns null because name is null.",
+        "`?: 0` — the Elvis operator: since the left side is null, use the right side value (0) instead.",
+        "`println(0)` — prints 0."
+      ],
+      "tip": "The pattern `something?.property ?: defaultValue` is everywhere in AI Kotlin. It means: 'give me this value, or fall back to the default if null.'"
+    }
+  },
+  {
+    "id": "easy-006",
+    "topic": "null safety",
+    "difficulty": "easy",
+    "snippet": "val name: String? = \"Alice\"\nprintln(name!!.length)",
+    "question": "What does this code print?",
+    "choices": [
+      "Throws a NullPointerException",
+      "Prints 5",
+      "Prints null",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "The !! operator asserts that a value is not null. If it is null, it throws a NullPointerException. If not null, it unwraps safely.",
+      "lineByLine": [
+        "`val name: String? = \"Alice\"` — a nullable String assigned a real value.",
+        "`name!!` — asserts that name is definitely not null. Safe here because it's \"Alice\".",
+        "`.length` — String.length returns the number of characters.",
+        "\"Alice\" has 5 characters, so this prints 5."
+      ],
+      "tip": "You'll see !! in AI code when the developer is confident a value isn't null. It's a red flag for code review — if that assumption is ever wrong, the app crashes."
+    }
+  },
+  {
+    "id": "easy-007",
+    "topic": "if as expression",
+    "difficulty": "easy",
+    "snippet": "val a = 10\nval b = 20\nval max = if (a > b) a else b\nprintln(max)",
+    "question": "What does this code print?",
+    "choices": [
+      "Prints 10",
+      "Prints 20",
+      "Prints true",
+      "Compilation error — if cannot be used as an expression"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "In Kotlin, if is an expression that returns a value, not just a statement. This eliminates the need for a ternary operator.",
+      "lineByLine": [
+        "`a > b` evaluates to `10 > 20` which is false.",
+        "Since the condition is false, the else branch runs, returning b (20).",
+        "`val max = 20` — max is assigned 20.",
+        "`println(20)` — prints 20."
+      ],
+      "tip": "Kotlin has no ternary operator (?:). Instead, if/else is used as an expression. AI models generate this pattern constantly — `val x = if (condition) a else b`."
+    }
+  },
+  {
+    "id": "easy-008",
+    "topic": "when expression",
+    "difficulty": "easy",
+    "snippet": "val x = 2\nval result = when (x) {\n    1 -> \"one\"\n    2 -> \"two\"\n    3 -> \"three\"\n    else -> \"other\"\n}\nprintln(result)",
+    "question": "What does this code print?",
+    "choices": [
+      "one",
+      "two",
+      "three",
+      "other"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "The when expression is Kotlin's replacement for switch statements. It matches the value against each branch and returns the result of the matching one.",
+      "lineByLine": [
+        "`when (x)` — starts a when expression that tests x.",
+        "`1 -> \"one\"` — if x is 1, return \"one\". x is 2, so skip.",
+        "`2 -> \"two\"` — if x is 2, return \"two\". x IS 2, so this matches!",
+        "`val result = \"two\"` — result is assigned \"two\".",
+        "`println(\"two\")` — prints two."
+      ],
+      "tip": "when replaces switch/case in Kotlin and is much more powerful. AI code uses it for type checking, range matching, and multi-value branches — not just simple equality."
+    }
+  },
+  {
+    "id": "easy-009",
+    "topic": "functions",
+    "difficulty": "easy",
+    "snippet": "fun greet(name: String = \"stranger\") {\n    println(\"Hello, $name!\")\n}\ngreet()",
+    "question": "What does this code print?",
+    "choices": [
+      "Hello, !",
+      "Hello, stranger!",
+      "Compilation error — missing required argument",
+      "Runtime error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Kotlin functions support default parameter values. If a caller does not provide the argument, the default is used automatically.",
+      "lineByLine": [
+        "`name: String = \"stranger\"` — name has a default value of \"stranger\".",
+        "`greet()` — called with no arguments, so name takes the default value.",
+        "`println(\"Hello, stranger!\")` — prints Hello, stranger!"
+      ],
+      "tip": "Default parameters are extremely common in AI-generated Kotlin. They eliminate the need for method overloads. You'll often see functions with many optional parameters each having sensible defaults."
+    }
+  },
+  {
+    "id": "easy-010",
+    "topic": "collections",
+    "difficulty": "easy",
+    "snippet": "val items = listOf(\"apple\", \"banana\", \"cherry\")\nprintln(items.size)",
+    "question": "What does this code print?",
+    "choices": [
+      "0",
+      "2",
+      "3",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "listOf() creates an immutable list. The size property returns the number of elements.",
+      "lineByLine": [
+        "`listOf(\"apple\", \"banana\", \"cherry\")` — creates a read-only list with 3 strings.",
+        "`items.size` — the size property returns the count of elements.",
+        "The list has 3 items, so this prints 3."
+      ],
+      "tip": "listOf() creates a read-only list (you can't add or remove items). For a mutable list, AI code uses mutableListOf(). You'll see both patterns frequently."
+    }
+  }
+]

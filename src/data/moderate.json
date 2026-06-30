@@ -1,0 +1,248 @@
+[
+  {
+    "id": "mod-001",
+    "topic": "data classes",
+    "difficulty": "moderate",
+    "snippet": "data class User(val name: String, val age: Int)\nval user1 = User(\"Alice\", 30)\nval user2 = user1.copy(age = 31)\nprintln(user2)",
+    "question": "What does this code print?",
+    "choices": [
+      "User(name=Alice, age=30)",
+      "User(name=Alice, age=31)",
+      "User(Alice, 31)",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "data classes automatically generate a toString() that shows the class name and all property values. The copy() function creates a new instance with some properties changed.",
+      "lineByLine": [
+        "`data class User(...)` — the data keyword auto-generates toString(), equals(), hashCode(), and copy().",
+        "`user1.copy(age = 31)` — creates a new User copying all fields from user1, but overriding age to 31.",
+        "`println(user2)` — calls the auto-generated toString(), which produces User(name=Alice, age=31)."
+      ],
+      "tip": "AI code uses data classes for models, DTOs, and any object that's primarily a container for values. The auto-generated copy() is used constantly to create modified versions without mutation."
+    }
+  },
+  {
+    "id": "mod-002",
+    "topic": "data classes",
+    "difficulty": "moderate",
+    "snippet": "data class Point(val x: Int, val y: Int)\nval (a, b) = Point(3, 7)\nprintln(\"$a, $b\")",
+    "question": "What does this code print?",
+    "choices": [
+      "Point(3, 7)",
+      "3, 7",
+      "7, 3",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Data classes support destructuring declarations — you can unpack their properties into separate variables using the (a, b) = ... syntax.",
+      "lineByLine": [
+        "`data class Point(val x: Int, val y: Int)` — defines a data class with two properties.",
+        "`val (a, b) = Point(3, 7)` — destructures the Point: a gets x (3), b gets y (7).",
+        "`println(\"$a, $b\")` — prints 3, 7 using string templates."
+      ],
+      "tip": "Destructuring is frequently used in AI code with data classes, map entries (for (key, value) in map), and lambda parameters. Properties are destructured in declaration order."
+    }
+  },
+  {
+    "id": "mod-003",
+    "topic": "scope functions",
+    "difficulty": "moderate",
+    "snippet": "val name: String? = \"Alice\"\nval result = name?.let { it.uppercase() } ?: \"unknown\"\nprintln(result)",
+    "question": "What does this code print?",
+    "choices": [
+      "alice",
+      "ALICE",
+      "unknown",
+      "null"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "let executes a block only when the receiver is non-null, and returns the block's result. Combined with ?., it's a powerful null-safe transformation.",
+      "lineByLine": [
+        "`name?.let { ... }` — since name is \"Alice\" (not null), the let block executes.",
+        "`it` inside let refers to the non-null value, which is \"Alice\".",
+        "`it.uppercase()` — transforms \"Alice\" to \"ALICE\".",
+        "`?: \"unknown\"` — not needed here because let returned \"ALICE\", not null.",
+        "`println(\"ALICE\")` — prints ALICE."
+      ],
+      "tip": "The pattern `nullable?.let { transform(it) } ?: default` is one of the most common idioms in AI-generated Kotlin. It's a null-safe map + fallback in one line."
+    }
+  },
+  {
+    "id": "mod-004",
+    "topic": "scope functions",
+    "difficulty": "moderate",
+    "snippet": "val list = mutableListOf<Int>().apply {\n    add(1)\n    add(2)\n    add(3)\n}\nprintln(list.size)",
+    "question": "What does this code print?",
+    "choices": [
+      "0",
+      "1",
+      "3",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "apply executes a block on an object and returns the object itself. It's used to configure or initialize an object inline.",
+      "lineByLine": [
+        "`mutableListOf<Int>()` — creates an empty mutable list of integers.",
+        "`.apply { ... }` — runs the block with the list as `this`, then returns the list.",
+        "Inside apply, `add(1)`, `add(2)`, `add(3)` each add an item to the list.",
+        "apply returns the list (now with 3 items), which is assigned to list.",
+        "`list.size` — returns 3."
+      ],
+      "tip": "apply is used for object initialization and builder patterns. AI code uses it heavily when constructing objects that need multiple property assignments or method calls right after creation."
+    }
+  },
+  {
+    "id": "mod-005",
+    "topic": "scope functions",
+    "difficulty": "moderate",
+    "snippet": "val result = run {\n    val x = 10\n    val y = 20\n    x + y\n}\nprintln(result)",
+    "question": "What does this code print?",
+    "choices": [
+      "10",
+      "20",
+      "30",
+      "Unit"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "run executes a block and returns the value of the last expression in that block.",
+      "lineByLine": [
+        "`run { ... }` — executes the block and returns its last expression.",
+        "`val x = 10` and `val y = 20` — local variables inside the block.",
+        "`x + y` — the last expression in the block, evaluating to 30.",
+        "`val result = 30` — result is assigned the return value of run.",
+        "`println(30)` — prints 30."
+      ],
+      "tip": "run is used to compute a value from a series of steps or to scope temporary variables. AI code uses it to avoid polluting the outer scope with intermediate variables."
+    }
+  },
+  {
+    "id": "mod-006",
+    "topic": "collections",
+    "difficulty": "moderate",
+    "snippet": "val numbers = listOf(1, 2, 3, 4)\nval doubled = numbers.map { it * 2 }\nprintln(doubled)",
+    "question": "What does this code print?",
+    "choices": [
+      "[1, 2, 3, 4]",
+      "[2, 4, 6, 8]",
+      "20",
+      "[2, 4]"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "map transforms every element in a collection by applying a lambda, returning a new list with the transformed values.",
+      "lineByLine": [
+        "`numbers.map { it * 2 }` — applies the lambda to each element.",
+        "`it` refers to the current element: 1, then 2, then 3, then 4.",
+        "Each is multiplied by 2: 1→2, 2→4, 3→6, 4→8.",
+        "map returns a new list: [2, 4, 6, 8].",
+        "`println([2, 4, 6, 8])` — prints [2, 4, 6, 8]."
+      ],
+      "tip": "map is the most common collection function in AI-generated Kotlin. It transforms every element. Remember: map never changes the size of the list, only the values."
+    }
+  },
+  {
+    "id": "mod-007",
+    "topic": "collections",
+    "difficulty": "moderate",
+    "snippet": "val numbers = listOf(1, 2, 3, 4, 5, 6)\nval evens = numbers.filter { it % 2 == 0 }\nprintln(evens)",
+    "question": "What does this code print?",
+    "choices": [
+      "[1, 3, 5]",
+      "[2, 4, 6]",
+      "[1, 2, 3, 4, 5, 6]",
+      "true"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "filter returns a new list containing only elements that match a given condition (the lambda returns true).",
+      "lineByLine": [
+        "`numbers.filter { it % 2 == 0 }` — keeps only elements where the condition is true.",
+        "`it % 2 == 0` — true when the element is evenly divisible by 2 (i.e., even).",
+        "1, 3, 5 are odd (condition false) — excluded.",
+        "2, 4, 6 are even (condition true) — kept.",
+        "`println([2, 4, 6])` — prints [2, 4, 6]."
+      ],
+      "tip": "filter is used everywhere in AI Kotlin code. It reduces a list to only items matching a predicate. map and filter are often chained together: list.filter { ... }.map { ... }."
+    }
+  },
+  {
+    "id": "mod-008",
+    "topic": "collections",
+    "difficulty": "moderate",
+    "snippet": "val names = listOf(\"Alice\", \"Bob\", \"Charlie\")\nval found = names.firstOrNull { it.startsWith(\"B\") }\nprintln(found)",
+    "question": "What does this code print?",
+    "choices": [
+      "Bob",
+      "null",
+      "true",
+      "[Bob]"
+    ],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "firstOrNull returns the first element matching the predicate, or null if no element matches. Here, \"Bob\" starts with \"B\" and is found.",
+      "lineByLine": [
+        "`names.firstOrNull { it.startsWith(\"B\") }` — searches the list from the start.",
+        "`\"Alice\".startsWith(\"B\")` — false, skip.",
+        "`\"Bob\".startsWith(\"B\")` — true! Return \"Bob\" immediately.",
+        "`val found = \"Bob\"`.",
+        "`println(\"Bob\")` — prints Bob."
+      ],
+      "tip": "firstOrNull is safer than first() — first() throws an exception if nothing matches. AI code uses firstOrNull when a missing result is a normal possibility, not an error."
+    }
+  },
+  {
+    "id": "mod-009",
+    "topic": "extension functions",
+    "difficulty": "moderate",
+    "snippet": "fun String.shout(): String = this.uppercase() + \"!!!\"\nprintln(\"hello\".shout())",
+    "question": "What does this code print?",
+    "choices": [
+      "hello",
+      "HELLO",
+      "HELLO!!!",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "Extension functions add new methods to existing types without modifying their source code. Inside the function, `this` refers to the object the function was called on.",
+      "lineByLine": [
+        "`fun String.shout()` — adds a shout() method to all String objects.",
+        "`this` refers to the String instance it was called on, which is \"hello\".",
+        "`this.uppercase()` — converts \"hello\" to \"HELLO\".",
+        "`+ \"!!!\"` — appends three exclamation marks.",
+        "`println(\"HELLO!!!\")` — prints HELLO!!!"
+      ],
+      "tip": "AI code uses extension functions to add utility methods to existing types. They look like regular method calls, which can be surprising when reading code — always check if a method is an extension when it seems unexpected."
+    }
+  },
+  {
+    "id": "mod-010",
+    "topic": "when with types",
+    "difficulty": "moderate",
+    "snippet": "fun describe(obj: Any): String = when (obj) {\n    is Int    -> \"Integer: $obj\"\n    is String -> \"String of length ${obj.length}\"\n    else      -> \"Unknown\"\n}\nprintln(describe(42))",
+    "question": "What does this code print?",
+    "choices": [
+      "Unknown",
+      "String of length 2",
+      "Integer: 42",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "when can perform type checks using is. When a branch matches, Kotlin smart-casts the variable to that type automatically.",
+      "lineByLine": [
+        "`obj: Any` — the parameter accepts any type.",
+        "`is Int` — checks if obj is an integer. 42 is an Int, so this matches.",
+        "Inside `\"Integer: $obj\"`, Kotlin already knows obj is an Int (smart cast).",
+        "The expression returns \"Integer: 42\".",
+        "`println(\"Integer: 42\")` — prints Integer: 42."
+      ],
+      "tip": "when (obj) with is checks is how AI code handles polymorphism without class hierarchies. After an is check, Kotlin smart-casts automatically — no explicit casting needed."
+    }
+  }
+]
