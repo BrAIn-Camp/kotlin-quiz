@@ -1,0 +1,107 @@
+[
+  {
+    "id": "ch15-q6",
+    "topic": "sealed class with abstract property",
+    "difficulty": "moderate",
+    "chapter": "ch-15",
+    "snippet": "sealed class Animal {\n    abstract val sound: String\n}\nclass Cat : Animal() { override val sound = \"Meow\" }\nclass Dog : Animal() { override val sound = \"Woof\" }\n\nfun makeSound(a: Animal) = println(a.sound)\nmakeSound(Cat())",
+    "question": "What does this print?",
+    "choices": ["Woof", "Meow", "Compilation error — sealed classes cannot have abstract members", "Animal"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Sealed classes can declare abstract properties and functions that every subclass must implement. This enforces a contract across the sealed hierarchy.",
+      "lineByLine": [
+        "`abstract val sound: String` — every subclass must provide `sound`.",
+        "`Cat` overrides it with \"Meow\".",
+        "`makeSound(Cat())` → `a.sound` → \"Meow\".",
+        "`println(\"Meow\")` — prints Meow."
+      ],
+      "tip": "Abstract members on sealed classes are powerful: they guarantee every subtype exposes the same interface, making it safe to use the member anywhere you have a sealed class reference."
+    }
+  },
+  {
+    "id": "ch15-q7",
+    "topic": "function returning sealed type",
+    "difficulty": "moderate",
+    "chapter": "ch-15",
+    "snippet": "sealed class ParseResult\ndata class Parsed(val value: Int) : ParseResult()\nobject ParseError : ParseResult()\n\nfun parse(s: String): ParseResult {\n    val n = s.toIntOrNull()\n    return if (n != null) Parsed(n) else ParseError\n}\n\nval r = parse(\"42\")\nprintln(r is Parsed)",
+    "question": "What does this print?",
+    "choices": ["false", "true", "Parsed(value=42)", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Functions commonly return sealed types to represent success/failure without exceptions. `parse(\"42\")` returns a `Parsed`, so `r is Parsed` is true.",
+      "lineByLine": [
+        "`\"42\".toIntOrNull()` → 42 (not null).",
+        "`return Parsed(42)`.",
+        "`r is Parsed` → true.",
+        "`println(true)` — prints true."
+      ],
+      "tip": "Returning sealed types from parse/fetch/compute functions is the Kotlin alternative to throwing exceptions. The caller is forced to handle both cases in a `when` expression."
+    }
+  },
+  {
+    "id": "ch15-q8",
+    "topic": "is check on sealed variable",
+    "difficulty": "moderate",
+    "chapter": "ch-15",
+    "snippet": "sealed class Event\ndata class Click(val x: Int, val y: Int) : Event()\ndata class KeyPress(val key: Char) : Event()\n\nval e: Event = KeyPress('A')\nprintln(e is Click)\nprintln(e is KeyPress)",
+    "question": "What does this print?",
+    "choices": ["true then false", "false then true", "false then false", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`is` performs a runtime type check on sealed subtypes. `e` holds a `KeyPress`, so `e is Click` is false and `e is KeyPress` is true.",
+      "lineByLine": [
+        "`val e: Event = KeyPress('A')` — declared as Event, holds a KeyPress.",
+        "`e is Click` → false.",
+        "`e is KeyPress` → true.",
+        "Output: false then true."
+      ],
+      "tip": "Using `is` to query the runtime subtype is safe with sealed classes because the compiler knows all possibilities. After a positive `is` check, Kotlin smart-casts automatically."
+    }
+  },
+  {
+    "id": "ch15-q9",
+    "topic": "sealed when with multiple data paths",
+    "difficulty": "moderate",
+    "chapter": "ch-15",
+    "snippet": "sealed class Response\ndata class Ok(val body: String) : Response()\ndata class Err(val code: Int, val msg: String) : Response()\n\nfun summarise(r: Response) = when (r) {\n    is Ok  -> \"200: ${r.body}\"\n    is Err -> \"${r.code}: ${r.msg}\"\n}\nprintln(summarise(Err(404, \"Not Found\")))",
+    "question": "What does this print?",
+    "choices": ["200: Not Found", "404: Not Found", "Err(code=404, msg=Not Found)", "Compilation error — missing else"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Each sealed subtype carries different data. In the matching branch, Kotlin smart-casts `r` to the specific subtype, giving access to that subtype's properties.",
+      "lineByLine": [
+        "`summarise(Err(404, \"Not Found\"))` — r is an Err.",
+        "`is Err` matches → r smart-cast to Err.",
+        "`r.code` = 404, `r.msg` = \"Not Found\".",
+        "Returns \"404: Not Found\". Prints 404: Not Found."
+      ],
+      "tip": "This is the core sealed class pattern: different data per subtype, dispatched cleanly in `when`. AI code models HTTP responses, database results, and validation outcomes exactly this way."
+    }
+  },
+  {
+    "id": "ch15-q10",
+    "topic": "new subtype forces compiler error",
+    "difficulty": "moderate",
+    "chapter": "ch-15",
+    "snippet": "sealed class Direction { }\nclass North : Direction()\nclass South : Direction()\n\nfun label(d: Direction): String = when (d) {\n    is North -> \"N\"\n    is South -> \"S\"\n}",
+    "question": "What happens if you add `class East : Direction()` to this code WITHOUT adding an `is East` branch?",
+    "choices": [
+      "Nothing — the code still compiles, East falls through silently",
+      "Runtime exception when an East is encountered",
+      "Compilation error — when expression is no longer exhaustive",
+      "East is handled by the last branch automatically"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "Sealed class `when` expressions are exhaustive. Adding a new subtype without a matching branch causes a compile error — the compiler catches the gap before the code runs.",
+      "lineByLine": [
+        "Currently, `North` and `South` cover all cases — no else needed.",
+        "Adding `class East` means there are now 3 subtypes.",
+        "The `when` no longer covers all cases.",
+        "Compile error: 'when' expression must be exhaustive."
+      ],
+      "tip": "This compile-time safety is the #1 reason to use sealed classes. You can never accidentally forget to handle a new case — the compiler enforces completeness. Add `else` only when you intentionally want to ignore new subtypes."
+    }
+  }
+]

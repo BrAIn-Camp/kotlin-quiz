@@ -1,62 +1,253 @@
 [
   {
-    "id": "ch18-q1", "topic": "lambda syntax", "difficulty": "moderate", "chapter": "ch-18",
+    "id": "ch18-q1",
+    "topic": "lambda syntax",
+    "difficulty": "moderate",
+    "chapter": "ch-18",
     "snippet": "val double = { x: Int -> x * 2 }\nprintln(double(5))",
     "question": "What does this print?",
-    "choices": ["x * 2", "5", "10", "Compilation error"],
+    "choices": [
+      "x * 2",
+      "5",
+      "10",
+      "Compilation error"
+    ],
     "correctIndex": 2,
     "explanation": {
       "summary": "A lambda is a function stored in a variable. `{ x: Int -> x * 2 }` takes an Int and returns it doubled. Calling `double(5)` executes the lambda.",
-      "lineByLine": ["`{ x: Int -> x * 2 }` — lambda with parameter x, body x*2.", "`val double = ...` — the lambda is assigned to a variable.", "`double(5)` — calls the lambda with x=5. Returns 5*2=10.", "`println(10)` — prints 10."],
+      "lineByLine": [
+        "`{ x: Int -> x * 2 }` — lambda with parameter x, body x*2.",
+        "`val double = ...` — the lambda is assigned to a variable.",
+        "`double(5)` — calls the lambda with x=5. Returns 5*2=10.",
+        "`println(10)` — prints 10."
+      ],
       "tip": "Lambdas are the foundation of Kotlin's functional style. You'll see them everywhere in AI code — passed to `map`, `filter`, event handlers, and callbacks."
     }
   },
   {
-    "id": "ch18-q2", "topic": "it keyword", "difficulty": "moderate", "chapter": "ch-18",
+    "id": "ch18-q2",
+    "topic": "it keyword",
+    "difficulty": "moderate",
+    "chapter": "ch-18",
     "snippet": "val square = { it: Int -> it * it }\nprintln(square(4))",
     "question": "What does this print?",
-    "choices": ["it * it", "4", "16", "Compilation error"],
+    "choices": [
+      "it * it",
+      "4",
+      "16",
+      "Compilation error"
+    ],
     "correctIndex": 2,
     "explanation": {
       "summary": "When a lambda has exactly one parameter, you can name it `it` (though you can also use any name). The parameter is still typed — here as Int.",
-      "lineByLine": ["`{ it: Int -> it * it }` — `it` is the parameter name, body is it*it.", "`square(4)` — calls with it=4.", "4 * 4 = 16.", "`println(16)` — prints 16."],
+      "lineByLine": [
+        "`{ it: Int -> it * it }` — `it` is the parameter name, body is it*it.",
+        "`square(4)` — calls with it=4.",
+        "4 * 4 = 16.",
+        "`println(16)` — prints 16."
+      ],
       "tip": "When the parameter type is inferred, you can omit the name entirely and just use `it` implicitly: `{ it * it }`. This shorthand is used constantly in AI code with `map`, `filter`, etc."
     }
   },
   {
-    "id": "ch18-q3", "topic": "trailing lambda", "difficulty": "moderate", "chapter": "ch-18",
+    "id": "ch18-q3",
+    "topic": "trailing lambda",
+    "difficulty": "moderate",
+    "chapter": "ch-18",
     "snippet": "fun repeat(times: Int, action: () -> Unit) {\n    for (i in 1..times) action()\n}\nrepeat(3) {\n    print(\"Hi \")\n}",
     "question": "What does this print?",
-    "choices": ["Hi", "Hi Hi", "Hi Hi Hi", "Compilation error"],
+    "choices": [
+      "Hi",
+      "Hi Hi",
+      "Hi Hi Hi",
+      "Compilation error"
+    ],
     "correctIndex": 2,
     "explanation": {
       "summary": "When the last parameter of a function is a lambda, it can be moved outside the parentheses — this is trailing lambda syntax.",
-      "lineByLine": ["`repeat(3) { ... }` — trailing lambda: the lambda is the `action` parameter.", "`repeat` calls `action()` 3 times.", "Each call prints \"Hi \".", "Output: Hi Hi Hi (with trailing space)."],
+      "lineByLine": [
+        "`repeat(3) { ... }` — trailing lambda: the lambda is the `action` parameter.",
+        "`repeat` calls `action()` 3 times.",
+        "Each call prints \"Hi \".",
+        "Output: Hi Hi Hi (with trailing space)."
+      ],
       "tip": "Trailing lambdas are everywhere in AI Kotlin — `launch { }`, `apply { }`, `onClick { }`. When you see `function(args) { ... }`, the `{ ... }` is the last lambda argument."
     }
   },
   {
-    "id": "ch18-q4", "topic": "lambda return value", "difficulty": "moderate", "chapter": "ch-18",
+    "id": "ch18-q4",
+    "topic": "lambda return value",
+    "difficulty": "moderate",
+    "chapter": "ch-18",
     "snippet": "val classify = { n: Int ->\n    if (n % 2 == 0) \"even\" else \"odd\"\n}\nprintln(classify(7))",
     "question": "What does this print?",
-    "choices": ["even", "odd", "7", "Compilation error"],
+    "choices": [
+      "even",
+      "odd",
+      "7",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "A lambda's return value is the last expression in its body. No `return` keyword is used.",
-      "lineByLine": ["`classify(7)` — calls the lambda with n=7.", "`7 % 2 == 0` → false.", "`else \"odd\"` — the last expression evaluates to \"odd\".", "`println(\"odd\")` — prints odd."],
+      "lineByLine": [
+        "`classify(7)` — calls the lambda with n=7.",
+        "`7 % 2 == 0` → false.",
+        "`else \"odd\"` — the last expression evaluates to \"odd\".",
+        "`println(\"odd\")` — prints odd."
+      ],
       "tip": "Lambdas return their last expression implicitly — no `return` keyword. Using `return` inside a lambda actually returns from the enclosing function (non-local return), which is usually not what you want."
     }
   },
   {
-    "id": "ch18-q5", "topic": "lambda type", "difficulty": "moderate", "chapter": "ch-18",
+    "id": "ch18-q5",
+    "topic": "lambda type",
+    "difficulty": "moderate",
+    "chapter": "ch-18",
     "snippet": "val greet: (String) -> String = { name -> \"Hello, $name!\" }\nprintln(greet(\"World\"))",
     "question": "What does this print?",
-    "choices": ["name -> Hello, name!", "Hello, World!", "Hello, name!", "Compilation error"],
+    "choices": [
+      "name -> Hello, name!",
+      "Hello, World!",
+      "Hello, name!",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`(String) -> String` is an explicit function type — a lambda that takes a String and returns a String.",
-      "lineByLine": ["`(String) -> String` — the type of a lambda: one String in, one String out.", "`{ name -> \"Hello, $name!\" }` — implementation.", "`greet(\"World\")` — name=\"World\", returns \"Hello, World!\".", "`println(\"Hello, World!\")` — prints Hello, World!"],
+      "lineByLine": [
+        "`(String) -> String` — the type of a lambda: one String in, one String out.",
+        "`{ name -> \"Hello, $name!\" }` — implementation.",
+        "`greet(\"World\")` — name=\"World\", returns \"Hello, World!\".",
+        "`println(\"Hello, World!\")` — prints Hello, World!"
+      ],
       "tip": "Function types like `(String) -> String` or `(Int, Int) -> Boolean` appear in AI code as parameter types, return types, and variable declarations. Reading them left-to-right: inputs in parens → return type."
+    }
+  },
+  {
+    "id": "ch18-q6",
+    "topic": "multi-line lambda",
+    "difficulty": "moderate",
+    "chapter": "ch-18",
+    "snippet": "val process = { x: Int ->\n    val doubled = x * 2\n    val message = \"Result: $doubled\"\n    message\n}\nprintln(process(6))",
+    "question": "What does this print?",
+    "choices": [
+      "6",
+      "12",
+      "Result: 12",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "A lambda can span multiple lines. The last expression in the body is the return value — no `return` keyword needed.",
+      "lineByLine": [
+        "`process(6)` — x = 6.",
+        "`val doubled = 6 * 2` = 12.",
+        "`val message = \"Result: 12\"`.",
+        "Last expression: `message` → \"Result: 12\" is returned.",
+        "`println(\"Result: 12\")` — prints Result: 12."
+      ],
+      "tip": "Multi-line lambdas follow the same implicit-return rule as single-line ones: the last expression is returned. AI code uses multi-line lambdas for complex transformations, but keeps them short — extract to a function if the lambda grows large."
+    }
+  },
+  {
+    "id": "ch18-q7",
+    "topic": "lambda capturing outer variable",
+    "difficulty": "moderate",
+    "chapter": "ch-18",
+    "snippet": "var counter = 0\nval increment = { counter++ }\nincrement()\nincrement()\nincrement()\nprintln(counter)",
+    "question": "What does this print?",
+    "choices": [
+      "0",
+      "1",
+      "3",
+      "Compilation error — lambda cannot modify outer variable"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "Lambdas can capture and modify variables from the enclosing scope. This is called a closure. Each call to `increment` modifies the same `counter`.",
+      "lineByLine": [
+        "`var counter = 0` — outer variable.",
+        "`val increment = { counter++ }` — lambda captures counter.",
+        "Three calls: counter goes 0 → 1 → 2 → 3.",
+        "`println(3)` — prints 3."
+      ],
+      "tip": "Closures (lambdas that capture outer state) are powerful but require care — captured `var` values are shared and mutable. AI code uses this for event handlers and callbacks that need to track state."
+    }
+  },
+  {
+    "id": "ch18-q8",
+    "topic": "underscore for unused parameter",
+    "difficulty": "moderate",
+    "chapter": "ch-18",
+    "snippet": "val pairs = listOf(1 to \"one\", 2 to \"two\", 3 to \"three\")\npairs.forEach { (_, word) -> print(\"$word \") }",
+    "question": "What does this print?",
+    "choices": [
+      "1 2 3",
+      "one two three",
+      "_ word _ word _ word",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`_` is used to discard a lambda parameter you don't need. Here the first element of each pair (the number) is ignored and only the word is used.",
+      "lineByLine": [
+        "`forEach { (_, word) -> ... }` — destructures each Pair.",
+        "`_` discards the Int (1, 2, 3).",
+        "`word` captures the String (one, two, three).",
+        "Output: one two three."
+      ],
+      "tip": "`_` for unused parameters prevents IDE warnings and signals to readers that the value is intentionally ignored. AI code uses it in destructuring, map operations, and indexed iterators."
+    }
+  },
+  {
+    "id": "ch18-q9",
+    "topic": "two explicit lambda parameters",
+    "difficulty": "moderate",
+    "chapter": "ch-18",
+    "snippet": "val add: (Int, Int) -> Int = { a, b -> a + b }\nval multiply: (Int, Int) -> Int = { a, b -> a * b }\nprintln(add(3, 4))\nprintln(multiply(3, 4))",
+    "question": "What does this print?",
+    "choices": [
+      "7 then 12",
+      "7 then 7",
+      "12 then 12",
+      "Compilation error"
+    ],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "When a lambda has multiple parameters, they are named explicitly with `->`. The `it` shorthand only works for single-parameter lambdas.",
+      "lineByLine": [
+        "`{ a, b -> a + b }` — two named parameters, no `it` possible.",
+        "`add(3, 4)` = 3 + 4 = 7.",
+        "`multiply(3, 4)` = 3 * 4 = 12.",
+        "Output: 7 then 12."
+      ],
+      "tip": "With two or more parameters, you must name them explicitly — `it` is only for single-parameter lambdas. AI code often uses short names like `a, b` or descriptive names like `key, value`."
+    }
+  },
+  {
+    "id": "ch18-q10",
+    "topic": "lambda stored and called later",
+    "difficulty": "moderate",
+    "chapter": "ch-18",
+    "snippet": "fun buildGreeter(prefix: String): () -> String {\n    return { \"$prefix, World!\" }\n}\nval hi = buildGreeter(\"Hi\")\nval hello = buildGreeter(\"Hello\")\nprintln(hi())\nprintln(hello())",
+    "question": "What does this print?",
+    "choices": [
+      "Hi, World! then Hi, World!",
+      "Hi, World! then Hello, World!",
+      "prefix, World! then prefix, World!",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`buildGreeter` returns a lambda that captures `prefix`. Each returned lambda closes over its own `prefix` value.",
+      "lineByLine": [
+        "`buildGreeter(\"Hi\")` returns `{ \"Hi, World!\" }`, stored in `hi`.",
+        "`buildGreeter(\"Hello\")` returns `{ \"Hello, World!\" }`, stored in `hello`.",
+        "`hi()` — calls the first lambda → \"Hi, World!\".",
+        "`hello()` — calls the second lambda → \"Hello, World!\"."
+      ],
+      "tip": "Lambdas stored in variables are first-class functions. Each one captures its own closed-over state. This is the foundation of factory functions, partial application, and configurable callbacks in AI Kotlin."
     }
   }
 ]

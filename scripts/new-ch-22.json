@@ -1,0 +1,106 @@
+[
+  {
+    "id": "ch22-q6",
+    "topic": "let on non-null value",
+    "difficulty": "moderate",
+    "chapter": "ch-22",
+    "snippet": "val name = \"alice\"\nval result = name.let { it.uppercase() + \"!\" }\nprintln(result)",
+    "question": "What does this print?",
+    "choices": ["alice", "ALICE", "ALICE!", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`let` can be used on any value, not just nullable ones. It executes the block with the receiver as `it` and returns the block's result. Here it's used purely for transformation.",
+      "lineByLine": [
+        "`name.let { ... }` — name is \"alice\", not null. Block runs.",
+        "`it.uppercase()` → \"ALICE\".",
+        "`+ \"!\"` → \"ALICE!\".",
+        "`val result = \"ALICE!\"`.",
+        "`println(\"ALICE!\")` — prints ALICE!"
+      ],
+      "tip": "`let` on a non-null value scopes a transformation without needing a temp variable: `val result = name.let { transform(it) }` vs `val temp = name; val result = transform(temp)`. AI code uses this for clean single-use transformations."
+    }
+  },
+  {
+    "id": "ch22-q7",
+    "topic": "run as extension function",
+    "difficulty": "moderate",
+    "chapter": "ch-22",
+    "snippet": "data class Circle(val radius: Double)\nval area = Circle(5.0).run {\n    val r = radius\n    3.14159 * r * r\n}\nprintln(area)",
+    "question": "What does this print?",
+    "choices": ["5.0", "78.53975", "Compilation error — run cannot be called on a data class", "3.14159"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`run` as an extension function runs a block with the receiver as `this` and returns the last expression. It's like `apply` but returns the block result, not the object.",
+      "lineByLine": [
+        "`Circle(5.0).run { ... }` — inside the block, `this` is the Circle.",
+        "`radius` accesses `this.radius` = 5.0.",
+        "`3.14159 * 5.0 * 5.0` = 78.53975.",
+        "`val area = 78.53975`.",
+        "`println(78.53975)` — prints 78.53975."
+      ],
+      "tip": "`obj.run { }` is used in AI code when you need to compute a value from an object's properties without repeating the object name. The key: `run` returns the block result, while `apply` returns the object."
+    }
+  },
+  {
+    "id": "ch22-q8",
+    "topic": "apply returns the object for chaining",
+    "difficulty": "moderate",
+    "chapter": "ch-22",
+    "snippet": "val list = mutableListOf<Int>()\n    .apply { add(1); add(2); add(3) }\n    .apply { add(4); add(5) }\nprintln(list.size)",
+    "question": "What does this print?",
+    "choices": ["3", "2", "5", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`apply` returns the object it's called on, so multiple `apply` calls can be chained. Each call further configures the same object.",
+      "lineByLine": [
+        "First `.apply { add(1); add(2); add(3) }` — adds 3 items, returns the list.",
+        "Second `.apply { add(4); add(5) }` — adds 2 more items, returns the list.",
+        "`list` now has 5 items.",
+        "`println(5)` — prints 5."
+      ],
+      "tip": "`apply` always returns `this` (the receiver). This makes it perfect for chaining setup steps. AI code chains `apply` calls when setup is logically separated into distinct phases."
+    }
+  },
+  {
+    "id": "ch22-q9",
+    "topic": "let returns different type",
+    "difficulty": "moderate",
+    "chapter": "ch-22",
+    "snippet": "val number = 42\nval description: String = number.let {\n    when {\n        it < 0 -> \"negative\"\n        it == 0 -> \"zero\"\n        else -> \"positive\"\n    }\n}\nprintln(description)",
+    "question": "What does this print?",
+    "choices": ["42", "positive", "zero", "Compilation error — let must return the same type"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`let` can return any type — it doesn't have to return the same type as the receiver. The block's last expression determines the return type.",
+      "lineByLine": [
+        "`number.let { ... }` — it = 42.",
+        "`when`: 42 < 0 false, 42 == 0 false, else → \"positive\".",
+        "The `when` expression evaluates to \"positive\".",
+        "`val description: String = \"positive\"`.",
+        "`println(\"positive\")` — prints positive."
+      ],
+      "tip": "`let` transforming from one type to another is extremely common in AI code: `user.let { it.id }` (User → Int), `response.let { parseBody(it) }` (String → Model). The return type is whatever the block returns."
+    }
+  },
+  {
+    "id": "ch22-q10",
+    "topic": "also vs let return difference",
+    "difficulty": "moderate",
+    "chapter": "ch-22",
+    "snippet": "val original = mutableListOf(1, 2, 3)\nval fromAlso = original.also { it.add(4) }\nval fromLet  = original.let  { it.size }\nprintln(fromAlso === original)\nprintln(fromLet)",
+    "question": "What does this print?",
+    "choices": ["false then 4", "true then 4", "true then 3", "false then 3"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`also` returns the original object (same reference). `let` returns the block's last expression (a different value). This is the key distinction between them.",
+      "lineByLine": [
+        "`original.also { it.add(4) }` — adds 4 to the list, returns `original` itself.",
+        "`fromAlso === original` — `===` checks reference equality → same object → true.",
+        "`original.let { it.size }` — by now original has 4 items, returns size = 4.",
+        "`fromLet` = 4.",
+        "Output: true then 4."
+      ],
+      "tip": "The core difference: `also` returns `this` (use for side effects); `let` returns the lambda result (use for transformation). `apply` also returns `this` but uses `this` (not `it`) inside the block."
+    }
+  }
+]

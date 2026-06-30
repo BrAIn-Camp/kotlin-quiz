@@ -1,62 +1,246 @@
 [
   {
-    "id": "ch10-q1", "topic": "Int arithmetic", "difficulty": "easy", "chapter": "ch-10",
+    "id": "ch10-q1",
+    "topic": "Int arithmetic",
+    "difficulty": "easy",
+    "chapter": "ch-10",
     "snippet": "val a: Int = 7\nval b: Int = 2\nprintln(a / b)\nprintln(a % b)",
     "question": "What does this print?",
-    "choices": ["3.5 then 1", "3 then 1", "3 then 2", "3.5 then 0.5"],
+    "choices": [
+      "3.5 then 1",
+      "3 then 1",
+      "3 then 2",
+      "3.5 then 0.5"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "Integer division in Kotlin truncates the decimal. `%` is the remainder (modulo) operator.",
-      "lineByLine": ["`7 / 2` — integer division: 3 (not 3.5).", "`7 % 2` — remainder: 7 = 3*2 + 1, so remainder is 1.", "Output: 3, then 1."],
+      "lineByLine": [
+        "`7 / 2` — integer division: 3 (not 3.5).",
+        "`7 % 2` — remainder: 7 = 3*2 + 1, so remainder is 1.",
+        "Output: 3, then 1."
+      ],
       "tip": "When both operands are Int, `/` always performs integer division and drops the remainder. For decimal results, at least one operand must be a Double or Float."
     }
   },
   {
-    "id": "ch10-q2", "topic": "Double arithmetic", "difficulty": "easy", "chapter": "ch-10",
+    "id": "ch10-q2",
+    "topic": "Double arithmetic",
+    "difficulty": "easy",
+    "chapter": "ch-10",
     "snippet": "val a: Double = 7.0\nval b: Double = 2.0\nprintln(a / b)",
     "question": "What does this print?",
-    "choices": ["3", "3.5", "3.0", "Compilation error"],
+    "choices": [
+      "3",
+      "3.5",
+      "3.0",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "When both operands are Double, `/` performs floating-point division and preserves the decimal.",
-      "lineByLine": ["`7.0 / 2.0` — floating-point division.", "Result: 3.5.", "`println(3.5)` — prints 3.5."],
+      "lineByLine": [
+        "`7.0 / 2.0` — floating-point division.",
+        "Result: 3.5.",
+        "`println(3.5)` — prints 3.5."
+      ],
       "tip": "Always use `.0` suffix when you need decimal division. `7 / 2` gives 3; `7.0 / 2` gives 3.5. This is a very common source of bugs in AI-generated numeric code."
     }
   },
   {
-    "id": "ch10-q3", "topic": "Boolean operators", "difficulty": "easy", "chapter": "ch-10",
+    "id": "ch10-q3",
+    "topic": "Boolean operators",
+    "difficulty": "easy",
+    "chapter": "ch-10",
     "snippet": "val a = true\nval b = false\nprintln(a && b)\nprintln(a || b)\nprintln(!a)",
     "question": "What does this print?",
-    "choices": ["false then true then false", "true then false then true", "false then false then true", "true then true then false"],
+    "choices": [
+      "false then true then false",
+      "true then false then true",
+      "false then false then true",
+      "true then true then false"
+    ],
     "correctIndex": 0,
     "explanation": {
       "summary": "`&&` is AND (both must be true), `||` is OR (at least one must be true), `!` is NOT (inverts the value).",
-      "lineByLine": ["`a && b` → `true && false` → false.", "`a || b` → `true || false` → true.", "`!a` → `!true` → false."],
+      "lineByLine": [
+        "`a && b` → `true && false` → false.",
+        "`a || b` → `true || false` → true.",
+        "`!a` → `!true` → false."
+      ],
       "tip": "Boolean operators in Kotlin are short-circuit: `&&` stops at the first false, `||` stops at the first true. This matters when the second operand has side effects."
     }
   },
   {
-    "id": "ch10-q4", "topic": "type conversion", "difficulty": "easy", "chapter": "ch-10",
+    "id": "ch10-q4",
+    "topic": "type conversion",
+    "difficulty": "easy",
+    "chapter": "ch-10",
     "snippet": "val x: Int = 42\nval y: Double = x.toDouble()\nprintln(y)",
     "question": "What does this print?",
-    "choices": ["42", "42.0", "Compilation error — cannot convert Int to Double", "null"],
+    "choices": [
+      "42",
+      "42.0",
+      "Compilation error — cannot convert Int to Double",
+      "null"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "Kotlin does not implicitly convert between number types. You must call `.toDouble()`, `.toInt()`, etc. explicitly.",
-      "lineByLine": ["`val x: Int = 42`.", "`x.toDouble()` — explicit conversion from Int to Double.", "`val y: Double = 42.0`.", "`println(42.0)` — prints 42.0."],
+      "lineByLine": [
+        "`val x: Int = 42`.",
+        "`x.toDouble()` — explicit conversion from Int to Double.",
+        "`val y: Double = 42.0`.",
+        "`println(42.0)` — prints 42.0."
+      ],
       "tip": "Kotlin's strict type system means `val y: Double = x` would be a compile error. You must call `.toInt()`, `.toDouble()`, `.toLong()`, etc. Explicit conversion is safer and clearer."
     }
   },
   {
-    "id": "ch10-q5", "topic": "Long literal", "difficulty": "easy", "chapter": "ch-10",
+    "id": "ch10-q5",
+    "topic": "Long literal",
+    "difficulty": "easy",
+    "chapter": "ch-10",
     "snippet": "val small: Int = 2_147_483_647\nval big: Long = 2_147_483_648L\nprintln(big - small)",
     "question": "What does this print?",
-    "choices": ["0", "1", "-1", "Compilation error"],
+    "choices": [
+      "0",
+      "1",
+      "-1",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`Int` holds values up to 2,147,483,647. For larger values, use `Long` with an `L` suffix. The underscores are just for readability.",
-      "lineByLine": ["`small` is the max Int value: 2,147,483,647.", "`big` is 2,147,483,648 (one more, requires Long).", "`big - small` = 2,147,483,648 - 2,147,483,647 = 1.", "`println(1)` — prints 1."],
+      "lineByLine": [
+        "`small` is the max Int value: 2,147,483,647.",
+        "`big` is 2,147,483,648 (one more, requires Long).",
+        "`big - small` = 2,147,483,648 - 2,147,483,647 = 1.",
+        "`println(1)` — prints 1."
+      ],
       "tip": "Use underscores in numeric literals (`2_147_483_647`) to improve readability without affecting the value. `L` suffix marks a Long literal. AI code uses Longs for timestamps, file sizes, and IDs."
+    }
+  },
+  {
+    "id": "ch10-q6",
+    "topic": "Char type",
+    "difficulty": "easy",
+    "chapter": "ch-10",
+    "snippet": "val letter: Char = 'K'\nprintln(letter)\nprintln(letter.isUpperCase())\nprintln(letter.lowercaseChar())",
+    "question": "What does this print?",
+    "choices": [
+      "K then false then k",
+      "K then true then k",
+      "75 then true then k",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`Char` holds a single character. It has built-in methods for case checking and conversion. Single quotes denote Char literals, double quotes denote String literals.",
+      "lineByLine": [
+        "`val letter: Char = 'K'` — single char, note single quotes.",
+        "`println(letter)` — prints K.",
+        "`letter.isUpperCase()` — 'K' is uppercase → true.",
+        "`letter.lowercaseChar()` — returns 'k' → prints k."
+      ],
+      "tip": "Char is distinct from String in Kotlin. `'A'` is a Char (single quotes); `\"A\"` is a String (double quotes). AI code processes characters directly when dealing with passwords, parsers, and character-level validation."
+    }
+  },
+  {
+    "id": "ch10-q7",
+    "topic": "String to number conversion",
+    "difficulty": "easy",
+    "chapter": "ch-10",
+    "snippet": "val s = \"42\"\nval n = s.toInt()\nprintln(n + 8)",
+    "question": "What does this print?",
+    "choices": [
+      "428",
+      "50",
+      "Compilation error — cannot convert String to Int",
+      "Throws NumberFormatException"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`.toInt()` parses a String as an integer. Once converted, normal arithmetic applies.",
+      "lineByLine": [
+        "`s.toInt()` — parses \"42\" as 42.",
+        "`n + 8` = 42 + 8 = 50.",
+        "`println(50)` — prints 50."
+      ],
+      "tip": "`.toInt()` throws `NumberFormatException` if the string isn't a valid integer. Use `.toIntOrNull()` for safe parsing — it returns `null` instead of throwing. AI code uses `toIntOrNull() ?: 0` for safe defaults."
+    }
+  },
+  {
+    "id": "ch10-q8",
+    "topic": "Float literal",
+    "difficulty": "easy",
+    "chapter": "ch-10",
+    "snippet": "val x: Float = 1.5f\nval y: Float = 2.5f\nprintln(x + y)",
+    "question": "What does this print?",
+    "choices": [
+      "4",
+      "4.0",
+      "Compilation error — Float not supported",
+      "3.5"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Float arithmetic produces a Float result. Adding two Floats returns a Float, which `println` displays with a `.0` decimal.",
+      "lineByLine": [
+        "`1.5f` and `2.5f` — Float literals (32-bit).",
+        "`x + y` = 1.5 + 2.5 = 4.0 (as a Float).",
+        "`println(4.0)` — prints 4.0."
+      ],
+      "tip": "The `f` suffix is required for Float literals. Without it, `1.5` is a Double. AI code rarely uses Float unless interfacing with graphics APIs or memory-sensitive code."
+    }
+  },
+  {
+    "id": "ch10-q9",
+    "topic": "minOf and maxOf",
+    "difficulty": "easy",
+    "chapter": "ch-10",
+    "snippet": "val a = 15\nval b = 9\nval c = 22\nprintln(minOf(a, b, c))\nprintln(maxOf(a, b, c))",
+    "question": "What does this print?",
+    "choices": [
+      "9 then 22",
+      "15 then 22",
+      "9 then 15",
+      "22 then 9"
+    ],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "`minOf` and `maxOf` are standard library functions that return the smallest or largest of their arguments. They accept two or more values.",
+      "lineByLine": [
+        "`minOf(15, 9, 22)` — smallest is 9.",
+        "`maxOf(15, 9, 22)` — largest is 22.",
+        "Output: 9 then 22."
+      ],
+      "tip": "`minOf` and `maxOf` are safer and more readable than manual `if` comparisons. AI code uses them for clamping values: `val clamped = minOf(maxOf(value, min), max)`."
+    }
+  },
+  {
+    "id": "ch10-q10",
+    "topic": "compound multiply-assign",
+    "difficulty": "easy",
+    "chapter": "ch-10",
+    "snippet": "var price = 100\nprice *= 2\nprice -= 15\nprintln(price)",
+    "question": "What does this print?",
+    "choices": [
+      "85",
+      "170",
+      "185",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`*=` multiplies in place; `-=` subtracts in place. Both require `var`.",
+      "lineByLine": [
+        "`price = 100`.",
+        "`price *= 2` → price = 100 * 2 = 200.",
+        "`price -= 15` → price = 200 - 15 = 185.",
+        "`println(185)` — prints 185."
+      ],
+      "tip": "All arithmetic compound assignments (`+=`, `-=`, `*=`, `/=`, `%=`) are supported in Kotlin. They're shorthand for `x = x op value` and are common in AI code for price calculations, score tracking, and counters."
     }
   }
 ]

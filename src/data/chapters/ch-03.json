@@ -1,62 +1,245 @@
 [
   {
-    "id": "ch03-q1", "topic": "string template", "difficulty": "easy", "chapter": "ch-03",
+    "id": "ch03-q1",
+    "topic": "string template",
+    "difficulty": "easy",
+    "chapter": "ch-03",
     "snippet": "val city = \"London\"\nprintln(\"Welcome to $city!\")",
     "question": "What does this print?",
-    "choices": ["Welcome to $city!", "Welcome to city!", "Welcome to London!", "Compilation error"],
+    "choices": [
+      "Welcome to $city!",
+      "Welcome to city!",
+      "Welcome to London!",
+      "Compilation error"
+    ],
     "correctIndex": 2,
     "explanation": {
       "summary": "The `$` prefix embeds a variable's value directly into a string literal.",
-      "lineByLine": ["`val city = \"London\"` — city holds the string London.", "`\"Welcome to $city!\"` — $city is replaced by its value at runtime.", "Output: Welcome to London!"],
+      "lineByLine": [
+        "`val city = \"London\"` — city holds the string London.",
+        "`\"Welcome to $city!\"` — $city is replaced by its value at runtime.",
+        "Output: Welcome to London!"
+      ],
       "tip": "`$variableName` inside a string is one of the most common patterns in all Kotlin code. It's cleaner than Java's `+` concatenation."
     }
   },
   {
-    "id": "ch03-q2", "topic": "string template expression", "difficulty": "easy", "chapter": "ch-03",
+    "id": "ch03-q2",
+    "topic": "string template expression",
+    "difficulty": "easy",
+    "chapter": "ch-03",
     "snippet": "val a = 4\nval b = 5\nprintln(\"${a} times ${b} is ${a * b}\")",
     "question": "What does this print?",
-    "choices": ["${a} times ${b} is ${a * b}", "a times b is a * b", "4 times 5 is 20", "4 times 5 is a * b"],
+    "choices": [
+      "${a} times ${b} is ${a * b}",
+      "a times b is a * b",
+      "4 times 5 is 20",
+      "4 times 5 is a * b"
+    ],
     "correctIndex": 2,
     "explanation": {
       "summary": "`${}` evaluates any expression inside the braces and inserts the result into the string.",
-      "lineByLine": ["`${a}` — evaluates to 4.", "`${b}` — evaluates to 5.", "`${a * b}` — evaluates 4 * 5 = 20.", "Full string: \"4 times 5 is 20\"."],
+      "lineByLine": [
+        "`${a}` — evaluates to 4.",
+        "`${b}` — evaluates to 5.",
+        "`${a * b}` — evaluates 4 * 5 = 20.",
+        "Full string: \"4 times 5 is 20\"."
+      ],
       "tip": "Use `$variable` for simple variable names and `${expression}` for anything more complex: arithmetic, property access, function calls."
     }
   },
   {
-    "id": "ch03-q3", "topic": "multiline string", "difficulty": "easy", "chapter": "ch-03",
+    "id": "ch03-q3",
+    "topic": "multiline string",
+    "difficulty": "easy",
+    "chapter": "ch-03",
     "snippet": "val text = \"\"\"\n    Hello\n    World\n\"\"\".trimIndent()\nprintln(text)",
     "question": "What does this print?",
-    "choices": ["    Hello\\n    World", "Hello\\nWorld", "Hello\nWorld (two lines)", "Compilation error"],
+    "choices": [
+      "    Hello\\n    World",
+      "Hello\\nWorld",
+      "Hello\nWorld (two lines)",
+      "Compilation error"
+    ],
     "correctIndex": 2,
     "explanation": {
       "summary": "Triple-quoted strings preserve newlines and indentation. `trimIndent()` removes the common leading whitespace from all lines.",
-      "lineByLine": ["`\"\"\"...\"\"\"` — a raw multiline string that preserves all whitespace and newlines.", "`.trimIndent()` — strips the common leading spaces (4 spaces here) from every line.", "Result: Hello on one line, World on the next."],
+      "lineByLine": [
+        "`\"\"\"...\"\"\"` — a raw multiline string that preserves all whitespace and newlines.",
+        "`.trimIndent()` — strips the common leading spaces (4 spaces here) from every line.",
+        "Result: Hello on one line, World on the next."
+      ],
       "tip": "Multiline strings with `trimIndent()` are everywhere in AI-generated Kotlin for SQL queries, JSON templates, HTML snippets, and prompt strings."
     }
   },
   {
-    "id": "ch03-q4", "topic": "string operations", "difficulty": "easy", "chapter": "ch-03",
+    "id": "ch03-q4",
+    "topic": "string operations",
+    "difficulty": "easy",
+    "chapter": "ch-03",
     "snippet": "val s = \"Kotlin\"\nprintln(s.length)\nprintln(s.uppercase())",
     "question": "What does this code print?",
-    "choices": ["6 then Kotlin", "6 then KOTLIN", "Kotlin then 6", "Compilation error"],
+    "choices": [
+      "6 then Kotlin",
+      "6 then KOTLIN",
+      "Kotlin then 6",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`String.length` returns the character count. `String.uppercase()` returns a new string with all characters uppercased.",
-      "lineByLine": ["`s.length` — \"Kotlin\" has 6 characters → prints 6.", "`s.uppercase()` — returns \"KOTLIN\" (s itself is unchanged since val).", "Output: 6, then KOTLIN on the next line."],
+      "lineByLine": [
+        "`s.length` — \"Kotlin\" has 6 characters → prints 6.",
+        "`s.uppercase()` — returns \"KOTLIN\" (s itself is unchanged since val).",
+        "Output: 6, then KOTLIN on the next line."
+      ],
       "tip": "Kotlin strings are immutable — operations like `uppercase()` return a new string. `s` itself is unchanged after calling `s.uppercase()`."
     }
   },
   {
-    "id": "ch03-q5", "topic": "string equality", "difficulty": "easy", "chapter": "ch-03",
+    "id": "ch03-q5",
+    "topic": "string equality",
+    "difficulty": "easy",
+    "chapter": "ch-03",
     "snippet": "val a = \"hello\"\nval b = \"hello\"\nprintln(a == b)",
     "question": "What does this print?",
-    "choices": ["false — == compares object references, not content", "true", "Compilation error", "null"],
+    "choices": [
+      "false — == compares object references, not content",
+      "true",
+      "Compilation error",
+      "null"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "In Kotlin, `==` compares structural equality (content), not reference equality. For strings, this means it compares the characters. This is different from Java where `==` on Strings compares references.",
-      "lineByLine": ["`val a = \"hello\"` and `val b = \"hello\"` — two strings with the same content.", "`a == b` — Kotlin's `==` calls `.equals()` under the hood for objects.", "\"hello\" equals \"hello\" → true."],
+      "lineByLine": [
+        "`val a = \"hello\"` and `val b = \"hello\"` — two strings with the same content.",
+        "`a == b` — Kotlin's `==` calls `.equals()` under the hood for objects.",
+        "\"hello\" equals \"hello\" → true."
+      ],
       "tip": "Kotlin's `==` is always content equality for data types. Use `===` if you ever need reference equality. AI code always uses `==` for comparing strings and objects."
+    }
+  },
+  {
+    "id": "ch03-q6",
+    "topic": "in operator for strings",
+    "difficulty": "easy",
+    "chapter": "ch-03",
+    "snippet": "val email = \"user@example.com\"\nprintln(\"@\" in email)\nprintln(\"gmail\" in email)",
+    "question": "What does this print?",
+    "choices": [
+      "true then true",
+      "true then false",
+      "false then true",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "The `in` operator checks whether a substring is contained within a string. It returns `true` if found, `false` otherwise.",
+      "lineByLine": [
+        "`\"@\" in email` — checks if \"@\" appears in \"user@example.com\" → true.",
+        "`\"gmail\" in email` — checks if \"gmail\" appears → it doesn't → false.",
+        "Output: true then false."
+      ],
+      "tip": "`\"substring\" in string` is idiomatic Kotlin for containment checks, equivalent to `string.contains(\"substring\")`. AI code uses both forms — `in` for simple checks, `.contains()` when you need options like `ignoreCase = true`."
+    }
+  },
+  {
+    "id": "ch03-q7",
+    "topic": "split",
+    "difficulty": "easy",
+    "chapter": "ch-03",
+    "snippet": "val csv = \"apple,banana,cherry\"\nval parts = csv.split(\",\")\nprintln(parts.size)\nprintln(parts[1])",
+    "question": "What does this print?",
+    "choices": [
+      "1 then apple,banana,cherry",
+      "3 then banana",
+      "2 then banana",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`.split(delimiter)` splits a string at each occurrence of the delimiter and returns a `List<String>` of the pieces.",
+      "lineByLine": [
+        "`csv.split(\",\")` — splits at each comma: [\"apple\", \"banana\", \"cherry\"].",
+        "`parts.size` = 3 → prints 3.",
+        "`parts[1]` — index 1 is \"banana\" → prints banana."
+      ],
+      "tip": "`split` is used constantly in AI code for parsing CSV data, breaking apart URLs, tokenizing input, and splitting log lines. The result is always a `List<String>`."
+    }
+  },
+  {
+    "id": "ch03-q8",
+    "topic": "isEmpty vs isBlank",
+    "difficulty": "easy",
+    "chapter": "ch-03",
+    "snippet": "val a = \"\"\nval b = \"   \"\nprintln(a.isEmpty())\nprintln(b.isEmpty())\nprintln(b.isBlank())",
+    "question": "What does this print?",
+    "choices": [
+      "true then true then true",
+      "true then false then true",
+      "false then false then true",
+      "true then true then false"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`isEmpty()` returns true only if the string has zero characters. `isBlank()` returns true if the string is empty OR contains only whitespace.",
+      "lineByLine": [
+        "`a.isEmpty()` — a is \"\", zero chars → true.",
+        "`b.isEmpty()` — b is \"   \", has 3 chars (spaces) → false.",
+        "`b.isBlank()` — b contains only whitespace → true."
+      ],
+      "tip": "Use `isBlank()` for user input validation — a string with only spaces should usually be treated as empty. Use `isEmpty()` when you need to distinguish \"no characters at all\" from \"only whitespace\"."
+    }
+  },
+  {
+    "id": "ch03-q9",
+    "topic": "replace",
+    "difficulty": "easy",
+    "chapter": "ch-03",
+    "snippet": "val s = \"Hello, World!\"\nval result = s.replace(\"World\", \"Kotlin\")\nprintln(result)\nprintln(s)",
+    "question": "What does this print?",
+    "choices": [
+      "Hello, Kotlin! then Hello, Kotlin!",
+      "Hello, Kotlin! then Hello, World!",
+      "Hello, World! then Hello, Kotlin!",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`.replace()` returns a *new* string with the substitution applied. The original string is unchanged because Kotlin strings are immutable.",
+      "lineByLine": [
+        "`s.replace(\"World\", \"Kotlin\")` — produces a new string \"Hello, Kotlin!\".",
+        "`val result` holds the new string.",
+        "`s` is still \"Hello, World!\" — strings are immutable.",
+        "Output: Hello, Kotlin! then Hello, World!"
+      ],
+      "tip": "String operations in Kotlin always return new strings — they never modify the original. This immutability is why `val` is safe for strings: the value genuinely cannot change."
+    }
+  },
+  {
+    "id": "ch03-q10",
+    "topic": "character access",
+    "difficulty": "easy",
+    "chapter": "ch-03",
+    "snippet": "val word = \"Kotlin\"\nprintln(word[0])\nprintln(word[word.length - 1])",
+    "question": "What does this print?",
+    "choices": [
+      "K then n",
+      "K then g",
+      "0 then 5",
+      "Compilation error"
+    ],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "Strings can be indexed with `[i]` to get individual characters. Indices are 0-based. The last character is at index `length - 1`.",
+      "lineByLine": [
+        "`word[0]` — first character of \"Kotlin\" is 'K'.",
+        "`word.length` = 6, so `word.length - 1` = 5.",
+        "`word[5]` — character at index 5 is 'n'.",
+        "Output: K then n."
+      ],
+      "tip": "String indexing returns a `Char`, not a `String`. AI code uses `s[0]` for single-character access and `s.first()` / `s.last()` as readable alternatives."
     }
   }
 ]

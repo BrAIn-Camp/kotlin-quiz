@@ -1,62 +1,257 @@
 [
   {
-    "id": "ch07-q1", "topic": "while loop", "difficulty": "easy", "chapter": "ch-07",
+    "id": "ch07-q1",
+    "topic": "while loop",
+    "difficulty": "easy",
+    "chapter": "ch-07",
     "snippet": "var n = 1\nwhile (n <= 3) {\n    print(\"$n \")\n    n++\n}",
     "question": "What does this print?",
-    "choices": ["1 2 3", "1 2", "1 2 3 4", "Infinite loop"],
+    "choices": [
+      "1 2 3",
+      "1 2",
+      "1 2 3 4",
+      "Infinite loop"
+    ],
     "correctIndex": 0,
     "explanation": {
       "summary": "`while` repeats as long as the condition is true. `n++` increments n each time, so the loop stops when n reaches 4.",
-      "lineByLine": ["`n = 1` → condition `1 <= 3` true → print 1, n becomes 2.", "`n = 2` → condition `2 <= 3` true → print 2, n becomes 3.", "`n = 3` → condition `3 <= 3` true → print 3, n becomes 4.", "`n = 4` → condition `4 <= 3` false → loop ends.", "Output: 1 2 3."],
+      "lineByLine": [
+        "`n = 1` → condition `1 <= 3` true → print 1, n becomes 2.",
+        "`n = 2` → condition `2 <= 3` true → print 2, n becomes 3.",
+        "`n = 3` → condition `3 <= 3` true → print 3, n becomes 4.",
+        "`n = 4` → condition `4 <= 3` false → loop ends.",
+        "Output: 1 2 3."
+      ],
       "tip": "Use `while` when you don't know the number of iterations in advance and are waiting for a condition to change. Use `for` when iterating a known sequence."
     }
   },
   {
-    "id": "ch07-q2", "topic": "do-while", "difficulty": "easy", "chapter": "ch-07",
+    "id": "ch07-q2",
+    "topic": "do-while",
+    "difficulty": "easy",
+    "chapter": "ch-07",
     "snippet": "var x = 10\ndo {\n    println(x)\n    x++\n} while (x < 10)",
     "question": "What does this print?",
-    "choices": ["Nothing", "10", "10 11 12...", "Compilation error"],
+    "choices": [
+      "Nothing",
+      "10",
+      "10 11 12...",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`do-while` always executes the body at least once, then checks the condition. Here, the body runs once (printing 10), then the condition fails.",
-      "lineByLine": ["Body runs first: prints 10, x becomes 11.", "Condition check: `11 < 10` → false.", "Loop ends after just one iteration.", "Output: 10."],
+      "lineByLine": [
+        "Body runs first: prints 10, x becomes 11.",
+        "Condition check: `11 < 10` → false.",
+        "Loop ends after just one iteration.",
+        "Output: 10."
+      ],
       "tip": "`do-while` guarantees at least one execution. This is useful when you need to run something once before checking — like prompting a user for input."
     }
   },
   {
-    "id": "ch07-q3", "topic": "break", "difficulty": "easy", "chapter": "ch-07",
+    "id": "ch07-q3",
+    "topic": "break",
+    "difficulty": "easy",
+    "chapter": "ch-07",
     "snippet": "var i = 0\nwhile (true) {\n    if (i == 3) break\n    print(\"$i \")\n    i++\n}",
     "question": "What does this print?",
-    "choices": ["0 1 2 3", "0 1 2", "Infinite loop", "0 1 2 3 4..."],
+    "choices": [
+      "0 1 2 3",
+      "0 1 2",
+      "Infinite loop",
+      "0 1 2 3 4..."
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`break` immediately exits the enclosing loop. When i reaches 3, `break` is triggered before `print`, so 3 is never printed.",
-      "lineByLine": ["i=0: condition false, print 0, i=1.", "i=1: condition false, print 1, i=2.", "i=2: condition false, print 2, i=3.", "i=3: condition true → `break` exits the loop.", "Output: 0 1 2."],
+      "lineByLine": [
+        "i=0: condition false, print 0, i=1.",
+        "i=1: condition false, print 1, i=2.",
+        "i=2: condition false, print 2, i=3.",
+        "i=3: condition true → `break` exits the loop.",
+        "Output: 0 1 2."
+      ],
       "tip": "`while (true)` with a `break` inside is a common pattern in AI code for loops that need complex exit conditions — like polling, game loops, or reading input until a sentinel value."
     }
   },
   {
-    "id": "ch07-q4", "topic": "continue", "difficulty": "easy", "chapter": "ch-07",
+    "id": "ch07-q4",
+    "topic": "continue",
+    "difficulty": "easy",
+    "chapter": "ch-07",
     "snippet": "for (i in 1..5) {\n    if (i == 3) continue\n    print(\"$i \")\n}",
     "question": "What does this print?",
-    "choices": ["1 2 3 4 5", "1 2 4 5", "1 2", "3"],
+    "choices": [
+      "1 2 3 4 5",
+      "1 2 4 5",
+      "1 2",
+      "3"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`continue` skips the rest of the current iteration and moves to the next one. When i is 3, the `print` is skipped.",
-      "lineByLine": ["i=1,2: no skip, print 1 2.", "i=3: `continue` skips the print.", "i=4,5: no skip, print 4 5.", "Output: 1 2 4 5."],
+      "lineByLine": [
+        "i=1,2: no skip, print 1 2.",
+        "i=3: `continue` skips the print.",
+        "i=4,5: no skip, print 4 5.",
+        "Output: 1 2 4 5."
+      ],
       "tip": "`continue` skips one iteration without exiting the loop. Use it to filter items in a loop when you can't use `filter` on a collection."
     }
   },
   {
-    "id": "ch07-q5", "topic": "while vs for", "difficulty": "easy", "chapter": "ch-07",
+    "id": "ch07-q5",
+    "topic": "while vs for",
+    "difficulty": "easy",
+    "chapter": "ch-07",
     "snippet": "val items = listOf(\"a\", \"b\", \"c\")\nvar idx = 0\nwhile (idx < items.size) {\n    print(items[idx])\n    idx++\n}",
     "question": "What does this print?",
-    "choices": ["a b c (with spaces)", "abc", "[a, b, c]", "Compilation error"],
+    "choices": [
+      "a b c (with spaces)",
+      "abc",
+      "[a, b, c]",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "Manual index traversal with `while`. `items[idx]` accesses elements by position. `print` adds no spaces.",
-      "lineByLine": ["`items.size` is 3.", "idx=0: prints items[0] = \"a\".", "idx=1: prints items[1] = \"b\".", "idx=2: prints items[2] = \"c\".", "idx=3: `3 < 3` is false, loop ends.", "Output: abc."],
+      "lineByLine": [
+        "`items.size` is 3.",
+        "idx=0: prints items[0] = \"a\".",
+        "idx=1: prints items[1] = \"b\".",
+        "idx=2: prints items[2] = \"c\".",
+        "idx=3: `3 < 3` is false, loop ends.",
+        "Output: abc."
+      ],
       "tip": "In practice, `for (item in items)` is simpler than while+index. But manual indexing appears in AI code when you need the index itself or when processing multiple collections in parallel."
+    }
+  },
+  {
+    "id": "ch07-q6",
+    "topic": "repeat function",
+    "difficulty": "easy",
+    "chapter": "ch-07",
+    "snippet": "repeat(4) {\n    print(\"* \")\n}",
+    "question": "What does this print?",
+    "choices": [
+      "*",
+      "* * * *",
+      "4",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`repeat(n) { block }` executes the block exactly `n` times. It's a clean, intention-revealing alternative to `for (i in 0 until n)`.",
+      "lineByLine": [
+        "`repeat(4)` — the block will run 4 times.",
+        "Each call runs `print(\"* \")` — prints star followed by a space.",
+        "Output: * * * * (four stars with spaces)."
+      ],
+      "tip": "`repeat` is idiomatic Kotlin for \"do this N times\". AI code uses it for padding, test data generation, and any fixed-count loop where you don't need the iteration index."
+    }
+  },
+  {
+    "id": "ch07-q7",
+    "topic": "labeled break",
+    "difficulty": "easy",
+    "chapter": "ch-07",
+    "snippet": "outer@ for (i in 1..3) {\n    for (j in 1..3) {\n        if (j == 2) break@outer\n        print(\"$i$j \")\n    }\n}",
+    "question": "What does this print?",
+    "choices": [
+      "11 12 13 21 22 23 31 32 33",
+      "11",
+      "11 21 31",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`break@outer` breaks out of the loop labelled `outer@` — not just the inner loop. When j reaches 2 on the very first outer iteration, both loops exit.",
+      "lineByLine": [
+        "i=1, j=1: condition false, prints 11.",
+        "i=1, j=2: `j == 2` → true → `break@outer` — exits the outer loop entirely.",
+        "Nothing else runs.",
+        "Output: 11."
+      ],
+      "tip": "Labeled breaks are used in AI code to escape deeply nested loops without a flag variable. The label goes directly before the loop it names (`outer@ for ...`)."
+    }
+  },
+  {
+    "id": "ch07-q8",
+    "topic": "running accumulator",
+    "difficulty": "easy",
+    "chapter": "ch-07",
+    "snippet": "var total = 0\nvar i = 1\nwhile (i <= 5) {\n    total += i\n    i++\n}\nprintln(total)",
+    "question": "What does this print?",
+    "choices": [
+      "5",
+      "10",
+      "15",
+      "25"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "The loop accumulates a running sum: 1+2+3+4+5 = 15.",
+      "lineByLine": [
+        "i=1: total = 0+1 = 1.",
+        "i=2: total = 1+2 = 3.",
+        "i=3: total = 3+3 = 6.",
+        "i=4: total = 6+4 = 10.",
+        "i=5: total = 10+5 = 15. i becomes 6, loop ends.",
+        "`println(15)` — prints 15."
+      ],
+      "tip": "Accumulating a value across loop iterations (sum, product, string building) is a fundamental pattern. Kotlin's collection `sum()` and `fold()` replace these manual loops in most AI code."
+    }
+  },
+  {
+    "id": "ch07-q9",
+    "topic": "decrement operator",
+    "difficulty": "easy",
+    "chapter": "ch-07",
+    "snippet": "var countdown = 3\nwhile (countdown > 0) {\n    print(\"$countdown \")\n    countdown--\n}",
+    "question": "What does this print?",
+    "choices": [
+      "3 2 1 0",
+      "3 2 1",
+      "0 1 2 3",
+      "Infinite loop"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`countdown--` decrements by 1 each iteration. The loop stops when `countdown` reaches 0 (condition `> 0` fails).",
+      "lineByLine": [
+        "countdown=3: condition true, prints 3, becomes 2.",
+        "countdown=2: condition true, prints 2, becomes 1.",
+        "countdown=1: condition true, prints 1, becomes 0.",
+        "countdown=0: `0 > 0` is false, loop ends.",
+        "Output: 3 2 1."
+      ],
+      "tip": "`--` decrements by 1, just as `++` increments. The `var countdown--` pattern is a classic countdown. AI code also uses `count--` in retry loops and debouncing logic."
+    }
+  },
+  {
+    "id": "ch07-q10",
+    "topic": "compound while condition",
+    "difficulty": "easy",
+    "chapter": "ch-07",
+    "snippet": "var x = 10\nwhile (x > 0 && x % 3 != 0) {\n    x--\n}\nprintln(x)",
+    "question": "What does this print?",
+    "choices": [
+      "10",
+      "9",
+      "0",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "The loop keeps running while both conditions are true. It stops as soon as x becomes divisible by 3.",
+      "lineByLine": [
+        "x=10: `10 > 0` true, `10 % 3 != 0` (10%3=1) true → x becomes 9.",
+        "x=9: `9 > 0` true, `9 % 3 != 0` → 9%3=0 → false → loop stops.",
+        "`println(9)` — prints 9."
+      ],
+      "tip": "Compound `while` conditions with `&&` run until any single condition fails. This pattern appears in AI code for search loops, retry logic, and input validation loops."
     }
   }
 ]

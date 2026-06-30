@@ -1,62 +1,249 @@
 [
   {
-    "id": "ch11-q1", "topic": "enum declaration", "difficulty": "easy", "chapter": "ch-11",
+    "id": "ch11-q1",
+    "topic": "enum declaration",
+    "difficulty": "easy",
+    "chapter": "ch-11",
     "snippet": "enum class Direction { NORTH, SOUTH, EAST, WEST }\nval d = Direction.NORTH\nprintln(d)",
     "question": "What does this print?",
-    "choices": ["0", "NORTH", "Direction.NORTH", "Compilation error"],
+    "choices": [
+      "0",
+      "NORTH",
+      "Direction.NORTH",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`println` on an enum value calls its `toString()`, which returns the entry's name as a string.",
-      "lineByLine": ["`enum class Direction` — declares 4 constant values.", "`val d = Direction.NORTH` — d holds the NORTH enum entry.", "`println(d)` — calls d.toString(), which returns \"NORTH\"."],
+      "lineByLine": [
+        "`enum class Direction` — declares 4 constant values.",
+        "`val d = Direction.NORTH` — d holds the NORTH enum entry.",
+        "`println(d)` — calls d.toString(), which returns \"NORTH\"."
+      ],
       "tip": "Enum entries have a `name` property (the string name) and an `ordinal` property (the position index, starting at 0). `println(d)` uses `name` implicitly."
     }
   },
   {
-    "id": "ch11-q2", "topic": "enum in when", "difficulty": "easy", "chapter": "ch-11",
+    "id": "ch11-q2",
+    "topic": "enum in when",
+    "difficulty": "easy",
+    "chapter": "ch-11",
     "snippet": "enum class Color { RED, GREEN, BLUE }\nval c = Color.GREEN\nval msg = when (c) {\n    Color.RED   -> \"Stop\"\n    Color.GREEN -> \"Go\"\n    Color.BLUE  -> \"Info\"\n}\nprintln(msg)",
     "question": "What does this print?",
-    "choices": ["Stop", "Go", "Info", "Compilation error — missing else"],
+    "choices": [
+      "Stop",
+      "Go",
+      "Info",
+      "Compilation error — missing else"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "When `when` covers all values of an enum, no `else` is required — the compiler knows the set is exhaustive.",
-      "lineByLine": ["`c` is `Color.GREEN`.", "`Color.GREEN -> \"Go\"` — matches.", "Returns \"Go\". No else needed — all 3 enum values are handled.", "`println(\"Go\")` — prints Go."],
+      "lineByLine": [
+        "`c` is `Color.GREEN`.",
+        "`Color.GREEN -> \"Go\"` — matches.",
+        "Returns \"Go\". No else needed — all 3 enum values are handled.",
+        "`println(\"Go\")` — prints Go."
+      ],
       "tip": "Exhaustive `when` with enums (no `else`) is a safety net — if you later add a new enum entry and forget to add a branch, the compiler gives an error. This is one of the key reasons to use enums."
     }
   },
   {
-    "id": "ch11-q3", "topic": "enum properties", "difficulty": "easy", "chapter": "ch-11",
+    "id": "ch11-q3",
+    "topic": "enum properties",
+    "difficulty": "easy",
+    "chapter": "ch-11",
     "snippet": "enum class Planet(val mass: Double) {\n    EARTH(5.97),\n    MARS(0.642)\n}\nprintln(Planet.MARS.mass)",
     "question": "What does this print?",
-    "choices": ["MARS", "0.642", "1", "Compilation error"],
+    "choices": [
+      "MARS",
+      "0.642",
+      "1",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "Enum entries can have constructor parameters and properties, just like regular classes.",
-      "lineByLine": ["`Planet(val mass: Double)` — each enum entry takes a mass value.", "`MARS(0.642)` — MARS has mass 0.642.", "`Planet.MARS.mass` — accesses the mass property of the MARS entry.", "`println(0.642)` — prints 0.642."],
+      "lineByLine": [
+        "`Planet(val mass: Double)` — each enum entry takes a mass value.",
+        "`MARS(0.642)` — MARS has mass 0.642.",
+        "`Planet.MARS.mass` — accesses the mass property of the MARS entry.",
+        "`println(0.642)` — prints 0.642."
+      ],
       "tip": "Enums with properties are common in AI code for mapping constants to associated data — like HTTP codes to messages, planet names to data, or state names to display labels."
     }
   },
   {
-    "id": "ch11-q4", "topic": "enum ordinal and name", "difficulty": "easy", "chapter": "ch-11",
+    "id": "ch11-q4",
+    "topic": "enum ordinal and name",
+    "difficulty": "easy",
+    "chapter": "ch-11",
     "snippet": "enum class Size { SMALL, MEDIUM, LARGE }\nprintln(Size.MEDIUM.ordinal)\nprintln(Size.MEDIUM.name)",
     "question": "What does this print?",
-    "choices": ["0 then MEDIUM", "1 then MEDIUM", "2 then MEDIUM", "MEDIUM then 1"],
+    "choices": [
+      "0 then MEDIUM",
+      "1 then MEDIUM",
+      "2 then MEDIUM",
+      "MEDIUM then 1"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`ordinal` gives the 0-based position of the entry in the declaration. `name` gives the entry's string name.",
-      "lineByLine": ["`SMALL` is 0, `MEDIUM` is 1, `LARGE` is 2.", "`Size.MEDIUM.ordinal` → 1.", "`Size.MEDIUM.name` → \"MEDIUM\".", "Output: 1 then MEDIUM."],
+      "lineByLine": [
+        "`SMALL` is 0, `MEDIUM` is 1, `LARGE` is 2.",
+        "`Size.MEDIUM.ordinal` → 1.",
+        "`Size.MEDIUM.name` → \"MEDIUM\".",
+        "Output: 1 then MEDIUM."
+      ],
       "tip": "Avoid using `ordinal` for logic — if entries are reordered, ordinals change. Use named properties instead for stability."
     }
   },
   {
-    "id": "ch11-q5", "topic": "enum valueOf", "difficulty": "easy", "chapter": "ch-11",
+    "id": "ch11-q5",
+    "topic": "enum valueOf",
+    "difficulty": "easy",
+    "chapter": "ch-11",
     "snippet": "enum class Status { ACTIVE, INACTIVE, PENDING }\nval s = Status.valueOf(\"ACTIVE\")\nprintln(s == Status.ACTIVE)",
     "question": "What does this print?",
-    "choices": ["false", "true", "ACTIVE", "Throws IllegalArgumentException"],
+    "choices": [
+      "false",
+      "true",
+      "ACTIVE",
+      "Throws IllegalArgumentException"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`valueOf(string)` looks up an enum entry by its exact name. The result is the enum constant, so comparing with `==` returns true.",
-      "lineByLine": ["`Status.valueOf(\"ACTIVE\")` — looks up the entry named \"ACTIVE\".", "Returns `Status.ACTIVE`.", "`Status.ACTIVE == Status.ACTIVE` → true.", "`println(true)` — prints true."],
+      "lineByLine": [
+        "`Status.valueOf(\"ACTIVE\")` — looks up the entry named \"ACTIVE\".",
+        "Returns `Status.ACTIVE`.",
+        "`Status.ACTIVE == Status.ACTIVE` → true.",
+        "`println(true)` — prints true."
+      ],
       "tip": "`valueOf` is used in AI code to parse enum values from strings — like reading a config file, parsing JSON, or converting user input into a typed enum constant."
+    }
+  },
+  {
+    "id": "ch11-q6",
+    "topic": "values() — all entries",
+    "difficulty": "easy",
+    "chapter": "ch-11",
+    "snippet": "enum class Day { MON, TUE, WED, THU, FRI, SAT, SUN }\nprintln(Day.values().size)",
+    "question": "What does this print?",
+    "choices": [
+      "0",
+      "5",
+      "7",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`values()` returns an array of all enum entries in declaration order. `.size` gives the count.",
+      "lineByLine": [
+        "`Day.values()` — returns [MON, TUE, WED, THU, FRI, SAT, SUN] as an Array<Day>.",
+        "`.size` — 7 entries.",
+        "`println(7)` — prints 7."
+      ],
+      "tip": "`values()` is used in AI code to iterate all enum entries, populate dropdowns, validate inputs, or build lookup tables. Kotlin 1.9+ added `entries` as a more efficient replacement."
+    }
+  },
+  {
+    "id": "ch11-q7",
+    "topic": "enum member function",
+    "difficulty": "easy",
+    "chapter": "ch-11",
+    "snippet": "enum class Coin(val cents: Int) {\n    PENNY(1), NICKEL(5), DIME(10);\n    fun inDollars(): Double = cents / 100.0\n}\nprintln(Coin.DIME.inDollars())",
+    "question": "What does this print?",
+    "choices": [
+      "10",
+      "0.1",
+      "0.10",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Enum entries can have member functions just like classes. The function has access to the entry's properties via `this`.",
+      "lineByLine": [
+        "`Coin.DIME` has `cents = 10`.",
+        "`inDollars()` = 10 / 100.0 = 0.1.",
+        "`println(0.1)` — prints 0.1."
+      ],
+      "tip": "Enum member functions are used in AI code to add behaviour to each constant — like formatting, conversion, or business rules. The semicolon after the last entry (`DIME(10);`) is required before any function or property declarations."
+    }
+  },
+  {
+    "id": "ch11-q8",
+    "topic": "enum ordinal comparison",
+    "difficulty": "easy",
+    "chapter": "ch-11",
+    "snippet": "enum class Level { LOW, MEDIUM, HIGH }\nprintln(Level.HIGH.ordinal > Level.LOW.ordinal)\nprintln(Level.MEDIUM.ordinal)",
+    "question": "What does this print?",
+    "choices": [
+      "true then 0",
+      "true then 1",
+      "false then 1",
+      "true then 2"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`ordinal` is a plain Int, so you can compare ordinals with `<`, `>`, etc. Ordinals start at 0 in declaration order.",
+      "lineByLine": [
+        "`Level.LOW.ordinal` = 0, `Level.HIGH.ordinal` = 2.",
+        "`2 > 0` → true.",
+        "`Level.MEDIUM.ordinal` = 1.",
+        "Output: true then 1."
+      ],
+      "tip": "Comparing ordinals is how AI code checks 'is this level higher than that one?' without custom comparators. However, adding a new enum entry between existing ones will silently change ordinals — use with care."
+    }
+  },
+  {
+    "id": "ch11-q9",
+    "topic": "iterating enum values",
+    "difficulty": "easy",
+    "chapter": "ch-11",
+    "snippet": "enum class Season { SPRING, SUMMER, AUTUMN, WINTER }\nfor (s in Season.values()) {\n    print(\"${s.name} \")\n}",
+    "question": "What does this print?",
+    "choices": [
+      "0 1 2 3",
+      "SPRING SUMMER AUTUMN WINTER",
+      "Spring Summer Autumn Winter",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Iterating `Season.values()` loops over every enum entry. `.name` returns the entry's name as a String in all caps (matching the declaration).",
+      "lineByLine": [
+        "`Season.values()` — array of all 4 entries.",
+        "`for (s in ...)` — s takes each entry in turn.",
+        "`s.name` — SPRING, SUMMER, AUTUMN, WINTER.",
+        "Output: SPRING SUMMER AUTUMN WINTER (with trailing space)."
+      ],
+      "tip": "Iterating `values()` and using `.name` is how AI code generates option lists, serializes enums to strings, and builds display maps from enum constants."
+    }
+  },
+  {
+    "id": "ch11-q10",
+    "topic": "enum in a set check",
+    "difficulty": "easy",
+    "chapter": "ch-11",
+    "snippet": "enum class Permission { READ, WRITE, DELETE }\nval allowed = setOf(Permission.READ, Permission.WRITE)\nprintln(Permission.DELETE in allowed)\nprintln(Permission.READ in allowed)",
+    "question": "What does this print?",
+    "choices": [
+      "true then false",
+      "false then true",
+      "false then false",
+      "true then true"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Enum values can be stored in collections and checked with `in`. This is a common pattern for permission and feature-flag systems.",
+      "lineByLine": [
+        "`allowed` contains READ and WRITE.",
+        "`Permission.DELETE in allowed` → DELETE is not in the set → false.",
+        "`Permission.READ in allowed` → READ is in the set → true.",
+        "Output: false then true."
+      ],
+      "tip": "Storing enum values in a `Set` and using `in` for membership checks is the idiomatic Kotlin way to model permissions, feature flags, and allowed operations. It reads almost like natural English."
     }
   }
 ]

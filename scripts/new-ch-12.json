@@ -1,0 +1,111 @@
+[
+  {
+    "id": "ch12-q6",
+    "topic": "copy with multiple fields",
+    "difficulty": "easy",
+    "chapter": "ch-12",
+    "snippet": "data class Config(val host: String, val port: Int, val tls: Boolean)\nval base = Config(\"localhost\", 80, false)\nval prod = base.copy(host = \"api.example.com\", port = 443, tls = true)\nprintln(prod)",
+    "question": "What does this print?",
+    "choices": [
+      "Config(host=localhost, port=80, tls=false)",
+      "Config(host=api.example.com, port=443, tls=true)",
+      "Config(host=api.example.com, port=80, tls=false)",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`copy()` accepts any number of named parameters. Only the named fields are changed; the rest are copied from the original.",
+      "lineByLine": [
+        "`base` = Config(localhost, 80, false).",
+        "`.copy(host = \"api.example.com\", port = 443, tls = true)` — all three fields overridden.",
+        "`prod` = Config(api.example.com, 443, true).",
+        "Auto-generated toString prints: Config(host=api.example.com, port=443, tls=true)."
+      ],
+      "tip": "Multi-field `copy()` is how AI code creates production vs development configs, or applies a batch of state changes immutably: `state.copy(isLoading = false, data = result, error = null)`."
+    }
+  },
+  {
+    "id": "ch12-q7",
+    "topic": "nullable property in data class",
+    "difficulty": "easy",
+    "chapter": "ch-12",
+    "snippet": "data class User(val name: String, val email: String? = null)\nval u = User(\"Bob\")\nprintln(u)",
+    "question": "What does this print?",
+    "choices": [
+      "User(name=Bob)",
+      "User(name=Bob, email=null)",
+      "Compilation error — data class cannot have nullable properties",
+      "User(name=Bob, email=)"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Data classes can have nullable properties. The auto-generated `toString()` includes all properties by name, showing `null` for any that are null.",
+      "lineByLine": [
+        "`email: String? = null` — optional nullable property.",
+        "`User(\"Bob\")` — name=\"Bob\", email defaults to null.",
+        "toString outputs all properties: User(name=Bob, email=null)."
+      ],
+      "tip": "Nullable properties with `null` defaults are common in AI data classes for optional fields like `avatar`, `bio`, or `lastLogin`. The `toString` always shows them explicitly, which helps debugging."
+    }
+  },
+  {
+    "id": "ch12-q8",
+    "topic": "data class as Map key",
+    "difficulty": "easy",
+    "chapter": "ch-12",
+    "snippet": "data class Point(val x: Int, val y: Int)\nval map = mutableMapOf<Point, String>()\nmap[Point(1, 2)] = \"A\"\nmap[Point(1, 2)] = \"B\"\nprintln(map.size)",
+    "question": "What does this print?",
+    "choices": ["2", "1", "0", "Compilation error — data class cannot be used as a Map key"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Because `data class` auto-generates consistent `equals()` and `hashCode()`, two instances with the same values are treated as the same map key.",
+      "lineByLine": [
+        "`Point(1, 2)` and `Point(1, 2)` — different objects but equal by data-class rules.",
+        "First assignment: map has key Point(1,2) → \"A\".",
+        "Second assignment: same key, value is overwritten to \"B\".",
+        "`map.size` = 1 — only one key.",
+        "`println(1)` — prints 1."
+      ],
+      "tip": "Data classes work as Map keys and Set elements out of the box. Regular classes don't, unless you manually override `equals` and `hashCode`. This is one of the most practical benefits of `data class`."
+    }
+  },
+  {
+    "id": "ch12-q9",
+    "topic": "nested data class",
+    "difficulty": "easy",
+    "chapter": "ch-12",
+    "snippet": "data class Address(val city: String, val zip: String)\ndata class Person(val name: String, val address: Address)\nval p = Person(\"Ana\", Address(\"Berlin\", \"10115\"))\nprintln(p.address.city)",
+    "question": "What does this print?",
+    "choices": ["Ana", "Berlin", "Address(city=Berlin, zip=10115)", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Data classes can be nested — one data class can hold another as a property. Access is via chained dot notation.",
+      "lineByLine": [
+        "`Person(\"Ana\", Address(\"Berlin\", \"10115\"))` — p holds a nested Address.",
+        "`p.address` — accesses the Address instance.",
+        "`.city` — accesses the city property of that Address.",
+        "`println(\"Berlin\")` — prints Berlin."
+      ],
+      "tip": "Nested data classes model hierarchical data naturally. AI code uses this for API response models: `data class Response(val user: User, val meta: Metadata)`. Each layer can be independently `copy()`ed."
+    }
+  },
+  {
+    "id": "ch12-q10",
+    "topic": "component functions",
+    "difficulty": "easy",
+    "chapter": "ch-12",
+    "snippet": "data class RGB(val r: Int, val g: Int, val b: Int)\nval color = RGB(255, 128, 0)\nprintln(color.component1())\nprintln(color.component2())",
+    "question": "What does this print?",
+    "choices": ["255 then 128", "128 then 0", "255 then 0", "Compilation error"],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "Data classes auto-generate `component1()`, `component2()`, etc. corresponding to each constructor property in order. These are what power destructuring.",
+      "lineByLine": [
+        "`component1()` → first constructor property → r = 255.",
+        "`component2()` → second constructor property → g = 128.",
+        "Output: 255 then 128."
+      ],
+      "tip": "`componentN()` functions are what Kotlin calls under the hood for destructuring: `val (r, g, b) = color` becomes `val r = color.component1()`, etc. Understanding this explains why destructuring is positional, not name-based."
+    }
+  }
+]

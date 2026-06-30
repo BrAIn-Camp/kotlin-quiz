@@ -1,62 +1,249 @@
 [
   {
-    "id": "ch19-q1", "topic": "map", "difficulty": "moderate", "chapter": "ch-19",
+    "id": "ch19-q1",
+    "topic": "map",
+    "difficulty": "moderate",
+    "chapter": "ch-19",
     "snippet": "val words = listOf(\"hello\", \"world\", \"kotlin\")\nval lengths = words.map { it.length }\nprintln(lengths)",
     "question": "What does this print?",
-    "choices": ["[hello, world, kotlin]", "[5, 5, 6]", "[5]", "Compilation error"],
+    "choices": [
+      "[hello, world, kotlin]",
+      "[5, 5, 6]",
+      "[5]",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`map` transforms every element by applying a lambda, returning a new list of the same size with transformed values.",
-      "lineByLine": ["`words.map { it.length }` — for each word, get its length.", "\"hello\".length=5, \"world\".length=5, \"kotlin\".length=6.", "Result: [5, 5, 6].", "`println([5, 5, 6])` — prints [5, 5, 6]."],
+      "lineByLine": [
+        "`words.map { it.length }` — for each word, get its length.",
+        "\"hello\".length=5, \"world\".length=5, \"kotlin\".length=6.",
+        "Result: [5, 5, 6].",
+        "`println([5, 5, 6])` — prints [5, 5, 6]."
+      ],
       "tip": "`map` is the most used collection operation. It transforms every element. The output list is always the same size as the input."
     }
   },
   {
-    "id": "ch19-q2", "topic": "filter", "difficulty": "moderate", "chapter": "ch-19",
+    "id": "ch19-q2",
+    "topic": "filter",
+    "difficulty": "moderate",
+    "chapter": "ch-19",
     "snippet": "val numbers = listOf(3, 7, 2, 9, 4, 1, 8)\nval big = numbers.filter { it > 5 }\nprintln(big)",
     "question": "What does this print?",
-    "choices": ["[3, 7, 2, 9, 4, 1, 8]", "[7, 9, 8]", "[3, 2, 4, 1]", "[true, false, true...]"],
+    "choices": [
+      "[3, 7, 2, 9, 4, 1, 8]",
+      "[7, 9, 8]",
+      "[3, 2, 4, 1]",
+      "[true, false, true...]"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`filter` returns a new list containing only elements where the lambda returns true.",
-      "lineByLine": ["`it > 5` — the condition.", "3, 2, 4, 1 → fail the condition.", "7, 9, 8 → pass the condition.", "`println([7, 9, 8])` — prints [7, 9, 8]."],
+      "lineByLine": [
+        "`it > 5` — the condition.",
+        "3, 2, 4, 1 → fail the condition.",
+        "7, 9, 8 → pass the condition.",
+        "`println([7, 9, 8])` — prints [7, 9, 8]."
+      ],
       "tip": "`filter` reduces a list. Elements that don't match are excluded. Map and filter together (`list.filter { }.map { }`) are the bread and butter of Kotlin collection processing in AI code."
     }
   },
   {
-    "id": "ch19-q3", "topic": "forEach", "difficulty": "moderate", "chapter": "ch-19",
+    "id": "ch19-q3",
+    "topic": "forEach",
+    "difficulty": "moderate",
+    "chapter": "ch-19",
     "snippet": "val items = listOf(\"a\", \"b\", \"c\")\nitems.forEach { println(it.uppercase()) }",
     "question": "What does this print?",
-    "choices": ["a b c (on one line)", "A then B then C (each on its own line)", "abc", "Compilation error"],
+    "choices": [
+      "a b c (on one line)",
+      "A then B then C (each on its own line)",
+      "abc",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`forEach` calls the lambda for each element as a side effect. It returns `Unit`. `println` is called for each element.",
-      "lineByLine": ["`forEach { println(it.uppercase()) }` — runs the lambda for each element.", "\"a\" → \"A\" → println → prints A.", "\"b\" → \"B\" → println → prints B.", "\"c\" → \"C\" → println → prints C."],
+      "lineByLine": [
+        "`forEach { println(it.uppercase()) }` — runs the lambda for each element.",
+        "\"a\" → \"A\" → println → prints A.",
+        "\"b\" → \"B\" → println → prints B.",
+        "\"c\" → \"C\" → println → prints C."
+      ],
       "tip": "Use `forEach` for side effects (printing, logging, calling callbacks). Use `map` when you need a transformed list back. `forEach` always returns Unit — never assign its result."
     }
   },
   {
-    "id": "ch19-q4", "topic": "chaining", "difficulty": "moderate", "chapter": "ch-19",
+    "id": "ch19-q4",
+    "topic": "chaining",
+    "difficulty": "moderate",
+    "chapter": "ch-19",
     "snippet": "val result = listOf(1, 2, 3, 4, 5, 6)\n    .filter { it % 2 == 0 }\n    .map { it * 10 }\nprintln(result)",
     "question": "What does this print?",
-    "choices": ["[1, 2, 3, 4, 5, 6]", "[2, 4, 6]", "[20, 40, 60]", "[10, 20, 30, 40, 50, 60]"],
+    "choices": [
+      "[1, 2, 3, 4, 5, 6]",
+      "[2, 4, 6]",
+      "[20, 40, 60]",
+      "[10, 20, 30, 40, 50, 60]"
+    ],
     "correctIndex": 2,
     "explanation": {
       "summary": "Chained operations: first `filter` keeps even numbers, then `map` multiplies each by 10.",
-      "lineByLine": ["`filter { it % 2 == 0 }` → [2, 4, 6].", "`map { it * 10 }` → [20, 40, 60].", "`println([20, 40, 60])` — prints [20, 40, 60]."],
+      "lineByLine": [
+        "`filter { it % 2 == 0 }` → [2, 4, 6].",
+        "`map { it * 10 }` → [20, 40, 60].",
+        "`println([20, 40, 60])` — prints [20, 40, 60]."
+      ],
       "tip": "Chaining collection operations is the idiomatic Kotlin style. Read the chain top to bottom — each operation receives the output of the one above it. AI code often chains 3-5 operations."
     }
   },
   {
-    "id": "ch19-q5", "topic": "firstOrNull", "difficulty": "moderate", "chapter": "ch-19",
+    "id": "ch19-q5",
+    "topic": "firstOrNull",
+    "difficulty": "moderate",
+    "chapter": "ch-19",
     "snippet": "val users = listOf(\"Alice\", \"Bob\", \"Carol\")\nval found = users.firstOrNull { it.length > 4 }\nprintln(found)",
     "question": "What does this print?",
-    "choices": ["Alice", "Carol", "null", "[Alice, Carol]"],
+    "choices": [
+      "Alice",
+      "Carol",
+      "null",
+      "[Alice, Carol]"
+    ],
     "correctIndex": 0,
     "explanation": {
       "summary": "`firstOrNull` returns the first element matching the predicate, or null if none match. It stops searching as soon as it finds a match.",
-      "lineByLine": ["`it.length > 4` — looking for a name with more than 4 characters.", "\"Alice\" has 5 characters → 5 > 4 → true, match found immediately.", "Returns \"Alice\" without checking further.", "`println(\"Alice\")` — prints Alice."],
+      "lineByLine": [
+        "`it.length > 4` — looking for a name with more than 4 characters.",
+        "\"Alice\" has 5 characters → 5 > 4 → true, match found immediately.",
+        "Returns \"Alice\" without checking further.",
+        "`println(\"Alice\")` — prints Alice."
+      ],
       "tip": "`firstOrNull` is the safe version of `first()`. If no match exists, it returns null instead of throwing an exception. Always prefer `firstOrNull` unless a missing result is a bug."
+    }
+  },
+  {
+    "id": "ch19-q6",
+    "topic": "any",
+    "difficulty": "moderate",
+    "chapter": "ch-19",
+    "snippet": "val temps = listOf(18, 22, 35, 14, 29)\nprintln(temps.any { it > 30 })\nprintln(temps.any { it > 40 })",
+    "question": "What does this print?",
+    "choices": [
+      "false then false",
+      "true then true",
+      "true then false",
+      "false then true"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`any` returns `true` if at least one element matches the predicate. It stops checking as soon as a match is found.",
+      "lineByLine": [
+        "`temps.any { it > 30 }` — 35 > 30 → true. Returns true immediately.",
+        "`temps.any { it > 40 }` — no element is > 40 → false.",
+        "Output: true then false."
+      ],
+      "tip": "`any` is the readable alternative to `filter { }.isNotEmpty()`. AI code uses it for validation: `if (errors.any { it.isCritical })`, `if (users.any { it.isAdmin })`."
+    }
+  },
+  {
+    "id": "ch19-q7",
+    "topic": "all",
+    "difficulty": "moderate",
+    "chapter": "ch-19",
+    "snippet": "val scores = listOf(85, 92, 78, 95, 88)\nprintln(scores.all { it >= 70 })\nprintln(scores.all { it >= 90 })",
+    "question": "What does this print?",
+    "choices": [
+      "true then false",
+      "false then true",
+      "true then true",
+      "false then false"
+    ],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "`all` returns `true` only if every element matches the predicate. As soon as one fails, it returns `false`.",
+      "lineByLine": [
+        "`scores.all { it >= 70 }` — all scores are ≥ 70 → true.",
+        "`scores.all { it >= 90 }` — 85, 78, 88 are < 90 → false.",
+        "Output: true then false."
+      ],
+      "tip": "`all` is used in AI code for validation rules: `if (fields.all { it.isValid() })`, `if (permissions.all { user.has(it) })`. An empty collection with `all` always returns true (vacuous truth)."
+    }
+  },
+  {
+    "id": "ch19-q8",
+    "topic": "count with predicate",
+    "difficulty": "moderate",
+    "chapter": "ch-19",
+    "snippet": "val words = listOf(\"hi\", \"hello\", \"hey\", \"world\", \"kotlin\")\nprintln(words.count { it.startsWith(\"h\") })",
+    "question": "What does this print?",
+    "choices": [
+      "2",
+      "3",
+      "5",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`count { predicate }` returns how many elements match the condition, without creating an intermediate list.",
+      "lineByLine": [
+        "`\"hi\".startsWith(\"h\")` → true.",
+        "`\"hello\".startsWith(\"h\")` → true.",
+        "`\"hey\".startsWith(\"h\")` → true.",
+        "`\"world\"` and `\"kotlin\"` → false.",
+        "`count` = 3."
+      ],
+      "tip": "`count { }` is more efficient than `filter { }.size` because it doesn't create a filtered list. AI code uses it for metrics: `users.count { it.isActive }`, `events.count { it.type == \"error\" }`."
+    }
+  },
+  {
+    "id": "ch19-q9",
+    "topic": "sumOf",
+    "difficulty": "moderate",
+    "chapter": "ch-19",
+    "snippet": "data class Item(val name: String, val price: Double)\nval cart = listOf(Item(\"Book\", 12.99), Item(\"Pen\", 1.99), Item(\"Bag\", 25.00))\nprintln(cart.sumOf { it.price })",
+    "question": "What does this print?",
+    "choices": [
+      "12.99",
+      "39.98",
+      "39.980000000000004",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`sumOf { selector }` sums the results of applying the selector lambda to each element. It's cleaner than using `fold` or `map { }.sum()`.",
+      "lineByLine": [
+        "`it.price` for each item: 12.99, 1.99, 25.00.",
+        "12.99 + 1.99 + 25.00 = 39.98.",
+        "`println(39.98)` — prints 39.98."
+      ],
+      "tip": "`sumOf` is the go-to for totalling numeric properties. AI code uses it constantly for shopping carts, invoice totals, and aggregated metrics: `orders.sumOf { it.total }`."
+    }
+  },
+  {
+    "id": "ch19-q10",
+    "topic": "groupBy",
+    "difficulty": "moderate",
+    "chapter": "ch-19",
+    "snippet": "val words = listOf(\"apple\", \"ant\", \"banana\", \"bee\", \"cherry\")\nval grouped = words.groupBy { it[0] }\nprintln(grouped['a']?.size)\nprintln(grouped['b']?.size)",
+    "question": "What does this print?",
+    "choices": [
+      "1 then 1",
+      "2 then 2",
+      "Compilation error",
+      "null then null"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`groupBy` partitions a collection into a `Map<K, List<T>>` where each key is the result of the lambda. Elements with the same key go into the same list.",
+      "lineByLine": [
+        "`it[0]` — first character of each word.",
+        "'a' group: [\"apple\", \"ant\"] — size 2.",
+        "'b' group: [\"banana\", \"bee\"] — size 2.",
+        "`grouped['a']?.size` = 2. `grouped['b']?.size` = 2."
+      ],
+      "tip": "`groupBy` is used in AI code to categorise data: group users by role, events by date, products by category. The result is always a `Map<Key, List<Item>>`."
     }
   }
 ]

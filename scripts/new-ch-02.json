@@ -1,0 +1,105 @@
+[
+  {
+    "id": "ch02-q6",
+    "topic": "compound assignment",
+    "difficulty": "easy",
+    "chapter": "ch-02",
+    "snippet": "var score = 10\nscore += 5\nscore += 3\nprintln(score)",
+    "question": "What does this print?",
+    "choices": ["10", "15", "18", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`+=` is shorthand for `score = score + value`. It requires a `var` because it modifies the variable.",
+      "lineByLine": [
+        "`var score = 10` — starts at 10.",
+        "`score += 5` → score = 10 + 5 = 15.",
+        "`score += 3` → score = 15 + 3 = 18.",
+        "`println(18)` — prints 18."
+      ],
+      "tip": "Kotlin supports all compound assignment operators: `+=`, `-=`, `*=`, `/=`, `%=`. They all require `var`. You'll see `count += 1` and `total += item.price` frequently in AI code."
+    }
+  },
+  {
+    "id": "ch02-q7",
+    "topic": "increment operator",
+    "difficulty": "easy",
+    "chapter": "ch-02",
+    "snippet": "var x = 0\nx++\nx++\nx++\nprintln(x)",
+    "question": "What does this print?",
+    "choices": ["0", "1", "3", "Compilation error — use x += 1 instead"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`x++` is the postfix increment operator — it increments `x` by 1. Called three times, x goes from 0 to 3.",
+      "lineByLine": [
+        "`var x = 0` — starts at 0.",
+        "`x++` three times — each adds 1: 0 → 1 → 2 → 3.",
+        "`println(3)` — prints 3."
+      ],
+      "tip": "`++` and `--` work in Kotlin just like other languages. `x++` and `++x` both increment by 1, but differ in what value they *return* when used in an expression. As a statement on its own, they behave identically."
+    }
+  },
+  {
+    "id": "ch02-q8",
+    "topic": "Boolean inference",
+    "difficulty": "easy",
+    "chapter": "ch-02",
+    "snippet": "val isLoggedIn = true\nval isAdmin = false\nprintln(isLoggedIn)\nprintln(isAdmin)",
+    "question": "What does this print?",
+    "choices": ["1 then 0", "true then false", "True then False", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Kotlin infers `Boolean` from `true` or `false` literals. `println` on a Boolean prints its lowercase string form.",
+      "lineByLine": [
+        "`val isLoggedIn = true` — inferred as Boolean.",
+        "`val isAdmin = false` — inferred as Boolean.",
+        "`println(true)` — prints true (lowercase).",
+        "`println(false)` — prints false (lowercase)."
+      ],
+      "tip": "Kotlin booleans print as lowercase `true` and `false`, not 1/0 or True/False. Boolean variable names in AI code typically start with `is`, `has`, `can`, or `should`."
+    }
+  },
+  {
+    "id": "ch02-q9",
+    "topic": "Float literal",
+    "difficulty": "easy",
+    "chapter": "ch-02",
+    "snippet": "val a = 3.14\nval b = 3.14f\nprintln(a)\nprintln(b)",
+    "question": "What are the types of `a` and `b`?",
+    "choices": [
+      "Both are Double",
+      "a is Double, b is Float",
+      "a is Float, b is Double",
+      "Both are Float"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "A bare decimal literal like `3.14` is inferred as `Double`. Adding an `f` suffix forces it to `Float`, which has less precision.",
+      "lineByLine": [
+        "`val a = 3.14` — no suffix → inferred as Double (64-bit).",
+        "`val b = 3.14f` — `f` suffix → inferred as Float (32-bit).",
+        "Both print their values, but Float may show slight precision differences."
+      ],
+      "tip": "Always use `Double` unless you have a specific reason for `Float` (e.g., GPU data or memory-constrained arrays). AI code defaults to `Double` for all decimal values."
+    }
+  },
+  {
+    "id": "ch02-q10",
+    "topic": "val vs var independence",
+    "difficulty": "easy",
+    "chapter": "ch-02",
+    "snippet": "var a = 1\nvar b = a\na = 99\nprintln(a)\nprintln(b)",
+    "question": "What does this print?",
+    "choices": ["99 then 99", "99 then 1", "1 then 99", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Assigning `b = a` copies the *value* of `a` at that moment. Later changes to `a` do not affect `b` — they are independent variables.",
+      "lineByLine": [
+        "`var a = 1` — a is 1.",
+        "`var b = a` — b gets the current value of a, which is 1. b = 1.",
+        "`a = 99` — a is now 99, but b is unchanged.",
+        "`println(a)` → 99. `println(b)` → 1."
+      ],
+      "tip": "Assigning one variable to another copies its value for primitive types (Int, Boolean, etc.). This is called value semantics. Object references behave differently — but for basic types this is always a copy."
+    }
+  }
+]

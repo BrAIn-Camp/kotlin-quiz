@@ -1,62 +1,246 @@
 [
   {
-    "id": "ch06-q1", "topic": "range creation", "difficulty": "easy", "chapter": "ch-06",
+    "id": "ch06-q1",
+    "topic": "range creation",
+    "difficulty": "easy",
+    "chapter": "ch-06",
     "snippet": "val r = 1..5\nprintln(r.contains(3))\nprintln(r.contains(6))",
     "question": "What does this print?",
-    "choices": ["true then true", "true then false", "false then true", "false then false"],
+    "choices": [
+      "true then true",
+      "true then false",
+      "false then true",
+      "false then false"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`1..5` creates an IntRange from 1 to 5, inclusive on both ends. `contains` returns true if the value is within the range.",
-      "lineByLine": ["`1..5` — includes 1, 2, 3, 4, 5.", "`r.contains(3)` — 3 is in the range → true.", "`r.contains(6)` — 6 is outside the range → false."],
+      "lineByLine": [
+        "`1..5` — includes 1, 2, 3, 4, 5.",
+        "`r.contains(3)` — 3 is in the range → true.",
+        "`r.contains(6)` — 6 is outside the range → false."
+      ],
       "tip": "Ranges are inclusive by default (`1..5` includes 5). Use `1 until 5` for an exclusive upper bound (1 to 4). AI code uses both forms depending on the context."
     }
   },
   {
-    "id": "ch06-q2", "topic": "for with range", "difficulty": "easy", "chapter": "ch-06",
+    "id": "ch06-q2",
+    "topic": "for with range",
+    "difficulty": "easy",
+    "chapter": "ch-06",
     "snippet": "for (i in 1..3) {\n    print(\"$i \")\n}",
     "question": "What does this print?",
-    "choices": ["1 2 3", "1 2", "1 2 3 4", "0 1 2 3"],
+    "choices": [
+      "1 2 3",
+      "1 2",
+      "1 2 3 4",
+      "0 1 2 3"
+    ],
     "correctIndex": 0,
     "explanation": {
       "summary": "`for (i in 1..3)` iterates over the range 1, 2, 3 — inclusive on both ends.",
-      "lineByLine": ["`1..3` — range is 1, 2, 3.", "`print(\"$i \")` — prints the number followed by a space (no newline).", "Output: 1 2 3 (with a trailing space)."],
+      "lineByLine": [
+        "`1..3` — range is 1, 2, 3.",
+        "`print(\"$i \")` — prints the number followed by a space (no newline).",
+        "Output: 1 2 3 (with a trailing space)."
+      ],
       "tip": "`for (i in range)` is the standard Kotlin loop. Note `print` vs `println` — `print` doesn't add a newline, so all values appear on one line."
     }
   },
   {
-    "id": "ch06-q3", "topic": "downTo", "difficulty": "easy", "chapter": "ch-06",
+    "id": "ch06-q3",
+    "topic": "downTo",
+    "difficulty": "easy",
+    "chapter": "ch-06",
     "snippet": "for (i in 5 downTo 3) {\n    print(\"$i \")\n}",
     "question": "What does this print?",
-    "choices": ["3 4 5", "5 4 3", "5 4 3 2 1", "3 4"],
+    "choices": [
+      "3 4 5",
+      "5 4 3",
+      "5 4 3 2 1",
+      "3 4"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`downTo` creates a descending range. `5 downTo 3` iterates 5, 4, 3.",
-      "lineByLine": ["`5 downTo 3` — starts at 5, decrements by 1 each step, stops at 3 (inclusive).", "Iteration: i=5, i=4, i=3.", "Output: 5 4 3."],
+      "lineByLine": [
+        "`5 downTo 3` — starts at 5, decrements by 1 each step, stops at 3 (inclusive).",
+        "Iteration: i=5, i=4, i=3.",
+        "Output: 5 4 3."
+      ],
       "tip": "`downTo` creates a reverse range. It's commonly used in AI code for countdown timers, reverse iteration, and algorithms that process from end to start."
     }
   },
   {
-    "id": "ch06-q4", "topic": "step", "difficulty": "easy", "chapter": "ch-06",
+    "id": "ch06-q4",
+    "topic": "step",
+    "difficulty": "easy",
+    "chapter": "ch-06",
     "snippet": "for (i in 0..10 step 3) {\n    print(\"$i \")\n}",
     "question": "What does this print?",
-    "choices": ["0 3 6 9", "0 3 6 9 12", "3 6 9", "0 3 6 10"],
+    "choices": [
+      "0 3 6 9",
+      "0 3 6 9 12",
+      "3 6 9",
+      "0 3 6 10"
+    ],
     "correctIndex": 0,
     "explanation": {
       "summary": "`step` sets the increment for each iteration. `0..10 step 3` produces 0, 3, 6, 9 — stopping when the next value would exceed 10.",
-      "lineByLine": ["`0..10 step 3` — start at 0, add 3 each time, stop when > 10.", "Values: 0, 3, 6, 9. (next would be 12 > 10, so stop).", "Output: 0 3 6 9."],
+      "lineByLine": [
+        "`0..10 step 3` — start at 0, add 3 each time, stop when > 10.",
+        "Values: 0, 3, 6, 9. (next would be 12 > 10, so stop).",
+        "Output: 0 3 6 9."
+      ],
       "tip": "`step` is used when you need to skip values — iterating every other element, every 10 pixels, every 5 seconds, etc."
     }
   },
   {
-    "id": "ch06-q5", "topic": "for over list", "difficulty": "easy", "chapter": "ch-06",
+    "id": "ch06-q5",
+    "topic": "for over list",
+    "difficulty": "easy",
+    "chapter": "ch-06",
     "snippet": "val fruits = listOf(\"apple\", \"banana\", \"cherry\")\nfor (fruit in fruits) {\n    println(fruit)\n}",
     "question": "What does this print?",
-    "choices": ["apple banana cherry (on one line)", "apple then banana then cherry (each on its own line)", "[apple, banana, cherry]", "fruit fruit fruit"],
+    "choices": [
+      "apple banana cherry (on one line)",
+      "apple then banana then cherry (each on its own line)",
+      "[apple, banana, cherry]",
+      "fruit fruit fruit"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`for (item in list)` iterates over every element. Each `println` call produces a new line.",
-      "lineByLine": ["`for (fruit in fruits)` — iterates over each element in the list.", "First iteration: fruit = \"apple\", prints apple.", "Second: fruit = \"banana\", prints banana.", "Third: fruit = \"cherry\", prints cherry."],
+      "lineByLine": [
+        "`for (fruit in fruits)` — iterates over each element in the list.",
+        "First iteration: fruit = \"apple\", prints apple.",
+        "Second: fruit = \"banana\", prints banana.",
+        "Third: fruit = \"cherry\", prints cherry."
+      ],
       "tip": "`for (item in collection)` is the standard way to iterate any Kotlin collection. It works on lists, sets, maps, ranges, and any Iterable."
+    }
+  },
+  {
+    "id": "ch06-q6",
+    "topic": "until (exclusive range)",
+    "difficulty": "easy",
+    "chapter": "ch-06",
+    "snippet": "for (i in 0 until 4) {\n    print(\"$i \")\n}",
+    "question": "What does this print?",
+    "choices": [
+      "0 1 2 3 4",
+      "0 1 2 3",
+      "1 2 3 4",
+      "1 2 3"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`until` creates a range that *excludes* the upper bound. `0 until 4` is 0, 1, 2, 3 — stopping before 4.",
+      "lineByLine": [
+        "`0 until 4` — equivalent to `0..3`, stops before 4.",
+        "Iterates: 0, 1, 2, 3.",
+        "Output: 0 1 2 3."
+      ],
+      "tip": "`until` is used whenever you're working with 0-based indices, like array/list sizes: `for (i in 0 until list.size)`. AI code often uses it instead of `..` to avoid off-by-one errors."
+    }
+  },
+  {
+    "id": "ch06-q7",
+    "topic": "withIndex",
+    "difficulty": "easy",
+    "chapter": "ch-06",
+    "snippet": "val fruits = listOf(\"apple\", \"banana\", \"cherry\")\nfor ((index, fruit) in fruits.withIndex()) {\n    println(\"$index: $fruit\")\n}",
+    "question": "What does this print?",
+    "choices": [
+      "apple then banana then cherry",
+      "0: apple then 1: banana then 2: cherry",
+      "1: apple then 2: banana then 3: cherry",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`withIndex()` wraps each element with its 0-based index. Destructuring `(index, fruit)` unpacks each pair.",
+      "lineByLine": [
+        "`fruits.withIndex()` — produces (0, apple), (1, banana), (2, cherry).",
+        "`for ((index, fruit) in ...)` — destructures each pair.",
+        "Iteration 0: prints 0: apple. Iteration 1: 1: banana. Iteration 2: 2: cherry."
+      ],
+      "tip": "`withIndex()` is AI Kotlin's clean replacement for a manual index counter. You'll also see `forEachIndexed { index, item -> ... }` which does the same thing as a lambda."
+    }
+  },
+  {
+    "id": "ch06-q8",
+    "topic": "indices property",
+    "difficulty": "easy",
+    "chapter": "ch-06",
+    "snippet": "val nums = listOf(10, 20, 30)\nfor (i in nums.indices) {\n    print(\"${nums[i]} \")\n}",
+    "question": "What does this print?",
+    "choices": [
+      "0 1 2",
+      "10 20 30",
+      "10 20 30 (with spaces)",
+      "Compilation error"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`.indices` returns the valid index range of a list (`0 until size`). Iterating over it gives you each index, which you can use to access elements.",
+      "lineByLine": [
+        "`nums.indices` → range 0..2 (i.e., 0, 1, 2).",
+        "`nums[0]` = 10, `nums[1]` = 20, `nums[2]` = 30.",
+        "`print(\"$it \")` — each with a trailing space.",
+        "Output: 10 20 30 (with trailing space)."
+      ],
+      "tip": "`.indices` is safer than writing `0 until list.size` manually — it's tied to the actual list and can't be wrong. AI code uses it when both the index and value are needed."
+    }
+  },
+  {
+    "id": "ch06-q9",
+    "topic": "CharRange",
+    "difficulty": "easy",
+    "chapter": "ch-06",
+    "snippet": "for (ch in 'a'..'e') {\n    print(ch)\n}",
+    "question": "What does this print?",
+    "choices": [
+      "a b c d e",
+      "abcde",
+      "a..e",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "The `..` operator also works on `Char` values, creating a `CharRange`. Iterating it yields each character in sequence.",
+      "lineByLine": [
+        "`'a'..'e'` — CharRange: a, b, c, d, e.",
+        "`for (ch in 'a'..'e')` — ch takes each character in turn.",
+        "`print(ch)` — no space, no newline.",
+        "Output: abcde."
+      ],
+      "tip": "CharRanges are used in AI code for validating characters, building alphabets, and checking if a character is a letter: `char in 'a'..'z'`."
+    }
+  },
+  {
+    "id": "ch06-q10",
+    "topic": "nested for loops",
+    "difficulty": "easy",
+    "chapter": "ch-06",
+    "snippet": "for (i in 1..2) {\n    for (j in 1..3) {\n        print(\"$i$j \")\n    }\n}",
+    "question": "What does this print?",
+    "choices": [
+      "11 12 13 21 22 23",
+      "11 21 12 22 13 23",
+      "11 12 13 then 21 22 23 on a new line",
+      "Compilation error"
+    ],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "The inner loop completes fully for each iteration of the outer loop. i=1 produces 11, 12, 13 before i increments to 2.",
+      "lineByLine": [
+        "i=1: inner loop runs with j=1,2,3 → prints 11, 12, 13.",
+        "i=2: inner loop runs with j=1,2,3 → prints 21, 22, 23.",
+        "All on one line with spaces (using `print`).",
+        "Output: 11 12 13 21 22 23."
+      ],
+      "tip": "Nested loops follow the same rules as in every language: the inner loop completes fully before the outer loop advances. AI code uses nested loops for grids, matrices, and combinatorial logic."
     }
   }
 ]

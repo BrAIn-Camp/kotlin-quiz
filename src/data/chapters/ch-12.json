@@ -1,62 +1,248 @@
 [
   {
-    "id": "ch12-q1", "topic": "data class toString", "difficulty": "easy", "chapter": "ch-12",
+    "id": "ch12-q1",
+    "topic": "data class toString",
+    "difficulty": "easy",
+    "chapter": "ch-12",
     "snippet": "data class Book(val title: String, val year: Int)\nval b = Book(\"Kotlin in Action\", 2017)\nprintln(b)",
     "question": "What does this print?",
-    "choices": ["Book@hashcode", "Book(title=Kotlin in Action, year=2017)", "Kotlin in Action", "Compilation error"],
+    "choices": [
+      "Book@hashcode",
+      "Book(title=Kotlin in Action, year=2017)",
+      "Kotlin in Action",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`data class` auto-generates `toString()` that shows the class name and all property values by name.",
-      "lineByLine": ["`data class Book(...)` — the `data` keyword auto-generates toString, equals, hashCode, copy.", "`println(b)` — calls auto-generated toString.", "Output: Book(title=Kotlin in Action, year=2017)."],
+      "lineByLine": [
+        "`data class Book(...)` — the `data` keyword auto-generates toString, equals, hashCode, copy.",
+        "`println(b)` — calls auto-generated toString.",
+        "Output: Book(title=Kotlin in Action, year=2017)."
+      ],
       "tip": "Without `data`, `println(b)` would print something like `Book@3764951d`. With `data`, it prints a readable representation. AI code uses `data class` for any object primarily holding values."
     }
   },
   {
-    "id": "ch12-q2", "topic": "copy", "difficulty": "easy", "chapter": "ch-12",
+    "id": "ch12-q2",
+    "topic": "copy",
+    "difficulty": "easy",
+    "chapter": "ch-12",
     "snippet": "data class Point(val x: Int, val y: Int)\nval p1 = Point(3, 7)\nval p2 = p1.copy(y = 10)\nprintln(p1)\nprintln(p2)",
     "question": "What does this print?",
-    "choices": ["Point(x=3, y=10) then Point(x=3, y=10)", "Point(x=3, y=7) then Point(x=3, y=10)", "Point(x=3, y=7) then Point(x=3, y=7)", "Compilation error"],
+    "choices": [
+      "Point(x=3, y=10) then Point(x=3, y=10)",
+      "Point(x=3, y=7) then Point(x=3, y=10)",
+      "Point(x=3, y=7) then Point(x=3, y=7)",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`copy()` creates a new instance with some properties changed. The original is unaffected.",
-      "lineByLine": ["`p1 = Point(3, 7)` — original point.", "`p1.copy(y = 10)` — new Point with x=3 (copied) and y=10 (changed).", "`p1` is still Point(x=3, y=7) — unchanged.", "`p2` is Point(x=3, y=10)."],
+      "lineByLine": [
+        "`p1 = Point(3, 7)` — original point.",
+        "`p1.copy(y = 10)` — new Point with x=3 (copied) and y=10 (changed).",
+        "`p1` is still Point(x=3, y=7) — unchanged.",
+        "`p2` is Point(x=3, y=10)."
+      ],
       "tip": "`copy()` is the idiomatic way to create modified versions of data objects without mutation. AI code uses it constantly in functional-style updates: `state = state.copy(isLoading = false)`."
     }
   },
   {
-    "id": "ch12-q3", "topic": "equals", "difficulty": "easy", "chapter": "ch-12",
+    "id": "ch12-q3",
+    "topic": "equals",
+    "difficulty": "easy",
+    "chapter": "ch-12",
     "snippet": "data class Color(val r: Int, val g: Int, val b: Int)\nval c1 = Color(255, 0, 0)\nval c2 = Color(255, 0, 0)\nprintln(c1 == c2)",
     "question": "What does this print?",
-    "choices": ["false — c1 and c2 are different objects", "true — data class equals compares property values", "Compilation error", "null"],
+    "choices": [
+      "false — c1 and c2 are different objects",
+      "true — data class equals compares property values",
+      "Compilation error",
+      "null"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`data class` auto-generates `equals()` that compares all constructor properties. Two instances with the same values are considered equal.",
-      "lineByLine": ["`c1` and `c2` are separate objects in memory.", "`c1 == c2` — calls auto-generated `equals()`.", "Both have r=255, g=0, b=0 → equal → true.", "`println(true)` — prints true."],
+      "lineByLine": [
+        "`c1` and `c2` are separate objects in memory.",
+        "`c1 == c2` — calls auto-generated `equals()`.",
+        "Both have r=255, g=0, b=0 → equal → true.",
+        "`println(true)` — prints true."
+      ],
       "tip": "Without `data`, `c1 == c2` would compare references and print false. With `data`, it compares values. This makes data classes safe to use as map keys and in equality checks."
     }
   },
   {
-    "id": "ch12-q4", "topic": "destructuring", "difficulty": "easy", "chapter": "ch-12",
+    "id": "ch12-q4",
+    "topic": "destructuring",
+    "difficulty": "easy",
+    "chapter": "ch-12",
     "snippet": "data class Person(val name: String, val age: Int)\nval (n, a) = Person(\"Sam\", 25)\nprintln(\"$n is $a\")",
     "question": "What does this print?",
-    "choices": ["Person(name=Sam, age=25)", "Sam is 25", "n is a", "Compilation error"],
+    "choices": [
+      "Person(name=Sam, age=25)",
+      "Sam is 25",
+      "n is a",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "Data classes support destructuring declarations. `val (n, a) = person` unpacks properties in their declaration order.",
-      "lineByLine": ["`val (n, a) = Person(\"Sam\", 25)` — n gets name (\"Sam\"), a gets age (25).", "`println(\"$n is $a\")` — \"Sam is 25\".", "Output: Sam is 25."],
+      "lineByLine": [
+        "`val (n, a) = Person(\"Sam\", 25)` — n gets name (\"Sam\"), a gets age (25).",
+        "`println(\"$n is $a\")` — \"Sam is 25\".",
+        "Output: Sam is 25."
+      ],
       "tip": "Destructuring is commonly used in AI code with `for ((key, value) in map)` and in lambda parameters. Properties are destructured in declaration order — the names you pick don't matter, only the positions."
     }
   },
   {
-    "id": "ch12-q5", "topic": "hashCode consistency", "difficulty": "easy", "chapter": "ch-12",
+    "id": "ch12-q5",
+    "topic": "hashCode consistency",
+    "difficulty": "easy",
+    "chapter": "ch-12",
     "snippet": "data class Tag(val name: String)\nval t1 = Tag(\"kotlin\")\nval t2 = Tag(\"kotlin\")\nprintln(t1.hashCode() == t2.hashCode())",
     "question": "What does this print?",
-    "choices": ["false — different objects always have different hashCodes", "true — data class hashCode is based on property values", "Compilation error", "It depends on the JVM"],
+    "choices": [
+      "false — different objects always have different hashCodes",
+      "true — data class hashCode is based on property values",
+      "Compilation error",
+      "It depends on the JVM"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`data class` generates `hashCode()` based on the constructor properties. Two instances with equal values always produce the same hash code.",
-      "lineByLine": ["`t1` and `t2` are separate objects but have the same `name`.", "Auto-generated `hashCode()` for both is based on `name = \"kotlin\"`.", "Both produce the same hash → `==` returns true."],
+      "lineByLine": [
+        "`t1` and `t2` are separate objects but have the same `name`.",
+        "Auto-generated `hashCode()` for both is based on `name = \"kotlin\"`.",
+        "Both produce the same hash → `==` returns true."
+      ],
       "tip": "Consistent `hashCode` is required for data classes to work correctly as keys in `HashMap` or `HashSet`. The auto-generated implementation handles this correctly."
+    }
+  },
+  {
+    "id": "ch12-q6",
+    "topic": "copy with multiple fields",
+    "difficulty": "easy",
+    "chapter": "ch-12",
+    "snippet": "data class Config(val host: String, val port: Int, val tls: Boolean)\nval base = Config(\"localhost\", 80, false)\nval prod = base.copy(host = \"api.example.com\", port = 443, tls = true)\nprintln(prod)",
+    "question": "What does this print?",
+    "choices": [
+      "Config(host=localhost, port=80, tls=false)",
+      "Config(host=api.example.com, port=443, tls=true)",
+      "Config(host=api.example.com, port=80, tls=false)",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`copy()` accepts any number of named parameters. Only the named fields are changed; the rest are copied from the original.",
+      "lineByLine": [
+        "`base` = Config(localhost, 80, false).",
+        "`.copy(host = \"api.example.com\", port = 443, tls = true)` — all three fields overridden.",
+        "`prod` = Config(api.example.com, 443, true).",
+        "Auto-generated toString prints: Config(host=api.example.com, port=443, tls=true)."
+      ],
+      "tip": "Multi-field `copy()` is how AI code creates production vs development configs, or applies a batch of state changes immutably: `state.copy(isLoading = false, data = result, error = null)`."
+    }
+  },
+  {
+    "id": "ch12-q7",
+    "topic": "nullable property in data class",
+    "difficulty": "easy",
+    "chapter": "ch-12",
+    "snippet": "data class User(val name: String, val email: String? = null)\nval u = User(\"Bob\")\nprintln(u)",
+    "question": "What does this print?",
+    "choices": [
+      "User(name=Bob)",
+      "User(name=Bob, email=null)",
+      "Compilation error — data class cannot have nullable properties",
+      "User(name=Bob, email=)"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Data classes can have nullable properties. The auto-generated `toString()` includes all properties by name, showing `null` for any that are null.",
+      "lineByLine": [
+        "`email: String? = null` — optional nullable property.",
+        "`User(\"Bob\")` — name=\"Bob\", email defaults to null.",
+        "toString outputs all properties: User(name=Bob, email=null)."
+      ],
+      "tip": "Nullable properties with `null` defaults are common in AI data classes for optional fields like `avatar`, `bio`, or `lastLogin`. The `toString` always shows them explicitly, which helps debugging."
+    }
+  },
+  {
+    "id": "ch12-q8",
+    "topic": "data class as Map key",
+    "difficulty": "easy",
+    "chapter": "ch-12",
+    "snippet": "data class Point(val x: Int, val y: Int)\nval map = mutableMapOf<Point, String>()\nmap[Point(1, 2)] = \"A\"\nmap[Point(1, 2)] = \"B\"\nprintln(map.size)",
+    "question": "What does this print?",
+    "choices": [
+      "2",
+      "1",
+      "0",
+      "Compilation error — data class cannot be used as a Map key"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Because `data class` auto-generates consistent `equals()` and `hashCode()`, two instances with the same values are treated as the same map key.",
+      "lineByLine": [
+        "`Point(1, 2)` and `Point(1, 2)` — different objects but equal by data-class rules.",
+        "First assignment: map has key Point(1,2) → \"A\".",
+        "Second assignment: same key, value is overwritten to \"B\".",
+        "`map.size` = 1 — only one key.",
+        "`println(1)` — prints 1."
+      ],
+      "tip": "Data classes work as Map keys and Set elements out of the box. Regular classes don't, unless you manually override `equals` and `hashCode`. This is one of the most practical benefits of `data class`."
+    }
+  },
+  {
+    "id": "ch12-q9",
+    "topic": "nested data class",
+    "difficulty": "easy",
+    "chapter": "ch-12",
+    "snippet": "data class Address(val city: String, val zip: String)\ndata class Person(val name: String, val address: Address)\nval p = Person(\"Ana\", Address(\"Berlin\", \"10115\"))\nprintln(p.address.city)",
+    "question": "What does this print?",
+    "choices": [
+      "Ana",
+      "Berlin",
+      "Address(city=Berlin, zip=10115)",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Data classes can be nested — one data class can hold another as a property. Access is via chained dot notation.",
+      "lineByLine": [
+        "`Person(\"Ana\", Address(\"Berlin\", \"10115\"))` — p holds a nested Address.",
+        "`p.address` — accesses the Address instance.",
+        "`.city` — accesses the city property of that Address.",
+        "`println(\"Berlin\")` — prints Berlin."
+      ],
+      "tip": "Nested data classes model hierarchical data naturally. AI code uses this for API response models: `data class Response(val user: User, val meta: Metadata)`. Each layer can be independently `copy()`ed."
+    }
+  },
+  {
+    "id": "ch12-q10",
+    "topic": "component functions",
+    "difficulty": "easy",
+    "chapter": "ch-12",
+    "snippet": "data class RGB(val r: Int, val g: Int, val b: Int)\nval color = RGB(255, 128, 0)\nprintln(color.component1())\nprintln(color.component2())",
+    "question": "What does this print?",
+    "choices": [
+      "255 then 128",
+      "128 then 0",
+      "255 then 0",
+      "Compilation error"
+    ],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "Data classes auto-generate `component1()`, `component2()`, etc. corresponding to each constructor property in order. These are what power destructuring.",
+      "lineByLine": [
+        "`component1()` → first constructor property → r = 255.",
+        "`component2()` → second constructor property → g = 128.",
+        "Output: 255 then 128."
+      ],
+      "tip": "`componentN()` functions are what Kotlin calls under the hood for destructuring: `val (r, g, b) = color` becomes `val r = color.component1()`, etc. Understanding this explains why destructuring is positional, not name-based."
     }
   }
 ]

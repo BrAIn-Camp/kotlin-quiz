@@ -1,62 +1,250 @@
 [
   {
-    "id": "ch04-q1", "topic": "if as statement", "difficulty": "easy", "chapter": "ch-04",
+    "id": "ch04-q1",
+    "topic": "if as statement",
+    "difficulty": "easy",
+    "chapter": "ch-04",
     "snippet": "val temp = 30\nif (temp > 25) {\n    println(\"Hot\")\n} else {\n    println(\"Cool\")\n}",
     "question": "What does this print?",
-    "choices": ["Cool", "Hot", "true", "Compilation error"],
+    "choices": [
+      "Cool",
+      "Hot",
+      "true",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "Standard if/else. `temp > 25` evaluates to `30 > 25` which is true, so the first branch runs.",
-      "lineByLine": ["`temp > 25` → `30 > 25` → true.", "True branch: `println(\"Hot\")` runs.", "Output: Hot."],
+      "lineByLine": [
+        "`temp > 25` → `30 > 25` → true.",
+        "True branch: `println(\"Hot\")` runs.",
+        "Output: Hot."
+      ],
       "tip": "Basic if/else works the same as in Java. The key difference in Kotlin is that `if` can also return a value."
     }
   },
   {
-    "id": "ch04-q2", "topic": "if as expression", "difficulty": "easy", "chapter": "ch-04",
+    "id": "ch04-q2",
+    "topic": "if as expression",
+    "difficulty": "easy",
+    "chapter": "ch-04",
     "snippet": "val score = 75\nval grade = if (score >= 60) \"Pass\" else \"Fail\"\nprintln(grade)",
     "question": "What does this print?",
-    "choices": ["Pass", "Fail", "75", "Compilation error — if cannot assign to a variable"],
+    "choices": [
+      "Pass",
+      "Fail",
+      "75",
+      "Compilation error — if cannot assign to a variable"
+    ],
     "correctIndex": 0,
     "explanation": {
       "summary": "In Kotlin, `if` is an expression — it returns a value. The result of the matching branch becomes the value of the whole expression.",
-      "lineByLine": ["`score >= 60` → `75 >= 60` → true.", "True branch returns \"Pass\".", "`val grade = \"Pass\"`.", "`println(\"Pass\")` — prints Pass."],
+      "lineByLine": [
+        "`score >= 60` → `75 >= 60` → true.",
+        "True branch returns \"Pass\".",
+        "`val grade = \"Pass\"`.",
+        "`println(\"Pass\")` — prints Pass."
+      ],
       "tip": "Kotlin has no ternary operator (`condition ? a : b`). Instead, `if/else` as an expression plays that role. You'll see `val x = if (...) a else b` in every AI-generated Kotlin codebase."
     }
   },
   {
-    "id": "ch04-q3", "topic": "if expression value", "difficulty": "easy", "chapter": "ch-04",
+    "id": "ch04-q3",
+    "topic": "if expression value",
+    "difficulty": "easy",
+    "chapter": "ch-04",
     "snippet": "val x = 10\nval y = 20\nprintln(if (x > y) x else y)",
     "question": "What does this print?",
-    "choices": ["10", "20", "true", "false"],
+    "choices": [
+      "10",
+      "20",
+      "true",
+      "false"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`if/else` inline as an expression directly inside `println`. The larger of x and y is returned.",
-      "lineByLine": ["`x > y` → `10 > 20` → false.", "False branch returns y (20).", "`println(20)` — prints 20."],
+      "lineByLine": [
+        "`x > y` → `10 > 20` → false.",
+        "False branch returns y (20).",
+        "`println(20)` — prints 20."
+      ],
       "tip": "You can use `if/else` expressions inline anywhere a value is expected — inside function calls, assignments, or even string templates like `\"${if (x > 0) \"positive\" else \"negative\"}\"`."
     }
   },
   {
-    "id": "ch04-q4", "topic": "if without else", "difficulty": "easy", "chapter": "ch-04",
+    "id": "ch04-q4",
+    "topic": "if without else",
+    "difficulty": "easy",
+    "chapter": "ch-04",
     "snippet": "val isRaining = false\nif (isRaining) {\n    println(\"Take umbrella\")\n}\nprintln(\"Done\")",
     "question": "What does this print?",
-    "choices": ["Take umbrella then Done", "Done", "Take umbrella", "Nothing"],
+    "choices": [
+      "Take umbrella then Done",
+      "Done",
+      "Take umbrella",
+      "Nothing"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "When `if` has no `else` branch and the condition is false, the body is skipped entirely. Execution continues after the if block.",
-      "lineByLine": ["`isRaining` is false.", "The if body is skipped.", "`println(\"Done\")` runs.", "Output: Done."],
+      "lineByLine": [
+        "`isRaining` is false.",
+        "The if body is skipped.",
+        "`println(\"Done\")` runs.",
+        "Output: Done."
+      ],
       "tip": "A standalone `if` without `else` cannot be used as a value-returning expression. It's only valid as a statement. If you need it to return a value, you must include the `else` branch."
     }
   },
   {
-    "id": "ch04-q5", "topic": "nested if", "difficulty": "easy", "chapter": "ch-04",
+    "id": "ch04-q5",
+    "topic": "nested if",
+    "difficulty": "easy",
+    "chapter": "ch-04",
     "snippet": "val n = 15\nval result = if (n > 20) {\n    \"big\"\n} else if (n > 10) {\n    \"medium\"\n} else {\n    \"small\"\n}\nprintln(result)",
     "question": "What does this print?",
-    "choices": ["big", "medium", "small", "Compilation error"],
+    "choices": [
+      "big",
+      "medium",
+      "small",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "Chained `if/else if/else` expressions work as a multi-way branch. The first true condition wins.",
-      "lineByLine": ["`n > 20` → `15 > 20` → false.", "`n > 10` → `15 > 10` → true. This branch runs.", "Returns \"medium\".", "`println(\"medium\")` — prints medium."],
+      "lineByLine": [
+        "`n > 20` → `15 > 20` → false.",
+        "`n > 10` → `15 > 10` → true. This branch runs.",
+        "Returns \"medium\".",
+        "`println(\"medium\")` — prints medium."
+      ],
       "tip": "For many branches on the same value, `when` is usually cleaner than chained `if/else if`. But `if/else if` is still used when conditions are unrelated or complex."
+    }
+  },
+  {
+    "id": "ch04-q6",
+    "topic": "AND condition",
+    "difficulty": "easy",
+    "chapter": "ch-04",
+    "snippet": "val age = 25\nval hasTicket = true\nif (age >= 18 && hasTicket) {\n    println(\"Welcome\")\n} else {\n    println(\"Denied\")\n}",
+    "question": "What does this print?",
+    "choices": [
+      "Denied",
+      "Welcome",
+      "true",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`&&` (AND) requires *both* conditions to be true. `age >= 18` is true and `hasTicket` is true, so the whole condition is true.",
+      "lineByLine": [
+        "`age >= 18` → `25 >= 18` → true.",
+        "`hasTicket` → true.",
+        "`true && true` → true → the if branch runs.",
+        "`println(\"Welcome\")` — prints Welcome."
+      ],
+      "tip": "`&&` short-circuits: if the left side is false, the right side is never evaluated. AI code uses `&&` for guard conditions like `if (user != null && user.isActive)`."
+    }
+  },
+  {
+    "id": "ch04-q7",
+    "topic": "OR condition",
+    "difficulty": "easy",
+    "chapter": "ch-04",
+    "snippet": "val isWeekend = false\nval isHoliday = true\nif (isWeekend || isHoliday) {\n    println(\"Day off\")\n} else {\n    println(\"Work day\")\n}",
+    "question": "What does this print?",
+    "choices": [
+      "Work day",
+      "Day off",
+      "false",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`||` (OR) is true if *at least one* condition is true. `isHoliday` is true, so the whole condition is true even though `isWeekend` is false.",
+      "lineByLine": [
+        "`isWeekend` → false.",
+        "`isHoliday` → true.",
+        "`false || true` → true → the if branch runs.",
+        "`println(\"Day off\")` — prints Day off."
+      ],
+      "tip": "`||` short-circuits: if the left side is true, the right side is never evaluated. AI code uses `||` for fallback conditions like `if (cache.isEmpty() || cache.isExpired())`."
+    }
+  },
+  {
+    "id": "ch04-q8",
+    "topic": "NOT operator",
+    "difficulty": "easy",
+    "chapter": "ch-04",
+    "snippet": "val isDone = false\nif (!isDone) {\n    println(\"Still working\")\n} else {\n    println(\"Finished\")\n}",
+    "question": "What does this print?",
+    "choices": [
+      "Finished",
+      "Still working",
+      "false",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`!` inverts a Boolean. `isDone` is `false`, so `!isDone` is `true`, and the if branch runs.",
+      "lineByLine": [
+        "`isDone` is false.",
+        "`!isDone` → !false → true.",
+        "Condition is true → if branch runs.",
+        "`println(\"Still working\")` — prints Still working."
+      ],
+      "tip": "`!condition` is common in AI code when a condition is naturally expressed as its negative: `if (!list.isEmpty())` or `if (!user.isBlocked())`."
+    }
+  },
+  {
+    "id": "ch04-q9",
+    "topic": "if in string template",
+    "difficulty": "easy",
+    "chapter": "ch-04",
+    "snippet": "val temp = 35\nprintln(\"It is ${if (temp > 30) \"hot\" else \"cool\"} today\")",
+    "question": "What does this print?",
+    "choices": [
+      "It is ${if (temp > 30) hot else cool} today",
+      "It is hot today",
+      "It is cool today",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "An `if/else` expression can be embedded inside a string template using `${}`. The expression is evaluated and its result is inserted into the string.",
+      "lineByLine": [
+        "`temp > 30` → `35 > 30` → true.",
+        "`if (temp > 30) \"hot\" else \"cool\"` → \"hot\".",
+        "`\"It is ${...} today\"` → \"It is hot today\".",
+        "`println(\"It is hot today\")` — prints It is hot today."
+      ],
+      "tip": "Embedding `if/else` inside `${}` is a compact way to vary a single word in a larger string. You'll see this pattern in AI code for status messages, labels, and dynamic descriptions."
+    }
+  },
+  {
+    "id": "ch04-q10",
+    "topic": "String comparison in condition",
+    "difficulty": "easy",
+    "chapter": "ch-04",
+    "snippet": "val role = \"admin\"\nif (role == \"admin\") {\n    println(\"Full access\")\n} else {\n    println(\"Limited access\")\n}",
+    "question": "What does this print?",
+    "choices": [
+      "Limited access",
+      "Full access",
+      "true",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`==` compares strings by content in Kotlin. `\"admin\" == \"admin\"` is true, so the if branch runs.",
+      "lineByLine": [
+        "`role` is \"admin\".",
+        "`role == \"admin\"` → content comparison → true.",
+        "If branch runs.",
+        "`println(\"Full access\")` — prints Full access."
+      ],
+      "tip": "Kotlin's `==` always performs content (structural) equality on strings — never reference equality. This is unlike Java where `==` on strings compares references. AI code safely uses `==` for all string comparisons."
     }
   }
 ]

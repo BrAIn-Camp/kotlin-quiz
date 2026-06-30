@@ -1,0 +1,103 @@
+[
+  {
+    "id": "ch13-q6",
+    "topic": "custom getter",
+    "difficulty": "easy",
+    "chapter": "ch-13",
+    "snippet": "class Circle(val radius: Double) {\n    val diameter: Double\n        get() = radius * 2\n}\nval c = Circle(5.0)\nprintln(c.diameter)",
+    "question": "What does this print?",
+    "choices": ["5.0", "10.0", "Compilation error — diameter must be initialized", "25.0"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "A `val` property with a custom `get()` is computed on every access. It requires no backing field — its value is derived from other properties.",
+      "lineByLine": [
+        "`val diameter` — no initial value, just a `get()` definition.",
+        "`get() = radius * 2` — computed each time `diameter` is accessed.",
+        "`c.diameter` → `5.0 * 2` = 10.0.",
+        "`println(10.0)` — prints 10.0."
+      ],
+      "tip": "Custom getters are used in AI code for derived properties: `val fullName get() = \"$firstName $lastName\"`, `val isExpired get() = expiresAt < now()`. They look like regular properties but compute their value dynamically."
+    }
+  },
+  {
+    "id": "ch13-q7",
+    "topic": "private property",
+    "difficulty": "easy",
+    "chapter": "ch-13",
+    "snippet": "class BankAccount(initialBalance: Double) {\n    private var balance = initialBalance\n    fun deposit(amount: Double) { balance += amount }\n    fun getBalance() = balance\n}\nval acc = BankAccount(100.0)\nacc.deposit(50.0)\nprintln(acc.getBalance())",
+    "question": "What does this print?",
+    "choices": ["100.0", "50.0", "150.0", "Compilation error — cannot access private balance"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`private` restricts access to within the class. Outside code must go through the public `deposit` and `getBalance` methods.",
+      "lineByLine": [
+        "`private var balance = 100.0` — hidden from outside.",
+        "`acc.deposit(50.0)` — balance becomes 150.0 via the public method.",
+        "`acc.getBalance()` — returns the private balance: 150.0.",
+        "`println(150.0)` — prints 150.0."
+      ],
+      "tip": "Encapsulation with `private` is the class-design fundamental: expose what callers need, hide everything else. AI code uses `private var` for mutable state that must stay consistent."
+    }
+  },
+  {
+    "id": "ch13-q8",
+    "topic": "computed property",
+    "difficulty": "easy",
+    "chapter": "ch-13",
+    "snippet": "class Rectangle(val width: Int, val height: Int) {\n    val area = width * height\n    val isSquare = width == height\n}\nval r = Rectangle(4, 4)\nprintln(r.area)\nprintln(r.isSquare)",
+    "question": "What does this print?",
+    "choices": ["16 then false", "16 then true", "8 then true", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Properties initialized with an expression in the class body are computed once at construction time using the constructor parameters.",
+      "lineByLine": [
+        "`val area = width * height` = 4 * 4 = 16, computed at construction.",
+        "`val isSquare = width == height` = 4 == 4 = true.",
+        "`r.area` → 16. `r.isSquare` → true.",
+        "Output: 16 then true."
+      ],
+      "tip": "Properties initialized from other properties are a clean alternative to custom getters when the value only needs to be computed once. Use a custom `get()` when the value could change after construction."
+    }
+  },
+  {
+    "id": "ch13-q9",
+    "topic": "open class",
+    "difficulty": "easy",
+    "chapter": "ch-13",
+    "snippet": "open class Animal(val name: String) {\n    open fun sound() = \"...\"\n}\nclass Dog(name: String) : Animal(name) {\n    override fun sound() = \"Woof\"\n}\nprintln(Dog(\"Rex\").sound())",
+    "question": "What does this print?",
+    "choices": ["...", "Woof", "Compilation error — classes cannot be extended by default", "Rex"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Kotlin classes are `final` by default — they cannot be extended unless marked `open`. `Dog` extends `Animal` and overrides `sound()`.",
+      "lineByLine": [
+        "`open class Animal` — can be extended.",
+        "`open fun sound()` — can be overridden.",
+        "`class Dog : Animal(name)` — Dog extends Animal, passes name to Animal's constructor.",
+        "`override fun sound() = \"Woof\"` — Dog's implementation.",
+        "`Dog(\"Rex\").sound()` → \"Woof\"."
+      ],
+      "tip": "Kotlin's `open` requirement is a deliberate design choice: classes must opt into being extended. This prevents accidental inheritance breaks. AI code uses `open` only when inheritance is intentional."
+    }
+  },
+  {
+    "id": "ch13-q10",
+    "topic": "independent instances",
+    "difficulty": "easy",
+    "chapter": "ch-13",
+    "snippet": "class Lamp(var on: Boolean = false) {\n    fun toggle() { on = !on }\n}\nval lamp1 = Lamp()\nval lamp2 = Lamp()\nlamp1.toggle()\nprintln(lamp1.on)\nprintln(lamp2.on)",
+    "question": "What does this print?",
+    "choices": ["true then true", "true then false", "false then false", "false then true"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Each call to `Lamp()` creates an independent object with its own copy of `on`. Changing one instance does not affect the other.",
+      "lineByLine": [
+        "`lamp1` and `lamp2` — separate instances, each with `on = false`.",
+        "`lamp1.toggle()` — flips lamp1.on to true. lamp2 is unaffected.",
+        "`println(lamp1.on)` → true.",
+        "`println(lamp2.on)` → false."
+      ],
+      "tip": "Each class instance has its own independent state. This is the core of object-oriented programming. Only `object` declarations (singletons) share state across 'instances'."
+    }
+  }
+]

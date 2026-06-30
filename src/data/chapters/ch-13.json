@@ -1,62 +1,253 @@
 [
   {
-    "id": "ch13-q1", "topic": "primary constructor", "difficulty": "easy", "chapter": "ch-13",
+    "id": "ch13-q1",
+    "topic": "primary constructor",
+    "difficulty": "easy",
+    "chapter": "ch-13",
     "snippet": "class Dog(val name: String, val breed: String)\nval d = Dog(\"Rex\", \"Labrador\")\nprintln(d.name)",
     "question": "What does this print?",
-    "choices": ["Dog", "Rex", "Labrador", "Compilation error"],
+    "choices": [
+      "Dog",
+      "Rex",
+      "Labrador",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "The primary constructor defines properties directly. `val name` and `val breed` are both declared and initialized in the constructor.",
-      "lineByLine": ["`class Dog(val name: String, val breed: String)` — one-line class with 2 properties.", "`Dog(\"Rex\", \"Labrador\")` — creates instance with name=\"Rex\", breed=\"Labrador\".", "`d.name` — accesses the name property.", "`println(\"Rex\")` — prints Rex."],
+      "lineByLine": [
+        "`class Dog(val name: String, val breed: String)` — one-line class with 2 properties.",
+        "`Dog(\"Rex\", \"Labrador\")` — creates instance with name=\"Rex\", breed=\"Labrador\".",
+        "`d.name` — accesses the name property.",
+        "`println(\"Rex\")` — prints Rex."
+      ],
       "tip": "Unlike `data class`, a plain `class` does not get auto-generated `toString`, `equals`, or `copy`. Use `class` when the object has significant behavior; use `data class` when it's primarily data."
     }
   },
   {
-    "id": "ch13-q2", "topic": "init block", "difficulty": "easy", "chapter": "ch-13",
+    "id": "ch13-q2",
+    "topic": "init block",
+    "difficulty": "easy",
+    "chapter": "ch-13",
     "snippet": "class Circle(val radius: Double) {\n    init {\n        println(\"Circle with radius $radius created\")\n    }\n}\nval c = Circle(5.0)",
     "question": "What does this print?",
-    "choices": ["Nothing", "Circle with radius 5.0 created", "Circle(5.0)", "Compilation error"],
+    "choices": [
+      "Nothing",
+      "Circle with radius 5.0 created",
+      "Circle(5.0)",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "The `init` block runs immediately after the primary constructor, every time an instance is created.",
-      "lineByLine": ["`init { ... }` — initialization code that runs on construction.", "`Circle(5.0)` — creates an instance, triggering `init`.", "`println(\"Circle with radius 5.0 created\")` — runs inside init.", "Output: Circle with radius 5.0 created."],
+      "lineByLine": [
+        "`init { ... }` — initialization code that runs on construction.",
+        "`Circle(5.0)` — creates an instance, triggering `init`.",
+        "`println(\"Circle with radius 5.0 created\")` — runs inside init.",
+        "Output: Circle with radius 5.0 created."
+      ],
       "tip": "`init` blocks are used in AI code for validation, logging, computed property initialization, or any setup that needs the constructor parameters."
     }
   },
   {
-    "id": "ch13-q3", "topic": "member function", "difficulty": "easy", "chapter": "ch-13",
+    "id": "ch13-q3",
+    "topic": "member function",
+    "difficulty": "easy",
+    "chapter": "ch-13",
     "snippet": "class Counter {\n    var count = 0\n    fun increment() { count++ }\n    fun value() = count\n}\nval c = Counter()\nc.increment()\nc.increment()\nprintln(c.value())",
     "question": "What does this print?",
-    "choices": ["0", "1", "2", "Compilation error"],
+    "choices": [
+      "0",
+      "1",
+      "2",
+      "Compilation error"
+    ],
     "correctIndex": 2,
     "explanation": {
       "summary": "Member functions have access to the class's properties. Each call to `increment()` modifies `count`.",
-      "lineByLine": ["`var count = 0` — mutable property, starts at 0.", "`c.increment()` × 2 — count becomes 2.", "`c.value()` — returns count, which is 2.", "`println(2)` — prints 2."],
+      "lineByLine": [
+        "`var count = 0` — mutable property, starts at 0.",
+        "`c.increment()` × 2 — count becomes 2.",
+        "`c.value()` — returns count, which is 2.",
+        "`println(2)` — prints 2."
+      ],
       "tip": "Classes bundle data (properties) with behavior (functions). This encapsulation is why classes exist. AI code uses classes for stateful objects — things that change over time."
     }
   },
   {
-    "id": "ch13-q4", "topic": "this reference", "difficulty": "easy", "chapter": "ch-13",
+    "id": "ch13-q4",
+    "topic": "this reference",
+    "difficulty": "easy",
+    "chapter": "ch-13",
     "snippet": "class Box(val size: Int) {\n    fun describe(): String {\n        return \"Box of size ${this.size}\"\n    }\n}\nprintln(Box(10).describe())",
     "question": "What does this print?",
-    "choices": ["Box of size this.size", "Box of size 10", "Box(size=10)", "Compilation error"],
+    "choices": [
+      "Box of size this.size",
+      "Box of size 10",
+      "Box(size=10)",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "`this` refers to the current instance of the class. `this.size` accesses the instance's `size` property.",
-      "lineByLine": ["`Box(10)` — creates an instance with size=10.", "`.describe()` — calls the member function.", "`this.size` — `this` is the Box instance, `.size` is 10.", "`println(\"Box of size 10\")` — prints Box of size 10."],
+      "lineByLine": [
+        "`Box(10)` — creates an instance with size=10.",
+        "`.describe()` — calls the member function.",
+        "`this.size` — `this` is the Box instance, `.size` is 10.",
+        "`println(\"Box of size 10\")` — prints Box of size 10."
+      ],
       "tip": "`this` is optional in most cases — you can write just `size` instead of `this.size`. It's only required when a local variable shadows a property name."
     }
   },
   {
-    "id": "ch13-q5", "topic": "secondary constructor", "difficulty": "easy", "chapter": "ch-13",
+    "id": "ch13-q5",
+    "topic": "secondary constructor",
+    "difficulty": "easy",
+    "chapter": "ch-13",
     "snippet": "class Message(val text: String) {\n    constructor(code: Int) : this(\"Code: $code\")\n}\nprintln(Message(42).text)",
     "question": "What does this print?",
-    "choices": ["42", "Code: 42", "Message(text=Code: 42)", "Compilation error"],
+    "choices": [
+      "42",
+      "Code: 42",
+      "Message(text=Code: 42)",
+      "Compilation error"
+    ],
     "correctIndex": 1,
     "explanation": {
       "summary": "A secondary constructor must delegate to the primary constructor via `this(...)`. It provides an alternate way to construct the object.",
-      "lineByLine": ["`constructor(code: Int) : this(\"Code: $code\")` — secondary constructor delegates to primary.", "`Message(42)` — uses the secondary constructor, which calls `this(\"Code: 42\")`.", "`.text` — the text property is \"Code: 42\".", "`println(\"Code: 42\")` — prints Code: 42."],
+      "lineByLine": [
+        "`constructor(code: Int) : this(\"Code: $code\")` — secondary constructor delegates to primary.",
+        "`Message(42)` — uses the secondary constructor, which calls `this(\"Code: 42\")`.",
+        "`.text` — the text property is \"Code: 42\".",
+        "`println(\"Code: 42\")` — prints Code: 42."
+      ],
       "tip": "Secondary constructors are less common in modern Kotlin — default parameters usually achieve the same result more cleanly. But you'll encounter them in AI code dealing with legacy APIs or multiple construction paths."
+    }
+  },
+  {
+    "id": "ch13-q6",
+    "topic": "custom getter",
+    "difficulty": "easy",
+    "chapter": "ch-13",
+    "snippet": "class Circle(val radius: Double) {\n    val diameter: Double\n        get() = radius * 2\n}\nval c = Circle(5.0)\nprintln(c.diameter)",
+    "question": "What does this print?",
+    "choices": [
+      "5.0",
+      "10.0",
+      "Compilation error — diameter must be initialized",
+      "25.0"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "A `val` property with a custom `get()` is computed on every access. It requires no backing field — its value is derived from other properties.",
+      "lineByLine": [
+        "`val diameter` — no initial value, just a `get()` definition.",
+        "`get() = radius * 2` — computed each time `diameter` is accessed.",
+        "`c.diameter` → `5.0 * 2` = 10.0.",
+        "`println(10.0)` — prints 10.0."
+      ],
+      "tip": "Custom getters are used in AI code for derived properties: `val fullName get() = \"$firstName $lastName\"`, `val isExpired get() = expiresAt < now()`. They look like regular properties but compute their value dynamically."
+    }
+  },
+  {
+    "id": "ch13-q7",
+    "topic": "private property",
+    "difficulty": "easy",
+    "chapter": "ch-13",
+    "snippet": "class BankAccount(initialBalance: Double) {\n    private var balance = initialBalance\n    fun deposit(amount: Double) { balance += amount }\n    fun getBalance() = balance\n}\nval acc = BankAccount(100.0)\nacc.deposit(50.0)\nprintln(acc.getBalance())",
+    "question": "What does this print?",
+    "choices": [
+      "100.0",
+      "50.0",
+      "150.0",
+      "Compilation error — cannot access private balance"
+    ],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`private` restricts access to within the class. Outside code must go through the public `deposit` and `getBalance` methods.",
+      "lineByLine": [
+        "`private var balance = 100.0` — hidden from outside.",
+        "`acc.deposit(50.0)` — balance becomes 150.0 via the public method.",
+        "`acc.getBalance()` — returns the private balance: 150.0.",
+        "`println(150.0)` — prints 150.0."
+      ],
+      "tip": "Encapsulation with `private` is the class-design fundamental: expose what callers need, hide everything else. AI code uses `private var` for mutable state that must stay consistent."
+    }
+  },
+  {
+    "id": "ch13-q8",
+    "topic": "computed property",
+    "difficulty": "easy",
+    "chapter": "ch-13",
+    "snippet": "class Rectangle(val width: Int, val height: Int) {\n    val area = width * height\n    val isSquare = width == height\n}\nval r = Rectangle(4, 4)\nprintln(r.area)\nprintln(r.isSquare)",
+    "question": "What does this print?",
+    "choices": [
+      "16 then false",
+      "16 then true",
+      "8 then true",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Properties initialized with an expression in the class body are computed once at construction time using the constructor parameters.",
+      "lineByLine": [
+        "`val area = width * height` = 4 * 4 = 16, computed at construction.",
+        "`val isSquare = width == height` = 4 == 4 = true.",
+        "`r.area` → 16. `r.isSquare` → true.",
+        "Output: 16 then true."
+      ],
+      "tip": "Properties initialized from other properties are a clean alternative to custom getters when the value only needs to be computed once. Use a custom `get()` when the value could change after construction."
+    }
+  },
+  {
+    "id": "ch13-q9",
+    "topic": "open class",
+    "difficulty": "easy",
+    "chapter": "ch-13",
+    "snippet": "open class Animal(val name: String) {\n    open fun sound() = \"...\"\n}\nclass Dog(name: String) : Animal(name) {\n    override fun sound() = \"Woof\"\n}\nprintln(Dog(\"Rex\").sound())",
+    "question": "What does this print?",
+    "choices": [
+      "...",
+      "Woof",
+      "Compilation error — classes cannot be extended by default",
+      "Rex"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Kotlin classes are `final` by default — they cannot be extended unless marked `open`. `Dog` extends `Animal` and overrides `sound()`.",
+      "lineByLine": [
+        "`open class Animal` — can be extended.",
+        "`open fun sound()` — can be overridden.",
+        "`class Dog : Animal(name)` — Dog extends Animal, passes name to Animal's constructor.",
+        "`override fun sound() = \"Woof\"` — Dog's implementation.",
+        "`Dog(\"Rex\").sound()` → \"Woof\"."
+      ],
+      "tip": "Kotlin's `open` requirement is a deliberate design choice: classes must opt into being extended. This prevents accidental inheritance breaks. AI code uses `open` only when inheritance is intentional."
+    }
+  },
+  {
+    "id": "ch13-q10",
+    "topic": "independent instances",
+    "difficulty": "easy",
+    "chapter": "ch-13",
+    "snippet": "class Lamp(var on: Boolean = false) {\n    fun toggle() { on = !on }\n}\nval lamp1 = Lamp()\nval lamp2 = Lamp()\nlamp1.toggle()\nprintln(lamp1.on)\nprintln(lamp2.on)",
+    "question": "What does this print?",
+    "choices": [
+      "true then true",
+      "true then false",
+      "false then false",
+      "false then true"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Each call to `Lamp()` creates an independent object with its own copy of `on`. Changing one instance does not affect the other.",
+      "lineByLine": [
+        "`lamp1` and `lamp2` — separate instances, each with `on = false`.",
+        "`lamp1.toggle()` — flips lamp1.on to true. lamp2 is unaffected.",
+        "`println(lamp1.on)` → true.",
+        "`println(lamp2.on)` → false."
+      ],
+      "tip": "Each class instance has its own independent state. This is the core of object-oriented programming. Only `object` declarations (singletons) share state across 'instances'."
     }
   }
 ]

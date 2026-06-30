@@ -1,0 +1,105 @@
+[
+  {
+    "id": "ch14-q6",
+    "topic": "named companion object",
+    "difficulty": "easy",
+    "chapter": "ch-14",
+    "snippet": "class Token(val value: String) {\n    companion object Generator {\n        fun random() = Token(\"tok_${(1000..9999).random()}\")\n    }\n}\nprintln(Token.random().value.startsWith(\"tok_\"))",
+    "question": "What does this print?",
+    "choices": ["false", "true", "Compilation error — companion objects cannot have names", "Generator"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "A companion object can have an optional name (`Generator` here). The factory method is still accessed via the class name: `Token.random()`.",
+      "lineByLine": [
+        "`companion object Generator` — named companion, name is optional and rarely used.",
+        "`Token.random()` — still called on the class, not on `Generator` directly.",
+        "`Token.random().value` — returns something like \"tok_4231\".",
+        "`.startsWith(\"tok_\")` → true."
+      ],
+      "tip": "Named companion objects are uncommon — you usually see plain `companion object`. The name is used when you need to reference the companion as a value: `Token.Generator` — mostly in reflection or interface-implementation scenarios."
+    }
+  },
+  {
+    "id": "ch14-q7",
+    "topic": "object expression",
+    "difficulty": "easy",
+    "chapter": "ch-14",
+    "snippet": "interface Greeter {\n    fun greet(): String\n}\nval g = object : Greeter {\n    override fun greet() = \"Hello!\"\n}\nprintln(g.greet())",
+    "question": "What does this print?",
+    "choices": ["Greeter", "Hello!", "object", "Compilation error — object cannot implement an interface"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "An `object` expression (anonymous object) creates a one-off implementation of an interface on the spot, without defining a named class.",
+      "lineByLine": [
+        "`object : Greeter { ... }` — anonymous class implementing Greeter, instantiated immediately.",
+        "`override fun greet() = \"Hello!\"` — provides the implementation.",
+        "`g.greet()` → \"Hello!\"."
+      ],
+      "tip": "Object expressions are used in AI code for one-off listeners, callbacks, and adapters where naming a full class isn't worth it. They're Kotlin's replacement for Java anonymous inner classes."
+    }
+  },
+  {
+    "id": "ch14-q8",
+    "topic": "object extending a class",
+    "difficulty": "easy",
+    "chapter": "ch-14",
+    "snippet": "open class Logger {\n    open fun log(msg: String) = println(\"LOG: $msg\")\n}\nval silent = object : Logger() {\n    override fun log(msg: String) { /* do nothing */ }\n}\nsilent.log(\"test\")\nprintln(\"done\")",
+    "question": "What does this print?",
+    "choices": ["LOG: test then done", "done", "test then done", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "An object expression can extend a class as well as implement interfaces. The overridden `log` does nothing, so only \"done\" is printed.",
+      "lineByLine": [
+        "`object : Logger()` — anonymous object extending Logger.",
+        "`override fun log(msg: String) { }` — empty body, does nothing.",
+        "`silent.log(\"test\")` — calls the override, which does nothing.",
+        "`println(\"done\")` — prints done."
+      ],
+      "tip": "Null-object pattern: an object that implements an interface/class but does nothing is useful in tests and optional callbacks. Instead of null-checking a callback, pass a silent no-op object."
+    }
+  },
+  {
+    "id": "ch14-q9",
+    "topic": "companion object cannot be instantiated",
+    "difficulty": "easy",
+    "chapter": "ch-14",
+    "snippet": "class ApiClient {\n    companion object {\n        const val BASE_URL = \"https://api.example.com\"\n    }\n}\nprintln(ApiClient.BASE_URL)",
+    "question": "What does this print?",
+    "choices": [
+      "Compilation error — must instantiate ApiClient first",
+      "https://api.example.com",
+      "BASE_URL",
+      "null"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Companion object members are accessed directly via the class name — no instance is needed. `const val` is a compile-time constant.",
+      "lineByLine": [
+        "`ApiClient.BASE_URL` — accessed on the class, not an instance.",
+        "No `ApiClient()` instantiation required.",
+        "`println(\"https://api.example.com\")` — prints the URL."
+      ],
+      "tip": "Companion objects replace Java's `static`. Constants, factory methods, and class-level utilities all live in the companion. Access them via `ClassName.member`, never via an instance."
+    }
+  },
+  {
+    "id": "ch14-q10",
+    "topic": "object declaration is a singleton",
+    "difficulty": "easy",
+    "chapter": "ch-14",
+    "snippet": "object Registry {\n    val items = mutableListOf<String>()\n}\nRegistry.items.add(\"alpha\")\nRegistry.items.add(\"beta\")\nprintln(Registry.items.size)",
+    "question": "What does this print?",
+    "choices": ["0", "1", "2", "Compilation error — object properties cannot be mutable"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "An `object` declaration is a singleton — there is exactly one instance. All mutations accumulate on the same object regardless of how many times you reference it.",
+      "lineByLine": [
+        "`Registry.items` — the single mutable list on the singleton.",
+        "`.add(\"alpha\")` — list becomes [alpha].",
+        "`.add(\"beta\")` — list becomes [alpha, beta].",
+        "`Registry.items.size` = 2."
+      ],
+      "tip": "Objects persist for the whole program lifetime. This makes them useful for global registries and caches, but a risk in tests — state from one test bleeds into the next unless explicitly cleared."
+    }
+  }
+]

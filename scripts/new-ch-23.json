@@ -1,0 +1,111 @@
+[
+  {
+    "id": "ch23-q6",
+    "topic": "invoke operator",
+    "difficulty": "difficult",
+    "chapter": "ch-23",
+    "snippet": "val double: (Int) -> Int = { it * 2 }\nprintln(double(5))\nprintln(double.invoke(5))",
+    "question": "What does this print?",
+    "choices": ["5 then 5", "10 then 10", "10 then Compilation error", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Function type variables can be called with `()` syntax or explicitly with `.invoke()`. Both are identical.",
+      "lineByLine": [
+        "`double(5)` — standard call syntax. Returns 5 * 2 = 10.",
+        "`double.invoke(5)` — explicit invoke call. Also returns 10.",
+        "Output: 10 then 10."
+      ],
+      "tip": "`.invoke()` is rarely written explicitly — `double(5)` is always preferred. But knowing it exists helps when reading AI code that uses functional interfaces or operator overloading, where `invoke` can be overridden."
+    }
+  },
+  {
+    "id": "ch23-q7",
+    "topic": "method reference ::println",
+    "difficulty": "difficult",
+    "chapter": "ch-23",
+    "snippet": "val items = listOf(\"alpha\", \"beta\", \"gamma\")\nitems.forEach(::println)",
+    "question": "What does this print?",
+    "choices": [
+      "::println",
+      "alpha then beta then gamma (each on its own line)",
+      "Compilation error — ::println is not a valid reference",
+      "[alpha, beta, gamma]"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`::println` is a function reference to the top-level `println` function. It can be passed anywhere a `(T) -> Unit` lambda is expected.",
+      "lineByLine": [
+        "`::println` — references the `println` function itself (not a call).",
+        "`forEach(::println)` — for each item, calls `println(item)`.",
+        "Prints alpha, beta, gamma each on their own line."
+      ],
+      "tip": "`::println` passed to `forEach` is idiomatic shorthand for `forEach { println(it) }`. AI code uses function references for clean, boilerplate-free callbacks: `list.map(::transform)`, `items.filter(::isValid)`."
+    }
+  },
+  {
+    "id": "ch23-q8",
+    "topic": "generic higher-order function",
+    "difficulty": "difficult",
+    "chapter": "ch-23",
+    "snippet": "fun <T, R> List<T>.mapFirst(transform: (T) -> R): R? {\n    return if (isEmpty()) null else transform(first())\n}\nprintln(listOf(3, 1, 4).mapFirst { it * 10 })\nprintln(emptyList<Int>().mapFirst { it * 10 })",
+    "question": "What does this print?",
+    "choices": ["30 then null", "10 then null", "30 then 0", "Compilation error"],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "A generic HOF can have multiple type parameters. `T` is the input type, `R` is the output type. The caller's lambda determines both through type inference.",
+      "lineByLine": [
+        "`listOf(3, 1, 4).mapFirst { it * 10 }` — T=Int, R=Int. first()=3. transform(3)=30.",
+        "`emptyList<Int>().mapFirst { ... }` — empty → returns null.",
+        "Output: 30 then null."
+      ],
+      "tip": "Generic HOFs with separate input and output type parameters (`<T, R>`) are how `map`, `flatMap`, and `fold` are defined. Reading `<T, R>` means: 'works on any input type T and can produce any output type R'."
+    }
+  },
+  {
+    "id": "ch23-q9",
+    "topic": "composing two functions",
+    "difficulty": "difficult",
+    "chapter": "ch-23",
+    "snippet": "fun <A, B, C> compose(f: (A) -> B, g: (B) -> C): (A) -> C {\n    return { a -> g(f(a)) }\n}\nval doubleIt = { x: Int -> x * 2 }\nval addTen  = { x: Int -> x + 10 }\nval combined = compose(doubleIt, addTen)\nprintln(combined(5))",
+    "question": "What does this print?",
+    "choices": ["15", "20", "25", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`compose` creates a new function that first applies `f` then `g`. Called with 5: double to 10, then add 10 to get 20.",
+      "lineByLine": [
+        "`compose(doubleIt, addTen)` returns `{ a -> addTen(doubleIt(a)) }`.",
+        "`combined(5)` → `addTen(doubleIt(5))`.",
+        "`doubleIt(5)` = 5 * 2 = 10.",
+        "`addTen(10)` = 10 + 10 = 20.",
+        "`println(20)` — prints 20."
+      ],
+      "tip": "Function composition builds pipelines without intermediate variables. AI code assembles processing pipelines this way: validate → transform → format → output. Each step is a pure function that can be tested independently."
+    }
+  },
+  {
+    "id": "ch23-q10",
+    "topic": "nullable function type",
+    "difficulty": "difficult",
+    "chapter": "ch-23",
+    "snippet": "fun runIfProvided(value: Int, action: ((Int) -> String)?) {\n    val result = action?.invoke(value) ?: \"no action\"\n    println(result)\n}\nrunIfProvided(42, { \"Got $it\" })\nrunIfProvided(42, null)",
+    "question": "What does this print?",
+    "choices": [
+      "Got 42 then no action",
+      "42 then null",
+      "Got 42 then null",
+      "Compilation error — function types cannot be nullable"
+    ],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "Function types can be nullable: `((Int) -> String)?`. Use `?.invoke()` to safely call a nullable function. If null, the Elvis operator provides a default.",
+      "lineByLine": [
+        "`runIfProvided(42, { \"Got $it\" })` — action is not null.",
+        "`action?.invoke(42)` → `{ \"Got $it\" }(42)` → \"Got 42\".",
+        "`runIfProvided(42, null)` — action is null.",
+        "`action?.invoke(42)` → null. `null ?: \"no action\"` → \"no action\".",
+        "Output: Got 42 then no action."
+      ],
+      "tip": "Nullable function types `((Type) -> Return)?` are used in AI code for optional callbacks: `onSuccess: ((Result) -> Unit)? = null`. Call them safely with `callback?.invoke(value)`."
+    }
+  }
+]

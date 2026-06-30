@@ -1,0 +1,105 @@
+[
+  {
+    "id": "ch16-q6",
+    "topic": "in operator for collections",
+    "difficulty": "easy",
+    "chapter": "ch-16",
+    "snippet": "val primes = listOf(2, 3, 5, 7, 11)\nprintln(5 in primes)\nprintln(4 in primes)",
+    "question": "What does this print?",
+    "choices": ["true then true", "true then false", "false then true", "false then false"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "The `in` operator checks if a value is present in a collection. It uses `equals()` for comparison.",
+      "lineByLine": [
+        "`5 in primes` — 5 is in the list → true.",
+        "`4 in primes` — 4 is not in the list → false.",
+        "Output: true then false."
+      ],
+      "tip": "`in` is the clean Kotlin way to check membership. For `List`, it's O(n). For `Set`, it's O(1). AI code uses `in` for readable guard checks: `if (status in validStatuses)`, `if (id in cache)`."
+    }
+  },
+  {
+    "id": "ch16-q7",
+    "topic": "getOrDefault",
+    "difficulty": "easy",
+    "chapter": "ch-16",
+    "snippet": "val scores = mapOf(\"Alice\" to 95, \"Bob\" to 87)\nprintln(scores.getOrDefault(\"Alice\", 0))\nprintln(scores.getOrDefault(\"Carol\", 0))",
+    "question": "What does this print?",
+    "choices": ["95 then null", "95 then 0", "0 then 0", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`getOrDefault(key, default)` returns the value if the key exists, or the default value if it doesn't. Unlike `[]`, it never returns null.",
+      "lineByLine": [
+        "`getOrDefault(\"Alice\", 0)` — Alice exists, returns 95.",
+        "`getOrDefault(\"Carol\", 0)` — Carol not found, returns 0.",
+        "Output: 95 then 0."
+      ],
+      "tip": "`getOrDefault` is cleaner than `scores[\"Carol\"] ?: 0` when you want a non-null fallback. AI code uses it for scoring, counting, and any map lookup where a missing key has a sensible default."
+    }
+  },
+  {
+    "id": "ch16-q8",
+    "topic": "mutableMapOf",
+    "difficulty": "easy",
+    "chapter": "ch-16",
+    "snippet": "val counts = mutableMapOf<String, Int>()\ncounts[\"a\"] = 1\ncounts[\"b\"] = 2\ncounts[\"a\"] = counts.getOrDefault(\"a\", 0) + 1\nprintln(counts[\"a\"])\nprintln(counts.size)",
+    "question": "What does this print?",
+    "choices": ["1 then 2", "2 then 2", "2 then 3", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`mutableMapOf` creates a map you can add to and update. Assigning an existing key overwrites its value.",
+      "lineByLine": [
+        "`counts[\"a\"] = 1` — adds key \"a\" with value 1.",
+        "`counts[\"b\"] = 2` — adds key \"b\" with value 2.",
+        "`counts[\"a\"] = getOrDefault(\"a\",0) + 1` = 1 + 1 = 2 → updates \"a\" to 2.",
+        "`counts[\"a\"]` = 2. `counts.size` = 2 (keys: a and b)."
+      ],
+      "tip": "The `count[key] = count.getOrDefault(key, 0) + 1` pattern is idiomatic frequency counting in Kotlin. AI code uses it for word counting, event tallying, and histogram building."
+    }
+  },
+  {
+    "id": "ch16-q9",
+    "topic": "sortedBy",
+    "difficulty": "easy",
+    "chapter": "ch-16",
+    "snippet": "val names = listOf(\"Charlie\", \"Alice\", \"Bob\")\nval sorted = names.sortedBy { it.length }\nprintln(sorted)",
+    "question": "What does this print?",
+    "choices": [
+      "[Alice, Bob, Charlie]",
+      "[Bob, Alice, Charlie]",
+      "[Charlie, Alice, Bob]",
+      "[Alice, Charlie, Bob]"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`sortedBy` returns a new list sorted by the result of the lambda. Strings are sorted by their lengths: Bob(3), Alice(5), Charlie(7).",
+      "lineByLine": [
+        "`sortedBy { it.length }` — sorts by character count ascending.",
+        "\"Bob\" = 3, \"Alice\" = 5, \"Charlie\" = 7.",
+        "Result: [Bob, Alice, Charlie].",
+        "`println([Bob, Alice, Charlie])` — prints that."
+      ],
+      "tip": "`sortedBy` leaves the original list unchanged and returns a new sorted copy. For descending order, use `sortedByDescending`. For in-place sorting on a mutable list, use `sortBy`."
+    }
+  },
+  {
+    "id": "ch16-q10",
+    "topic": "isEmpty on collection",
+    "difficulty": "easy",
+    "chapter": "ch-16",
+    "snippet": "val items = mutableListOf<String>()\nprintln(items.isEmpty())\nitems.add(\"hello\")\nprintln(items.isEmpty())",
+    "question": "What does this print?",
+    "choices": ["true then true", "false then false", "true then false", "false then true"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`isEmpty()` returns `true` when the collection has no elements. After adding an item, it returns `false`.",
+      "lineByLine": [
+        "`items` starts empty → `isEmpty()` = true.",
+        "`items.add(\"hello\")` — list now has one element.",
+        "`isEmpty()` = false.",
+        "Output: true then false."
+      ],
+      "tip": "`isEmpty()` and `isNotEmpty()` are used constantly in AI code as guard conditions: `if (queue.isEmpty()) return`, `if (errors.isNotEmpty()) showErrors()`. They're clearer than `size == 0`."
+    }
+  }
+]

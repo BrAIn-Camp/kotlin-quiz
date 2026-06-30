@@ -1,0 +1,112 @@
+[
+  {
+    "id": "ch17-q6",
+    "topic": "chained safe calls",
+    "difficulty": "easy",
+    "chapter": "ch-17",
+    "snippet": "data class City(val name: String)\ndata class Address(val city: City?)\ndata class User(val address: Address?)\n\nval user = User(null)\nprintln(user.address?.city?.name)",
+    "question": "What does this print?",
+    "choices": ["Throws NullPointerException", "null", "City", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Safe calls chain: if any link in the chain is null, the entire expression short-circuits to null immediately without proceeding further.",
+      "lineByLine": [
+        "`user.address` — address is null.",
+        "`?.city` — short-circuits: address is null, so this returns null.",
+        "`?.name` — also skipped.",
+        "Entire chain → null. `println(null)` — prints null."
+      ],
+      "tip": "Chained `?.` is one of Kotlin's most powerful patterns. `a?.b?.c?.d` reads as: 'give me d, but return null at the first missing link.' AI code uses this for deeply nested optional data structures."
+    }
+  },
+  {
+    "id": "ch17-q7",
+    "topic": "?.let with null receiver does not run",
+    "difficulty": "easy",
+    "chapter": "ch-17",
+    "snippet": "val value: String? = null\nvalue?.let {\n    println(\"Block ran: $it\")\n}\nprintln(\"After\")",
+    "question": "What does this print?",
+    "choices": [
+      "Block ran: null then After",
+      "After",
+      "Block ran:  then After",
+      "Compilation error"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "When `?.let` is called on a null value, the `let` block is skipped entirely. Execution jumps straight to the code after it.",
+      "lineByLine": [
+        "`value` is null.",
+        "`value?.let { ... }` — `?.` short-circuits: block does NOT run.",
+        "Execution continues after the let block.",
+        "`println(\"After\")` — prints After."
+      ],
+      "tip": "`?.let { }` is the idiomatic 'run this code only if the value is not null' pattern in Kotlin. AI code uses it to safely execute side effects on nullable values."
+    }
+  },
+  {
+    "id": "ch17-q8",
+    "topic": "isNullOrEmpty",
+    "difficulty": "easy",
+    "chapter": "ch-17",
+    "snippet": "val a: String? = null\nval b: String? = \"\"\nval c: String? = \"hi\"\nprintln(a.isNullOrEmpty())\nprintln(b.isNullOrEmpty())\nprintln(c.isNullOrEmpty())",
+    "question": "What does this print?",
+    "choices": [
+      "true then false then false",
+      "true then true then false",
+      "false then true then false",
+      "Compilation error — cannot call isNullOrEmpty on String?"
+    ],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`isNullOrEmpty()` is an extension on `String?` that returns true if the string is null OR has zero characters. It's a safe call on a nullable type.",
+      "lineByLine": [
+        "`a.isNullOrEmpty()` — a is null → true.",
+        "`b.isNullOrEmpty()` — b is \"\" (zero chars) → true.",
+        "`c.isNullOrEmpty()` — c is \"hi\" (non-null, non-empty) → false.",
+        "Output: true then true then false."
+      ],
+      "tip": "`isNullOrEmpty()` and `isNullOrBlank()` are helper extensions on nullable strings that handle the null check for you. AI code uses them to validate user input and API responses without nested null checks."
+    }
+  },
+  {
+    "id": "ch17-q9",
+    "topic": "Elvis with return",
+    "difficulty": "easy",
+    "chapter": "ch-17",
+    "snippet": "fun getLength(s: String?): Int {\n    val str = s ?: return -1\n    return str.length\n}\nprintln(getLength(null))\nprintln(getLength(\"hello\"))",
+    "question": "What does this print?",
+    "choices": ["-1 then 5", "0 then 5", "-1 then -1", "Compilation error"],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "`?: return` is a guard clause: if the value is null, return immediately with the given value. Otherwise, the non-null value is assigned.",
+      "lineByLine": [
+        "`getLength(null)`: s is null → `s ?: return -1` → returns -1 immediately.",
+        "`getLength(\"hello\")`: s is \"hello\" → `str = \"hello\"` (not null, no return).",
+        "`str.length` = 5 → returns 5.",
+        "Output: -1 then 5."
+      ],
+      "tip": "`val x = y ?: return` (or `?: return defaultValue`) is a clean one-liner guard clause in AI code. It replaces `if (y == null) return` and makes the non-null path obvious."
+    }
+  },
+  {
+    "id": "ch17-q10",
+    "topic": "nullable Int with Elvis",
+    "difficulty": "easy",
+    "chapter": "ch-17",
+    "snippet": "val input: String = \"abc\"\nval number: Int = input.toIntOrNull() ?: 0\nprintln(number)",
+    "question": "What does this print?",
+    "choices": ["abc", "Throws NumberFormatException", "0", "null"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`toIntOrNull()` returns null if the string can't be parsed. The Elvis operator provides 0 as the fallback, so `number` is always a non-null Int.",
+      "lineByLine": [
+        "`\"abc\".toIntOrNull()` — \"abc\" is not a valid integer → returns null.",
+        "`null ?: 0` — null triggers Elvis → result is 0.",
+        "`val number: Int = 0`.",
+        "`println(0)` — prints 0."
+      ],
+      "tip": "`input.toIntOrNull() ?: 0` is the safest way to parse integers in AI code. It never throws, never produces null, and gives a meaningful default. You'll see this pattern for form inputs, config parsing, and API responses."
+    }
+  }
+]

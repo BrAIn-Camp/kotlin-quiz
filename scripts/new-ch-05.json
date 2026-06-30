@@ -1,0 +1,107 @@
+[
+  {
+    "id": "ch05-q6",
+    "topic": "!in range check",
+    "difficulty": "easy",
+    "chapter": "ch-05",
+    "snippet": "val age = 15\nval msg = when {\n    age in 0..12  -> \"Child\"\n    age in 13..17 -> \"Teen\"\n    age !in 0..17 -> \"Adult\"\n    else          -> \"Unknown\"\n}\nprintln(msg)",
+    "question": "What does this print?",
+    "choices": ["Child", "Teen", "Adult", "Unknown"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`!in` is the opposite of `in` — it checks that a value is *not* in a range. Here, age 15 matches the `13..17` branch before `!in` is ever tested.",
+      "lineByLine": [
+        "`age in 0..12` → `15 in 0..12` → false, skip.",
+        "`age in 13..17` → `15 in 13..17` → true, match!",
+        "Returns \"Teen\". The remaining branches are not evaluated.",
+        "`println(\"Teen\")` — prints Teen."
+      ],
+      "tip": "`!in` is shorthand for `!range.contains(value)`. AI code uses it for exclusion checks like `if (status !in listOf(\"active\", \"pending\"))`."
+    }
+  },
+  {
+    "id": "ch05-q7",
+    "topic": "when with String",
+    "difficulty": "easy",
+    "chapter": "ch-05",
+    "snippet": "val lang = \"Kotlin\"\nval type = when (lang) {\n    \"Java\", \"Kotlin\" -> \"JVM\"\n    \"Swift\", \"ObjC\"  -> \"Apple\"\n    else             -> \"Other\"\n}\nprintln(type)",
+    "question": "What does this print?",
+    "choices": ["Kotlin", "JVM", "Apple", "Other"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`when` works with String subjects just like Int subjects. `\"Kotlin\"` matches the first branch which lists both `\"Java\"` and `\"Kotlin\"`.",
+      "lineByLine": [
+        "`when (lang)` — tests lang against each branch.",
+        "`\"Java\", \"Kotlin\"` — lang is \"Kotlin\", matches this branch.",
+        "Returns \"JVM\".",
+        "`println(\"JVM\")` — prints JVM."
+      ],
+      "tip": "String `when` is very common in AI code for routing, command parsing, and mapping string identifiers to behaviour. The `==` used by `when` is always content equality."
+    }
+  },
+  {
+    "id": "ch05-q8",
+    "topic": "when as function body",
+    "difficulty": "easy",
+    "chapter": "ch-05",
+    "snippet": "fun classify(n: Int) = when {\n    n < 0  -> \"negative\"\n    n == 0 -> \"zero\"\n    else   -> \"positive\"\n}\nprintln(classify(-3))\nprintln(classify(0))",
+    "question": "What does this print?",
+    "choices": [
+      "negative then zero",
+      "negative then positive",
+      "zero then negative",
+      "Compilation error"
+    ],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "A `when` expression can be the entire body of a single-expression function using `=`. Each branch is a boolean condition.",
+      "lineByLine": [
+        "`fun classify(n: Int) = when { ... }` — when is the function's return value.",
+        "`classify(-3)`: `-3 < 0` → true → returns \"negative\".",
+        "`classify(0)`: `0 < 0` → false; `0 == 0` → true → returns \"zero\".",
+        "Output: negative then zero."
+      ],
+      "tip": "Single-expression functions with `when` bodies are extremely common in AI Kotlin. They replace multi-line if/else chains cleanly and the return type is inferred automatically."
+    }
+  },
+  {
+    "id": "ch05-q9",
+    "topic": "when checking null",
+    "difficulty": "easy",
+    "chapter": "ch-05",
+    "snippet": "val input: String? = null\nval result = when (input) {\n    null -> \"nothing\"\n    \"\"   -> \"empty\"\n    else -> \"has value: $input\"\n}\nprintln(result)",
+    "question": "What does this print?",
+    "choices": ["empty", "nothing", "has value: null", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`when` can match against `null` directly. This is a clean way to handle nullable values without a separate null check.",
+      "lineByLine": [
+        "`input` is null.",
+        "`null ->` branch matches exactly.",
+        "Returns \"nothing\".",
+        "`println(\"nothing\")` — prints nothing."
+      ],
+      "tip": "`when (value) { null -> ...; else -> ... }` is a clean null-handling pattern in AI code. It replaces the verbose `if (value == null) { } else { when (value) { } }` pattern."
+    }
+  },
+  {
+    "id": "ch05-q10",
+    "topic": "when return used directly",
+    "difficulty": "easy",
+    "chapter": "ch-05",
+    "snippet": "val n = 7\nprintln(\n    when {\n        n % 2 == 0 -> \"even\"\n        else       -> \"odd\"\n    }\n)",
+    "question": "What does this print?",
+    "choices": ["even", "odd", "7", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "A `when` expression can be passed directly to `println` without storing it in a variable first. Its value is computed and passed immediately.",
+      "lineByLine": [
+        "`n % 2 == 0` → `7 % 2 == 0` → `1 == 0` → false.",
+        "`else -> \"odd\"` — runs.",
+        "The `when` expression evaluates to \"odd\".",
+        "`println(\"odd\")` — prints odd."
+      ],
+      "tip": "Because `when` is an expression, it can go anywhere a value is expected: in `println`, as a function argument, in a list constructor, etc. AI code uses this to stay concise."
+    }
+  }
+]
