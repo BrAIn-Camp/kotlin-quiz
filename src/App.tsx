@@ -78,10 +78,10 @@ export default function App() {
           <span className="header-title">Kotlin Code Reader</span>
           <a
             className="header-github-link"
-            href="https://github.com/CycoLand/learn-android-ui"
+            href="https://github.com/BrAIn-Camp/kotlin-quiz"
             target="_blank"
             rel="noopener noreferrer"
-            title="View the course repository on GitHub"
+            title="View the quiz app repository on GitHub"
           >
             <svg height="18" viewBox="0 0 16 16" width="18" aria-hidden="true" fill="currentColor">
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
