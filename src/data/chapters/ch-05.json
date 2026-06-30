@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch05-q1", "topic": "when basic", "difficulty": "easy", "chapter": "ch-05",
+    "snippet": "val day = 3\nval name = when (day) {\n    1 -> \"Mon\"\n    2 -> \"Tue\"\n    3 -> \"Wed\"\n    else -> \"Other\"\n}\nprintln(name)",
+    "question": "What does this print?",
+    "choices": ["Mon", "Tue", "Wed", "Other"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`when` matches the value against each branch and returns the result of the first matching one.",
+      "lineByLine": ["`when (day)` — tests day against each branch.", "`3 -> \"Wed\"` — day is 3, this branch matches.", "`val name = \"Wed\"`.", "`println(\"Wed\")` — prints Wed."],
+      "tip": "`when` is Kotlin's replacement for `switch`. Unlike Java's switch, `when` is an expression that returns a value, and there's no fall-through between cases."
+    }
+  },
+  {
+    "id": "ch05-q2", "topic": "when else", "difficulty": "easy", "chapter": "ch-05",
+    "snippet": "val code = 99\nval msg = when (code) {\n    200 -> \"OK\"\n    404 -> \"Not Found\"\n    500 -> \"Server Error\"\n    else -> \"Unknown\"\n}\nprintln(msg)",
+    "question": "What does this print?",
+    "choices": ["OK", "Not Found", "Server Error", "Unknown"],
+    "correctIndex": 3,
+    "explanation": {
+      "summary": "When no branch matches, the `else` branch runs. It's required when `when` is used as an expression unless all possible values are covered.",
+      "lineByLine": ["`code` is 99.", "200, 404, 500 — none match 99.", "`else -> \"Unknown\"` — the fallback branch runs.", "`println(\"Unknown\")` — prints Unknown."],
+      "tip": "When `when` is used as an expression (assigns to a variable or is returned), the `else` branch is mandatory unless the compiler can verify all cases are covered — as with sealed classes or enums."
+    }
+  },
+  {
+    "id": "ch05-q3", "topic": "when multiple values", "difficulty": "easy", "chapter": "ch-05",
+    "snippet": "val month = 4\nval season = when (month) {\n    12, 1, 2 -> \"Winter\"\n    3, 4, 5  -> \"Spring\"\n    6, 7, 8  -> \"Summer\"\n    else     -> \"Autumn\"\n}\nprintln(season)",
+    "question": "What does this print?",
+    "choices": ["Winter", "Spring", "Summer", "Autumn"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "A single `when` branch can match multiple values by separating them with commas.",
+      "lineByLine": ["`month` is 4.", "`3, 4, 5 -> \"Spring\"` — 4 is in this list, so it matches.", "Returns \"Spring\".", "`println(\"Spring\")` — prints Spring."],
+      "tip": "Multiple values in one `when` branch (`val1, val2 -> result`) replaces many `if (x == a || x == b)` conditions. AI code uses this pattern constantly."
+    }
+  },
+  {
+    "id": "ch05-q4", "topic": "when with range", "difficulty": "easy", "chapter": "ch-05",
+    "snippet": "val score = 82\nval grade = when (score) {\n    in 90..100 -> \"A\"\n    in 80..89  -> \"B\"\n    in 70..79  -> \"C\"\n    else       -> \"F\"\n}\nprintln(grade)",
+    "question": "What does this print?",
+    "choices": ["A", "B", "C", "F"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`when` branches can use `in range` to check if a value falls within a range.",
+      "lineByLine": ["`score` is 82.", "`in 90..100` — 82 not in range, skip.", "`in 80..89` — 82 is in 80–89, match!", "Returns \"B\". `println(\"B\")` — prints B."],
+      "tip": "Range checks in `when` (`in 80..89`) are much cleaner than `score >= 80 && score <= 89`. AI code uses this pattern for scoring, bucketing, and categorical logic."
+    }
+  },
+  {
+    "id": "ch05-q5", "topic": "when without argument", "difficulty": "easy", "chapter": "ch-05",
+    "snippet": "val x = 15\nwhen {\n    x < 0  -> println(\"negative\")\n    x == 0 -> println(\"zero\")\n    else   -> println(\"positive\")\n}",
+    "question": "What does this print?",
+    "choices": ["negative", "zero", "positive", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`when` without an argument acts like a chain of `if/else if` — each branch is a boolean condition.",
+      "lineByLine": ["`x < 0` → `15 < 0` → false, skip.", "`x == 0` → `15 == 0` → false, skip.", "`else` — runs, prints positive."],
+      "tip": "`when` without an argument is a clean replacement for long `if/else if` chains. AI code often uses this form when testing multiple unrelated conditions."
+    }
+  }
+]

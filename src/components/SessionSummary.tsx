@@ -4,6 +4,7 @@ interface SessionSummaryProps {
   difficulty: Difficulty;
   questions: Question[];
   answers: (number | null)[];
+  chapterTitle?: string;
   onRetry: () => void;
   onChooseModule: () => void;
 }
@@ -17,6 +18,7 @@ export default function SessionSummary({
   difficulty,
   questions,
   answers,
+  chapterTitle,
   onRetry,
   onChooseModule,
 }: SessionSummaryProps) {
@@ -43,9 +45,10 @@ export default function SessionSummary({
         {passed ? '🎉 Great work!' : '📚 Keep practicing!'}
       </h2>
       <p className="summary-subtitle">
-        {passed
-          ? `You scored ${pct}% on the ${difficulty} tier.`
-          : `You scored ${pct}%. Hit 70% to advance.`}
+        {chapterTitle
+          ? (passed ? `You scored ${pct}% on Ch: ${chapterTitle}.` : `You scored ${pct}% on Ch: ${chapterTitle}.`)
+          : (passed ? `You scored ${pct}% on the ${difficulty} tier.` : `You scored ${pct}%. Hit 70% to advance.`)
+        }
       </p>
 
       {missed.length > 0 && (
@@ -69,9 +72,9 @@ export default function SessionSummary({
 
       <div className="summary-actions">
         <button className="btn-secondary" onClick={onRetry}>
-          🔄 Retry {difficulty}
+          🔄 Retry {chapterTitle ? `Ch: ${chapterTitle}` : difficulty}
         </button>
-        {passed && nextTier ? (
+        {passed && nextTier && !chapterTitle ? (
           <button className="btn-primary" onClick={onChooseModule}>
             Next: {nextTier.charAt(0).toUpperCase() + nextTier.slice(1)} →
           </button>

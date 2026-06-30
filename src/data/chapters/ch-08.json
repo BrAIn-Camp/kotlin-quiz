@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch08-q1", "topic": "function declaration", "difficulty": "easy", "chapter": "ch-08",
+    "snippet": "fun add(a: Int, b: Int): Int {\n    return a + b\n}\nprintln(add(3, 4))",
+    "question": "What does this print?",
+    "choices": ["3", "4", "7", "a + b"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`add` takes two Int parameters and returns their sum. Called with 3 and 4, it returns 7.",
+      "lineByLine": ["`fun add(a: Int, b: Int): Int` — parameters and return type are explicit.", "`return a + b` — returns 3 + 4 = 7.", "`println(add(3, 4))` — prints 7."],
+      "tip": "Function parameter types and return types are always explicit in Kotlin. Unlike variables, Kotlin does not infer function return types from the body (in multi-line functions)."
+    }
+  },
+  {
+    "id": "ch08-q2", "topic": "single expression function", "difficulty": "easy", "chapter": "ch-08",
+    "snippet": "fun square(n: Int) = n * n\nprintln(square(5))",
+    "question": "What does this print?",
+    "choices": ["n * n", "5", "25", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "A single-expression function uses `=` instead of `{}` and `return`. The return type is inferred from the expression.",
+      "lineByLine": ["`fun square(n: Int) = n * n` — the `= n * n` is the entire function body.", "Return type is inferred as Int.", "`square(5)` = 5 * 5 = 25.", "`println(25)` — prints 25."],
+      "tip": "Single-expression functions (`fun f() = expr`) are extremely common in AI Kotlin. They're concise and the return type is always inferred. Watch for them — they're easy to misread as assignment."
+    }
+  },
+  {
+    "id": "ch08-q3", "topic": "Unit return", "difficulty": "easy", "chapter": "ch-08",
+    "snippet": "fun printLine(msg: String) {\n    println(\">> $msg\")\n}\nprintLine(\"test\")",
+    "question": "What does this print?",
+    "choices": ["test", ">> test", "msg", ">> msg"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "A function with no return type declaration implicitly returns `Unit`. `println` with a string template prepends `>> `.",
+      "lineByLine": ["`fun printLine(msg: String)` — no return type, implicitly Unit.", "`println(\">> $msg\")` — $msg is replaced by \"test\".", "Output: >> test."],
+      "tip": "Functions that exist only for side effects (printing, logging, writing) return Unit implicitly. You don't need to write `return Unit` or `: Unit` — it's always omitted in real code."
+    }
+  },
+  {
+    "id": "ch08-q4", "topic": "early return", "difficulty": "easy", "chapter": "ch-08",
+    "snippet": "fun checkAge(age: Int): String {\n    if (age < 0) return \"Invalid\"\n    if (age < 18) return \"Minor\"\n    return \"Adult\"\n}\nprintln(checkAge(20))",
+    "question": "What does this print?",
+    "choices": ["Invalid", "Minor", "Adult", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "Multiple `return` statements in a function — the first one reached exits the function immediately.",
+      "lineByLine": ["`age` is 20.", "`age < 0` → false, skip.", "`age < 18` → false, skip.", "`return \"Adult\"` — reached, function exits with \"Adult\".", "`println(\"Adult\")` — prints Adult."],
+      "tip": "Early returns (guard clauses) are a common pattern in AI code to handle edge cases at the top of a function before the main logic. This keeps nesting flat."
+    }
+  },
+  {
+    "id": "ch08-q5", "topic": "function as value", "difficulty": "easy", "chapter": "ch-08",
+    "snippet": "fun multiply(a: Int, b: Int) = a * b\nval result = multiply(6, 7)\nprintln(result)",
+    "question": "What does this print?",
+    "choices": ["6", "7", "42", "multiply(6, 7)"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "The return value of a function call can be stored in a variable. `multiply(6, 7)` returns 42.",
+      "lineByLine": ["`fun multiply(a: Int, b: Int) = a * b` — single-expression function.", "`multiply(6, 7)` = 6 * 7 = 42.", "`val result = 42`.", "`println(42)` — prints 42."],
+      "tip": "Storing function results in `val` before using them is idiomatic Kotlin — it makes the intent clear and keeps individual lines short."
+    }
+  }
+]

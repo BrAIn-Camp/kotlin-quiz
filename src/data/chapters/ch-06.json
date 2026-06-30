@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch06-q1", "topic": "range creation", "difficulty": "easy", "chapter": "ch-06",
+    "snippet": "val r = 1..5\nprintln(r.contains(3))\nprintln(r.contains(6))",
+    "question": "What does this print?",
+    "choices": ["true then true", "true then false", "false then true", "false then false"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`1..5` creates an IntRange from 1 to 5, inclusive on both ends. `contains` returns true if the value is within the range.",
+      "lineByLine": ["`1..5` — includes 1, 2, 3, 4, 5.", "`r.contains(3)` — 3 is in the range → true.", "`r.contains(6)` — 6 is outside the range → false."],
+      "tip": "Ranges are inclusive by default (`1..5` includes 5). Use `1 until 5` for an exclusive upper bound (1 to 4). AI code uses both forms depending on the context."
+    }
+  },
+  {
+    "id": "ch06-q2", "topic": "for with range", "difficulty": "easy", "chapter": "ch-06",
+    "snippet": "for (i in 1..3) {\n    print(\"$i \")\n}",
+    "question": "What does this print?",
+    "choices": ["1 2 3", "1 2", "1 2 3 4", "0 1 2 3"],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "`for (i in 1..3)` iterates over the range 1, 2, 3 — inclusive on both ends.",
+      "lineByLine": ["`1..3` — range is 1, 2, 3.", "`print(\"$i \")` — prints the number followed by a space (no newline).", "Output: 1 2 3 (with a trailing space)."],
+      "tip": "`for (i in range)` is the standard Kotlin loop. Note `print` vs `println` — `print` doesn't add a newline, so all values appear on one line."
+    }
+  },
+  {
+    "id": "ch06-q3", "topic": "downTo", "difficulty": "easy", "chapter": "ch-06",
+    "snippet": "for (i in 5 downTo 3) {\n    print(\"$i \")\n}",
+    "question": "What does this print?",
+    "choices": ["3 4 5", "5 4 3", "5 4 3 2 1", "3 4"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`downTo` creates a descending range. `5 downTo 3` iterates 5, 4, 3.",
+      "lineByLine": ["`5 downTo 3` — starts at 5, decrements by 1 each step, stops at 3 (inclusive).", "Iteration: i=5, i=4, i=3.", "Output: 5 4 3."],
+      "tip": "`downTo` creates a reverse range. It's commonly used in AI code for countdown timers, reverse iteration, and algorithms that process from end to start."
+    }
+  },
+  {
+    "id": "ch06-q4", "topic": "step", "difficulty": "easy", "chapter": "ch-06",
+    "snippet": "for (i in 0..10 step 3) {\n    print(\"$i \")\n}",
+    "question": "What does this print?",
+    "choices": ["0 3 6 9", "0 3 6 9 12", "3 6 9", "0 3 6 10"],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "`step` sets the increment for each iteration. `0..10 step 3` produces 0, 3, 6, 9 — stopping when the next value would exceed 10.",
+      "lineByLine": ["`0..10 step 3` — start at 0, add 3 each time, stop when > 10.", "Values: 0, 3, 6, 9. (next would be 12 > 10, so stop).", "Output: 0 3 6 9."],
+      "tip": "`step` is used when you need to skip values — iterating every other element, every 10 pixels, every 5 seconds, etc."
+    }
+  },
+  {
+    "id": "ch06-q5", "topic": "for over list", "difficulty": "easy", "chapter": "ch-06",
+    "snippet": "val fruits = listOf(\"apple\", \"banana\", \"cherry\")\nfor (fruit in fruits) {\n    println(fruit)\n}",
+    "question": "What does this print?",
+    "choices": ["apple banana cherry (on one line)", "apple then banana then cherry (each on its own line)", "[apple, banana, cherry]", "fruit fruit fruit"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`for (item in list)` iterates over every element. Each `println` call produces a new line.",
+      "lineByLine": ["`for (fruit in fruits)` — iterates over each element in the list.", "First iteration: fruit = \"apple\", prints apple.", "Second: fruit = \"banana\", prints banana.", "Third: fruit = \"cherry\", prints cherry."],
+      "tip": "`for (item in collection)` is the standard way to iterate any Kotlin collection. It works on lists, sets, maps, ranges, and any Iterable."
+    }
+  }
+]

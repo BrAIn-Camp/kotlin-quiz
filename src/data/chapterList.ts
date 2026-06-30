@@ -1,0 +1,27 @@
+import type { ChapterInfo } from '../types/question';
+
+export const CHAPTERS: ChapterInfo[] = [
+  { id: 'ch-01', number: 1,  title: 'Hello Kotlin',                folder: 'ch-01-hello-kotlin',              description: '`fun main()`, `println()` — entry point, top-level functions, no class required' },
+  { id: 'ch-02', number: 2,  title: 'Variables',                   folder: 'ch-02-variables',                 description: '`val` vs `var`, type inference, basic types by example' },
+  { id: 'ch-03', number: 3,  title: 'Strings',                     folder: 'ch-03-strings',                   description: 'String templates, multiline strings, common string operations' },
+  { id: 'ch-04', number: 4,  title: 'if / else',                   folder: 'ch-04-if-else',                   description: 'Conditions as statements and as expressions that return a value' },
+  { id: 'ch-05', number: 5,  title: 'when',                        folder: 'ch-05-when',                      description: 'Pattern matching — value branches, range checks, type checks' },
+  { id: 'ch-06', number: 6,  title: 'Ranges + for',                folder: 'ch-06-ranges-for',                description: '`1..10`, `downTo`, `step`, `for` loops over ranges and lists' },
+  { id: 'ch-07', number: 7,  title: 'while',                       folder: 'ch-07-while',                     description: '`while` and `do-while` loops, `break`, `continue`' },
+  { id: 'ch-08', number: 8,  title: 'Functions',                   folder: 'ch-08-functions',                 description: 'Declaring functions, return types, single-expression syntax' },
+  { id: 'ch-09', number: 9,  title: 'Default Params + Named Args', folder: 'ch-09-default-params-named-args', description: 'Optional parameters with defaults, calling with named arguments' },
+  { id: 'ch-10', number: 10, title: 'Types',                       folder: 'ch-10-types',                     description: '`Int`, `Long`, `Double`, `Boolean`, `Char`, `String` — the explicit type system' },
+  { id: 'ch-11', number: 11, title: 'Enums',                       folder: 'ch-11-enums',                     description: 'Fixed sets of named options, properties on entries, `when` with enums' },
+  { id: 'ch-12', number: 12, title: 'Data Classes',                folder: 'ch-12-data-classes',              description: 'Structured data — auto `equals`, `hashCode`, `toString`, `copy`' },
+  { id: 'ch-13', number: 13, title: 'Classes',                     folder: 'ch-13-classes',                   description: 'Primary constructor, `init`, member functions, `this`' },
+  { id: 'ch-14', number: 14, title: 'object + companion object',   folder: 'ch-14-object-companion',          description: 'Singletons and class-level members without `static`' },
+  { id: 'ch-15', number: 15, title: 'Sealed Classes',              folder: 'ch-15-sealed-classes',            description: 'Closed set of shapes — exhaustive `when`, compile-time completeness' },
+  { id: 'ch-16', number: 16, title: 'Collections',                 folder: 'ch-16-collections',               description: '`listOf`, `mapOf`, `setOf`, mutable variants, iterate with `for`' },
+  { id: 'ch-17', number: 17, title: 'Null Safety',                 folder: 'ch-17-null-safety',               description: '`String?` vs `String`, `?.`, `?:`, `!!`, smart casts after null check' },
+  { id: 'ch-18', number: 18, title: 'Lambdas',                     folder: 'ch-18-lambdas',                   description: 'Functions as values — `{ a, b -> a + b }`, `it`, trailing lambda syntax' },
+  { id: 'ch-19', number: 19, title: 'map / filter / forEach',      folder: 'ch-19-collection-ops',            description: 'Transforming and querying collections with lambdas' },
+  { id: 'ch-20', number: 20, title: 'Extension Functions',         folder: 'ch-20-extension-functions',       description: 'Adding functions to types you don\'t own — the pattern behind Android KTX' },
+  { id: 'ch-21', number: 21, title: 'Type Checking',               folder: 'ch-21-type-checking',             description: '`is`, smart casts, `as`, `as?` — safe and unsafe casting' },
+  { id: 'ch-22', number: 22, title: 'Scope Functions',             folder: 'ch-22-scope-functions',           description: '`let`, `apply`, `run`, `with`, `also` — object configuration and chaining' },
+  { id: 'ch-23', number: 23, title: 'Higher-Order Functions',      folder: 'ch-23-higher-order-functions',    description: 'Functions as parameters and return values, function types, `typealias`' },
+];

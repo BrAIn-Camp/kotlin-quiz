@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch15-q1", "topic": "sealed class exhaustive when", "difficulty": "moderate", "chapter": "ch-15",
+    "snippet": "sealed class Shape\nclass Circle(val r: Double) : Shape()\nclass Square(val s: Double) : Shape()\n\nfun area(shape: Shape) = when (shape) {\n    is Circle -> 3.14 * shape.r * shape.r\n    is Square -> shape.s * shape.s\n}\nprintln(area(Square(4.0)))",
+    "question": "What does this print?",
+    "choices": ["Compilation error — missing else branch", "16.0", "12.56", "Shape"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Sealed class + when is exhaustive — no `else` needed because the compiler knows all subtypes. Square area = s*s = 4.0*4.0 = 16.0.",
+      "lineByLine": ["`sealed class Shape` — only Circle and Square can extend it.", "`when (shape)` covers both subtypes — compiler accepts this without `else`.", "`is Square` matches, `shape` is smart-cast to Square.", "`shape.s * shape.s` = 4.0 * 4.0 = 16.0."],
+      "tip": "Sealed classes + when is how AI code models 'one of several known types' — like API results (Success/Error), UI states (Loading/Loaded/Error), or domain events."
+    }
+  },
+  {
+    "id": "ch15-q2", "topic": "sealed vs enum", "difficulty": "moderate", "chapter": "ch-15",
+    "snippet": "sealed class Notification\ndata class Email(val to: String, val body: String) : Notification()\ndata class Sms(val to: String) : Notification()\ndata class Push(val title: String, val body: String) : Notification()\n\nval n: Notification = Email(\"a@b.com\", \"Hi\")\nprintln(n is Email)",
+    "question": "What does this print?",
+    "choices": ["false", "true", "Email", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Unlike enums, sealed class subtypes can each carry different data. `n is Email` checks the runtime type.",
+      "lineByLine": ["`n` is declared as `Notification` but holds an `Email` instance.", "`n is Email` — runtime type check: true.", "`println(true)` — prints true."],
+      "tip": "The key advantage of sealed classes over enums: each subtype can carry its own unique data. AI code models result types, events, and UI states as sealed classes for exactly this reason."
+    }
+  },
+  {
+    "id": "ch15-q3", "topic": "smart cast in when", "difficulty": "moderate", "chapter": "ch-15",
+    "snippet": "sealed class Event\ndata class Click(val x: Int, val y: Int) : Event()\nobject Dismiss : Event()\n\nfun handle(e: Event) = when (e) {\n    is Click  -> \"Clicked at ${e.x},${e.y}\"\n    is Dismiss -> \"Dismissed\"\n}\nprintln(handle(Click(10, 20)))",
+    "question": "What does this print?",
+    "choices": ["Clicked at e.x,e.y", "Clicked at 10,20", "Dismissed", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Inside an `is` branch, Kotlin smart-casts the variable to that type. `e` becomes a `Click`, so `e.x` and `e.y` are accessible without explicit casting.",
+      "lineByLine": ["`handle(Click(10, 20))` — e is a Click.", "`is Click` matches, e is smart-cast to Click.", "`e.x` = 10, `e.y` = 20.", "`\"Clicked at 10,20\"` is returned and printed."],
+      "tip": "Smart casts after `is` checks eliminate explicit casts (`e as Click`). AI code relies on this heavily — after a type check, you can use all the subtype's properties directly."
+    }
+  },
+  {
+    "id": "ch15-q4", "topic": "object subtype in sealed", "difficulty": "moderate", "chapter": "ch-15",
+    "snippet": "sealed class State\nobject Loading : State()\ndata class Success(val data: String) : State()\ndata class Error(val msg: String) : State()\n\nval s: State = Loading\nprintln(s == Loading)",
+    "question": "What does this print?",
+    "choices": ["false", "true", "Loading", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`object` subtypes are singletons — there's only one `Loading` instance. Comparing with `==` always returns true when checking the same singleton.",
+      "lineByLine": ["`object Loading` — a singleton sealed subtype.", "`val s: State = Loading` — s references the Loading singleton.", "`s == Loading` — same reference, same object → true."],
+      "tip": "`object` subtypes in sealed classes represent states with no data (like loading, empty, or idle). `data class` subtypes carry data. This combination is the standard pattern for UI state in Android."
+    }
+  },
+  {
+    "id": "ch15-q5", "topic": "sealed completeness guard", "difficulty": "moderate", "chapter": "ch-15",
+    "snippet": "sealed class Result\ndata class Ok(val value: Int) : Result()\ndata class Err(val msg: String) : Result()\n\nfun describe(r: Result): String = when (r) {\n    is Ok  -> \"Value: ${r.value}\"\n    is Err -> \"Error: ${r.msg}\"\n}\nprintln(describe(Ok(99)))",
+    "question": "What does this print?",
+    "choices": ["Compilation error — missing else", "Value: 99", "Error: 99", "Ok(value=99)"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "With a sealed class, when you cover all subtypes in a `when` expression, no `else` branch is needed — the compiler verifies completeness at compile time.",
+      "lineByLine": ["`sealed class Result` — only Ok and Err exist.", "`when (r)` handles both — exhaustive, no `else` needed.", "`describe(Ok(99))` — `is Ok` matches, r.value = 99.", "Returns \"Value: 99\". Prints Value: 99."],
+      "tip": "This compile-time exhaustiveness is why sealed classes are used for error handling. If you add a new subtype later, every `when` that doesn't have `else` becomes a compile error — forcing you to handle the new case."
+    }
+  }
+]

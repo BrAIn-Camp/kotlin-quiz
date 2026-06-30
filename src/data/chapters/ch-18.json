@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch18-q1", "topic": "lambda syntax", "difficulty": "moderate", "chapter": "ch-18",
+    "snippet": "val double = { x: Int -> x * 2 }\nprintln(double(5))",
+    "question": "What does this print?",
+    "choices": ["x * 2", "5", "10", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "A lambda is a function stored in a variable. `{ x: Int -> x * 2 }` takes an Int and returns it doubled. Calling `double(5)` executes the lambda.",
+      "lineByLine": ["`{ x: Int -> x * 2 }` — lambda with parameter x, body x*2.", "`val double = ...` — the lambda is assigned to a variable.", "`double(5)` — calls the lambda with x=5. Returns 5*2=10.", "`println(10)` — prints 10."],
+      "tip": "Lambdas are the foundation of Kotlin's functional style. You'll see them everywhere in AI code — passed to `map`, `filter`, event handlers, and callbacks."
+    }
+  },
+  {
+    "id": "ch18-q2", "topic": "it keyword", "difficulty": "moderate", "chapter": "ch-18",
+    "snippet": "val square = { it: Int -> it * it }\nprintln(square(4))",
+    "question": "What does this print?",
+    "choices": ["it * it", "4", "16", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "When a lambda has exactly one parameter, you can name it `it` (though you can also use any name). The parameter is still typed — here as Int.",
+      "lineByLine": ["`{ it: Int -> it * it }` — `it` is the parameter name, body is it*it.", "`square(4)` — calls with it=4.", "4 * 4 = 16.", "`println(16)` — prints 16."],
+      "tip": "When the parameter type is inferred, you can omit the name entirely and just use `it` implicitly: `{ it * it }`. This shorthand is used constantly in AI code with `map`, `filter`, etc."
+    }
+  },
+  {
+    "id": "ch18-q3", "topic": "trailing lambda", "difficulty": "moderate", "chapter": "ch-18",
+    "snippet": "fun repeat(times: Int, action: () -> Unit) {\n    for (i in 1..times) action()\n}\nrepeat(3) {\n    print(\"Hi \")\n}",
+    "question": "What does this print?",
+    "choices": ["Hi", "Hi Hi", "Hi Hi Hi", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "When the last parameter of a function is a lambda, it can be moved outside the parentheses — this is trailing lambda syntax.",
+      "lineByLine": ["`repeat(3) { ... }` — trailing lambda: the lambda is the `action` parameter.", "`repeat` calls `action()` 3 times.", "Each call prints \"Hi \".", "Output: Hi Hi Hi (with trailing space)."],
+      "tip": "Trailing lambdas are everywhere in AI Kotlin — `launch { }`, `apply { }`, `onClick { }`. When you see `function(args) { ... }`, the `{ ... }` is the last lambda argument."
+    }
+  },
+  {
+    "id": "ch18-q4", "topic": "lambda return value", "difficulty": "moderate", "chapter": "ch-18",
+    "snippet": "val classify = { n: Int ->\n    if (n % 2 == 0) \"even\" else \"odd\"\n}\nprintln(classify(7))",
+    "question": "What does this print?",
+    "choices": ["even", "odd", "7", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "A lambda's return value is the last expression in its body. No `return` keyword is used.",
+      "lineByLine": ["`classify(7)` — calls the lambda with n=7.", "`7 % 2 == 0` → false.", "`else \"odd\"` — the last expression evaluates to \"odd\".", "`println(\"odd\")` — prints odd."],
+      "tip": "Lambdas return their last expression implicitly — no `return` keyword. Using `return` inside a lambda actually returns from the enclosing function (non-local return), which is usually not what you want."
+    }
+  },
+  {
+    "id": "ch18-q5", "topic": "lambda type", "difficulty": "moderate", "chapter": "ch-18",
+    "snippet": "val greet: (String) -> String = { name -> \"Hello, $name!\" }\nprintln(greet(\"World\"))",
+    "question": "What does this print?",
+    "choices": ["name -> Hello, name!", "Hello, World!", "Hello, name!", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`(String) -> String` is an explicit function type — a lambda that takes a String and returns a String.",
+      "lineByLine": ["`(String) -> String` — the type of a lambda: one String in, one String out.", "`{ name -> \"Hello, $name!\" }` — implementation.", "`greet(\"World\")` — name=\"World\", returns \"Hello, World!\".", "`println(\"Hello, World!\")` — prints Hello, World!"],
+      "tip": "Function types like `(String) -> String` or `(Int, Int) -> Boolean` appear in AI code as parameter types, return types, and variable declarations. Reading them left-to-right: inputs in parens → return type."
+    }
+  }
+]

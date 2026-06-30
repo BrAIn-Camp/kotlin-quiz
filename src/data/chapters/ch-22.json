@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch22-q1", "topic": "let", "difficulty": "moderate", "chapter": "ch-22",
+    "snippet": "val name: String? = \"Alice\"\nval result = name?.let { it.uppercase() } ?: \"unknown\"\nprintln(result)",
+    "question": "What does this print?",
+    "choices": ["alice", "ALICE", "unknown", "null"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`let` executes a block with the receiver as `it`, and returns the block's last expression. Combined with `?.`, it only runs when the receiver is non-null.",
+      "lineByLine": ["`name` is \"Alice\" (not null), so `?.let` runs.", "`it` is \"Alice\" inside the block.", "`it.uppercase()` returns \"ALICE\".", "`?:\"unknown\"` — not used because `let` returned a non-null value.", "`println(\"ALICE\")` — prints ALICE."],
+      "tip": "`let` is the most used scope function. The pattern `nullable?.let { transform(it) } ?: default` is a null-safe map + fallback in one line. You'll see it constantly in AI Kotlin."
+    }
+  },
+  {
+    "id": "ch22-q2", "topic": "apply", "difficulty": "moderate", "chapter": "ch-22",
+    "snippet": "data class Config(var host: String = \"\", var port: Int = 0)\nval cfg = Config().apply {\n    host = \"localhost\"\n    port = 8080\n}\nprintln(\"${cfg.host}:${cfg.port}\")",
+    "question": "What does this print?",
+    "choices": [":0", "localhost:0", "localhost:8080", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`apply` runs a block with the receiver as `this`, then returns the receiver itself. It's ideal for object initialization.",
+      "lineByLine": ["`Config()` — creates Config with defaults (host=\"\", port=0).", "`.apply { ... }` — runs the block with the Config as `this`.", "`host = \"localhost\"` — sets cfg.host.", "`port = 8080` — sets cfg.port.", "`apply` returns the cfg object.", "`println(\"localhost:8080\")` — prints localhost:8080."],
+      "tip": "`apply` is the builder pattern in Kotlin. AI code uses it to configure objects right after creation without breaking the chain. The key: `apply` uses `this` (not `it`) and returns the object."
+    }
+  },
+  {
+    "id": "ch22-q3", "topic": "run", "difficulty": "moderate", "chapter": "ch-22",
+    "snippet": "val total = run {\n    val price = 9.99\n    val qty = 3\n    price * qty\n}\nprintln(total)",
+    "question": "What does this print?",
+    "choices": ["9.99", "3.0", "29.97", "Unit"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`run` executes a block and returns the last expression. It's used to compute a value using temporary variables without polluting the outer scope.",
+      "lineByLine": ["`run { ... }` — executes the block.", "`val price = 9.99`, `val qty = 3` — temporary variables, scoped inside run.", "`price * qty` = 9.99 * 3 = 29.97 — the last expression, returned by run.", "`val total = 29.97`. `println(29.97)` — prints 29.97."],
+      "tip": "Use `run` to scope temporary variables and produce a single result. The variables (`price`, `qty`) don't leak outside the block. AI code uses this for complex inline initialization."
+    }
+  },
+  {
+    "id": "ch22-q4", "topic": "also", "difficulty": "moderate", "chapter": "ch-22",
+    "snippet": "val numbers = mutableListOf(1, 2, 3)\n    .also { println(\"Created: $it\") }\nnumbers.add(4)\nprintln(numbers.size)",
+    "question": "What is the full output?",
+    "choices": ["Created: [1, 2, 3, 4] then 4", "Created: [1, 2, 3] then 4", "Created: [1, 2, 3] then 3", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`also` runs a side-effect block (using `it`) and returns the original object. The `println` inside `also` fires before `add` is called.",
+      "lineByLine": ["`mutableListOf(1, 2, 3)` — creates [1, 2, 3].", "`.also { println(\"Created: $it\") }` — prints 'Created: [1, 2, 3]', returns the list.", "`numbers.add(4)` — list becomes [1, 2, 3, 4].", "`numbers.size` = 4. Prints 4."],
+      "tip": "`also` is used for logging and debugging in the middle of a chain. Unlike `apply` (which uses `this`), `also` uses `it` — useful when you need to distinguish the object from the outer scope."
+    }
+  },
+  {
+    "id": "ch22-q5", "topic": "with", "difficulty": "moderate", "chapter": "ch-22",
+    "snippet": "val sb = StringBuilder()\nwith(sb) {\n    append(\"Hello\")\n    append(\", \")\n    append(\"World\")\n}\nprintln(sb)",
+    "question": "What does this print?",
+    "choices": ["Hello", "Hello, World", "StringBuilder", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`with` runs a block with an object as `this`. Unlike `apply`, `with` takes the object as a parameter and returns the block's last expression (not the object).",
+      "lineByLine": ["`with(sb) { ... }` — sb is `this` inside the block.", "`append(\"Hello\")` → sb = \"Hello\".", "`append(\", \")` → sb = \"Hello, \".", "`append(\"World\")` → sb = \"Hello, World\".", "`println(sb)` — prints Hello, World."],
+      "tip": "`with` is used when you want to call multiple methods on an object without repeating its name. `apply` is similar but returns the object; `with` returns the block result. AI code uses `with` for multi-step operations on an existing object."
+    }
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch23-q1", "topic": "function type", "difficulty": "difficult", "chapter": "ch-23",
+    "snippet": "fun operate(a: Int, b: Int, op: (Int, Int) -> Int): Int {\n    return op(a, b)\n}\nprintln(operate(10, 3, { x, y -> x - y }))",
+    "question": "What does this print?",
+    "choices": ["13", "7", "30", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`(Int, Int) -> Int` is a function type — a function that takes two Ints and returns an Int. `operate` accepts any such function as `op` and calls it.",
+      "lineByLine": ["`op: (Int, Int) -> Int` — op is a parameter that is itself a function.", "`operate(10, 3, { x, y -> x - y })` — op is the subtraction lambda.", "`op(10, 3)` = 10 - 3 = 7.", "`println(7)` — prints 7."],
+      "tip": "Higher-order functions (functions that accept or return functions) are central to Kotlin. The function type `(Type1, Type2) -> ReturnType` describes the shape. AI code uses this for callbacks, strategies, and functional transformations."
+    }
+  },
+  {
+    "id": "ch23-q2", "topic": "trailing lambda HOF", "difficulty": "difficult", "chapter": "ch-23",
+    "snippet": "fun applyIf(value: Int, condition: Boolean, transform: (Int) -> Int): Int {\n    return if (condition) transform(value) else value\n}\nprintln(applyIf(5, true) { it * 3 })",
+    "question": "What does this print?",
+    "choices": ["5", "15", "8", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "When the last argument is a lambda, it can be placed outside the parentheses (trailing lambda). Here `condition=true`, so `transform` is applied.",
+      "lineByLine": ["`applyIf(5, true) { it * 3 }` — value=5, condition=true, transform is `{ it * 3 }`.", "`condition` is true → `transform(value)` = `{ it * 3 }(5)` = 15.", "`println(15)` — prints 15."],
+      "tip": "Trailing lambda syntax makes higher-order functions feel like language constructs. `launch { }`, `repeat(3) { }`, `measureTime { }` — these all use trailing lambdas."
+    }
+  },
+  {
+    "id": "ch23-q3", "topic": "function returning function", "difficulty": "difficult", "chapter": "ch-23",
+    "snippet": "fun multiplierOf(factor: Int): (Int) -> Int {\n    return { number -> number * factor }\n}\nval triple = multiplierOf(3)\nprintln(triple(7))",
+    "question": "What does this print?",
+    "choices": ["3", "7", "21", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "A function can return another function. `multiplierOf(3)` returns a lambda that captures `factor=3` and multiplies any number by it.",
+      "lineByLine": ["`multiplierOf(3)` — returns `{ number -> number * 3 }`.", "`val triple = { number -> number * 3 }`.", "`triple(7)` = 7 * 3 = 21.", "`println(21)` — prints 21."],
+      "tip": "Functions that return functions create configurable behavior. `factor` is captured from the outer function — this is called a closure. AI code uses this for factory functions, validators, and parameterized transformations."
+    }
+  },
+  {
+    "id": "ch23-q4", "topic": "function reference", "difficulty": "difficult", "chapter": "ch-23",
+    "snippet": "fun isPositive(n: Int) = n > 0\nval numbers = listOf(-2, 0, 3, -1, 5)\nprintln(numbers.filter(::isPositive))",
+    "question": "What does this print?",
+    "choices": ["[-2, 0, -1]", "[3, 5]", "[true, false, true, false, true]", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`::functionName` is a function reference — it refers to an existing function without calling it. Here, `::isPositive` passes the function itself as the predicate to `filter`.",
+      "lineByLine": ["`::isPositive` — a reference to the `isPositive` function (not a call).", "`filter(::isPositive)` — filter calls `isPositive(n)` for each element.", "-2, 0, -1 → false. 3, 5 → true.", "Result: [3, 5]. Prints [3, 5]."],
+      "tip": "Function references (`::name`) let you pass existing functions where lambdas are expected. They're cleaner than `filter { isPositive(it) }` when the lambda just calls one function."
+    }
+  },
+  {
+    "id": "ch23-q5", "topic": "typealias", "difficulty": "difficult", "chapter": "ch-23",
+    "snippet": "typealias Predicate<T> = (T) -> Boolean\n\nfun <T> List<T>.keepIf(p: Predicate<T>) = filter(p)\n\nprintln(listOf(1, 2, 3, 4).keepIf { it > 2 })",
+    "question": "What does this print?",
+    "choices": ["[1, 2]", "[3, 4]", "[true, false, true, false]", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`typealias` creates a readable name for a complex type. `Predicate<T>` is just another name for `(T) -> Boolean`. The behavior is identical.",
+      "lineByLine": ["`typealias Predicate<T> = (T) -> Boolean` — a readable alias.", "`keepIf` accepts a `Predicate<T>` which is just a lambda.", "`keepIf { it > 2 }` — keeps elements where it > 2.", "1, 2 → false. 3, 4 → true.", "Result: [3, 4]. Prints [3, 4]."],
+      "tip": "`typealias` doesn't create a new type — it's just a readable name. AI code uses it to make complex function types legible: `typealias Callback = (Result) -> Unit` is much clearer than the raw function type."
+    }
+  }
+]

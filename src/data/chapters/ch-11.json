@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch11-q1", "topic": "enum declaration", "difficulty": "easy", "chapter": "ch-11",
+    "snippet": "enum class Direction { NORTH, SOUTH, EAST, WEST }\nval d = Direction.NORTH\nprintln(d)",
+    "question": "What does this print?",
+    "choices": ["0", "NORTH", "Direction.NORTH", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`println` on an enum value calls its `toString()`, which returns the entry's name as a string.",
+      "lineByLine": ["`enum class Direction` — declares 4 constant values.", "`val d = Direction.NORTH` — d holds the NORTH enum entry.", "`println(d)` — calls d.toString(), which returns \"NORTH\"."],
+      "tip": "Enum entries have a `name` property (the string name) and an `ordinal` property (the position index, starting at 0). `println(d)` uses `name` implicitly."
+    }
+  },
+  {
+    "id": "ch11-q2", "topic": "enum in when", "difficulty": "easy", "chapter": "ch-11",
+    "snippet": "enum class Color { RED, GREEN, BLUE }\nval c = Color.GREEN\nval msg = when (c) {\n    Color.RED   -> \"Stop\"\n    Color.GREEN -> \"Go\"\n    Color.BLUE  -> \"Info\"\n}\nprintln(msg)",
+    "question": "What does this print?",
+    "choices": ["Stop", "Go", "Info", "Compilation error — missing else"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "When `when` covers all values of an enum, no `else` is required — the compiler knows the set is exhaustive.",
+      "lineByLine": ["`c` is `Color.GREEN`.", "`Color.GREEN -> \"Go\"` — matches.", "Returns \"Go\". No else needed — all 3 enum values are handled.", "`println(\"Go\")` — prints Go."],
+      "tip": "Exhaustive `when` with enums (no `else`) is a safety net — if you later add a new enum entry and forget to add a branch, the compiler gives an error. This is one of the key reasons to use enums."
+    }
+  },
+  {
+    "id": "ch11-q3", "topic": "enum properties", "difficulty": "easy", "chapter": "ch-11",
+    "snippet": "enum class Planet(val mass: Double) {\n    EARTH(5.97),\n    MARS(0.642)\n}\nprintln(Planet.MARS.mass)",
+    "question": "What does this print?",
+    "choices": ["MARS", "0.642", "1", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Enum entries can have constructor parameters and properties, just like regular classes.",
+      "lineByLine": ["`Planet(val mass: Double)` — each enum entry takes a mass value.", "`MARS(0.642)` — MARS has mass 0.642.", "`Planet.MARS.mass` — accesses the mass property of the MARS entry.", "`println(0.642)` — prints 0.642."],
+      "tip": "Enums with properties are common in AI code for mapping constants to associated data — like HTTP codes to messages, planet names to data, or state names to display labels."
+    }
+  },
+  {
+    "id": "ch11-q4", "topic": "enum ordinal and name", "difficulty": "easy", "chapter": "ch-11",
+    "snippet": "enum class Size { SMALL, MEDIUM, LARGE }\nprintln(Size.MEDIUM.ordinal)\nprintln(Size.MEDIUM.name)",
+    "question": "What does this print?",
+    "choices": ["0 then MEDIUM", "1 then MEDIUM", "2 then MEDIUM", "MEDIUM then 1"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`ordinal` gives the 0-based position of the entry in the declaration. `name` gives the entry's string name.",
+      "lineByLine": ["`SMALL` is 0, `MEDIUM` is 1, `LARGE` is 2.", "`Size.MEDIUM.ordinal` → 1.", "`Size.MEDIUM.name` → \"MEDIUM\".", "Output: 1 then MEDIUM."],
+      "tip": "Avoid using `ordinal` for logic — if entries are reordered, ordinals change. Use named properties instead for stability."
+    }
+  },
+  {
+    "id": "ch11-q5", "topic": "enum valueOf", "difficulty": "easy", "chapter": "ch-11",
+    "snippet": "enum class Status { ACTIVE, INACTIVE, PENDING }\nval s = Status.valueOf(\"ACTIVE\")\nprintln(s == Status.ACTIVE)",
+    "question": "What does this print?",
+    "choices": ["false", "true", "ACTIVE", "Throws IllegalArgumentException"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`valueOf(string)` looks up an enum entry by its exact name. The result is the enum constant, so comparing with `==` returns true.",
+      "lineByLine": ["`Status.valueOf(\"ACTIVE\")` — looks up the entry named \"ACTIVE\".", "Returns `Status.ACTIVE`.", "`Status.ACTIVE == Status.ACTIVE` → true.", "`println(true)` — prints true."],
+      "tip": "`valueOf` is used in AI code to parse enum values from strings — like reading a config file, parsing JSON, or converting user input into a typed enum constant."
+    }
+  }
+]

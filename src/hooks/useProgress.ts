@@ -1,25 +1,25 @@
 import { useState, useCallback } from 'react';
-import type { Progress, DifficultyProgress, Difficulty } from '../types/question';
+import type { Progress, DifficultyProgress, ChapterProgress, Difficulty } from '../types/question';
 
 const STORAGE_KEY = 'kotlin-quiz-progress';
 
-const defaultProgress = (): DifficultyProgress => ({
-  bestScore: 0,
-  totalSeen: 0,
-  attempts: 0,
-});
+const defaultTier = (): DifficultyProgress => ({ bestScore: 0, totalSeen: 0, attempts: 0 });
+const defaultChapter = (): ChapterProgress => ({ bestScore: 0, totalSeen: 0, attempts: 0 });
 
 const initialProgress = (): Progress => ({
-  easy: defaultProgress(),
-  moderate: defaultProgress(),
-  difficult: defaultProgress(),
+  easy: defaultTier(),
+  moderate: defaultTier(),
+  difficult: defaultTier(),
+  chapters: {},
 });
 
 function loadProgress(): Progress {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return initialProgress();
-    return JSON.parse(raw) as Progress;
+    const parsed = JSON.parse(raw) as Progress;
+    if (!parsed.chapters) parsed.chapters = {};
+    return parsed;
   } catch {
     return initialProgress();
   }
@@ -28,26 +28,41 @@ function loadProgress(): Progress {
 function saveProgress(progress: Progress): void {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-  } catch {
-    // localStorage unavailable — silently ignore
-  }
+  } catch { /* silently ignore */ }
 }
 
 export function useProgress() {
   const [progress, setProgress] = useState<Progress>(loadProgress);
 
   const recordSession = useCallback(
-    (difficulty: Difficulty, score: number, total: number) => {
+    (key: Difficulty | string, score: number, total: number, isChapter = false) => {
       setProgress(prev => {
-        const tier = prev[difficulty];
-        const updated: Progress = {
-          ...prev,
-          [difficulty]: {
-            bestScore: Math.max(tier.bestScore, score),
-            totalSeen: total,
-            attempts: tier.attempts + 1,
-          },
-        };
+        let updated: Progress;
+        if (isChapter) {
+          const tier = prev.chapters[key] ?? defaultChapter();
+          updated = {
+            ...prev,
+            chapters: {
+              ...prev.chapters,
+              [key]: {
+                bestScore: Math.max(tier.bestScore, score),
+                totalSeen: total,
+                attempts: tier.attempts + 1,
+              },
+            },
+          };
+        } else {
+          const d = key as Difficulty;
+          const tier = prev[d];
+          updated = {
+            ...prev,
+            [d]: {
+              bestScore: Math.max(tier.bestScore, score),
+              totalSeen: total,
+              attempts: tier.attempts + 1,
+            },
+          };
+        }
         saveProgress(updated);
         return updated;
       });
@@ -61,7 +76,6 @@ export function useProgress() {
     setProgress(fresh);
   }, []);
 
-  // A tier is unlocked when the previous tier has a best score >= 70% of its questions
   const isUnlocked = useCallback(
     (difficulty: Difficulty): boolean => {
       if (difficulty === 'easy') return true;
@@ -69,7 +83,6 @@ export function useProgress() {
         const { bestScore, totalSeen } = progress.easy;
         return totalSeen > 0 && bestScore / totalSeen >= 0.7;
       }
-      // difficult
       const { bestScore, totalSeen } = progress.moderate;
       return totalSeen > 0 && bestScore / totalSeen >= 0.7;
     },

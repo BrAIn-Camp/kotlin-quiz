@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch10-q1", "topic": "Int arithmetic", "difficulty": "easy", "chapter": "ch-10",
+    "snippet": "val a: Int = 7\nval b: Int = 2\nprintln(a / b)\nprintln(a % b)",
+    "question": "What does this print?",
+    "choices": ["3.5 then 1", "3 then 1", "3 then 2", "3.5 then 0.5"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Integer division in Kotlin truncates the decimal. `%` is the remainder (modulo) operator.",
+      "lineByLine": ["`7 / 2` — integer division: 3 (not 3.5).", "`7 % 2` — remainder: 7 = 3*2 + 1, so remainder is 1.", "Output: 3, then 1."],
+      "tip": "When both operands are Int, `/` always performs integer division and drops the remainder. For decimal results, at least one operand must be a Double or Float."
+    }
+  },
+  {
+    "id": "ch10-q2", "topic": "Double arithmetic", "difficulty": "easy", "chapter": "ch-10",
+    "snippet": "val a: Double = 7.0\nval b: Double = 2.0\nprintln(a / b)",
+    "question": "What does this print?",
+    "choices": ["3", "3.5", "3.0", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "When both operands are Double, `/` performs floating-point division and preserves the decimal.",
+      "lineByLine": ["`7.0 / 2.0` — floating-point division.", "Result: 3.5.", "`println(3.5)` — prints 3.5."],
+      "tip": "Always use `.0` suffix when you need decimal division. `7 / 2` gives 3; `7.0 / 2` gives 3.5. This is a very common source of bugs in AI-generated numeric code."
+    }
+  },
+  {
+    "id": "ch10-q3", "topic": "Boolean operators", "difficulty": "easy", "chapter": "ch-10",
+    "snippet": "val a = true\nval b = false\nprintln(a && b)\nprintln(a || b)\nprintln(!a)",
+    "question": "What does this print?",
+    "choices": ["false then true then false", "true then false then true", "false then false then true", "true then true then false"],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "`&&` is AND (both must be true), `||` is OR (at least one must be true), `!` is NOT (inverts the value).",
+      "lineByLine": ["`a && b` → `true && false` → false.", "`a || b` → `true || false` → true.", "`!a` → `!true` → false."],
+      "tip": "Boolean operators in Kotlin are short-circuit: `&&` stops at the first false, `||` stops at the first true. This matters when the second operand has side effects."
+    }
+  },
+  {
+    "id": "ch10-q4", "topic": "type conversion", "difficulty": "easy", "chapter": "ch-10",
+    "snippet": "val x: Int = 42\nval y: Double = x.toDouble()\nprintln(y)",
+    "question": "What does this print?",
+    "choices": ["42", "42.0", "Compilation error — cannot convert Int to Double", "null"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Kotlin does not implicitly convert between number types. You must call `.toDouble()`, `.toInt()`, etc. explicitly.",
+      "lineByLine": ["`val x: Int = 42`.", "`x.toDouble()` — explicit conversion from Int to Double.", "`val y: Double = 42.0`.", "`println(42.0)` — prints 42.0."],
+      "tip": "Kotlin's strict type system means `val y: Double = x` would be a compile error. You must call `.toInt()`, `.toDouble()`, `.toLong()`, etc. Explicit conversion is safer and clearer."
+    }
+  },
+  {
+    "id": "ch10-q5", "topic": "Long literal", "difficulty": "easy", "chapter": "ch-10",
+    "snippet": "val small: Int = 2_147_483_647\nval big: Long = 2_147_483_648L\nprintln(big - small)",
+    "question": "What does this print?",
+    "choices": ["0", "1", "-1", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`Int` holds values up to 2,147,483,647. For larger values, use `Long` with an `L` suffix. The underscores are just for readability.",
+      "lineByLine": ["`small` is the max Int value: 2,147,483,647.", "`big` is 2,147,483,648 (one more, requires Long).", "`big - small` = 2,147,483,648 - 2,147,483,647 = 1.", "`println(1)` — prints 1."],
+      "tip": "Use underscores in numeric literals (`2_147_483_647`) to improve readability without affecting the value. `L` suffix marks a Long literal. AI code uses Longs for timestamps, file sizes, and IDs."
+    }
+  }
+]

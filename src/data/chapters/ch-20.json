@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch20-q1", "topic": "extension function", "difficulty": "moderate", "chapter": "ch-20",
+    "snippet": "fun String.isPalindrome(): Boolean {\n    return this == this.reversed()\n}\nprintln(\"racecar\".isPalindrome())\nprintln(\"kotlin\".isPalindrome())",
+    "question": "What does this print?",
+    "choices": ["false then true", "true then false", "true then true", "false then false"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Extension functions add new methods to existing types. `this` refers to the String the function is called on.",
+      "lineByLine": ["`fun String.isPalindrome()` — adds `isPalindrome` to all Strings.", "`this == this.reversed()` — compares the string with its reverse.", "\"racecar\" reversed is \"racecar\" → true.", "\"kotlin\" reversed is \"niltok\" → false."],
+      "tip": "Extension functions look and feel exactly like regular methods. In AI code, you'll encounter extension functions that appear to be built-in — check the imports to see if they're added by a library or defined locally."
+    }
+  },
+  {
+    "id": "ch20-q2", "topic": "this in extension", "difficulty": "moderate", "chapter": "ch-20",
+    "snippet": "fun Int.isEven(): Boolean = this % 2 == 0\nprintln(4.isEven())\nprintln(7.isEven())",
+    "question": "What does this print?",
+    "choices": ["true then true", "false then false", "true then false", "false then true"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`this` inside an extension on `Int` refers to the Int value the function is called on.",
+      "lineByLine": ["`fun Int.isEven()` — extends Int with an `isEven` method.", "`this % 2 == 0` — tests if the receiver is even.", "`4.isEven()` — this=4, 4%2==0 → true.", "`7.isEven()` — this=7, 7%2!=0 → false."],
+      "tip": "Extension functions on primitive types (Int, String, Double) are very common in Android KTX and AI-generated utility code. They make `4.isEven()` read more naturally than `isEven(4)`."
+    }
+  },
+  {
+    "id": "ch20-q3", "topic": "extension on custom type", "difficulty": "moderate", "chapter": "ch-20",
+    "snippet": "data class Rect(val w: Int, val h: Int)\nfun Rect.area() = w * h\nfun Rect.perimeter() = 2 * (w + h)\nval r = Rect(4, 3)\nprintln(r.area())",
+    "question": "What does this print?",
+    "choices": ["7", "12", "14", "Compilation error — methods must be inside the class"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Extension functions can be added to any type, including your own data classes. Inside the extension, properties of the receiver are directly accessible (no `this.` needed).",
+      "lineByLine": ["`fun Rect.area() = w * h` — extends Rect with an area function.", "Inside the extension, `w` and `h` are the Rect's properties.", "`r.area()` with Rect(4, 3) = 4 * 3 = 12.", "`println(12)` — prints 12."],
+      "tip": "Extension functions are used in AI code to add utility methods to classes without modifying them — especially useful for classes from libraries you don't control."
+    }
+  },
+  {
+    "id": "ch20-q4", "topic": "extension vs member", "difficulty": "moderate", "chapter": "ch-20",
+    "snippet": "class Greeter {\n    fun hello() = \"Member hello\"\n}\nfun Greeter.hello() = \"Extension hello\"\nprintln(Greeter().hello())",
+    "question": "What does this print?",
+    "choices": ["Member hello", "Extension hello", "Compilation error — duplicate method names", "Ambiguous call error"],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "When a member function and an extension function have the same signature, the member function always wins.",
+      "lineByLine": ["`Greeter` has a member `hello()` returning \"Member hello\".", "An extension `hello()` also exists.", "`Greeter().hello()` — member takes priority over extension.", "Output: Member hello."],
+      "tip": "Member functions always shadow extensions with the same signature. This means extensions can't override existing behavior — they can only add new functionality. AI-generated code sometimes relies on this guarantee."
+    }
+  },
+  {
+    "id": "ch20-q5", "topic": "extension on nullable", "difficulty": "moderate", "chapter": "ch-20",
+    "snippet": "fun String?.orEmpty(): String = this ?: \"\"\nval a: String? = null\nval b: String? = \"hi\"\nprintln(a.orEmpty())\nprintln(b.orEmpty())",
+    "question": "What does this print?",
+    "choices": ["null then hi", "empty string then hi", "Compilation error", "Throws NullPointerException"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Extensions can be defined on nullable types (`String?`). Inside, `this` can be null. Here, `this ?: \"\"` returns an empty string when null.",
+      "lineByLine": ["`fun String?.orEmpty()` — extension on nullable String.", "`this ?: \"\"` — if null, return empty string; otherwise return the string.", "`a.orEmpty()` — a is null → returns \"\".", "`b.orEmpty()` — b is \"hi\" → returns \"hi\".", "Output: (empty line) then hi."],
+      "tip": "Extensions on nullable types let you write `nullableString.orEmpty()` instead of `nullableString ?: \"\"`. Kotlin's standard library has many such extensions — `orEmpty()` itself is a built-in."
+    }
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch16-q1", "topic": "listOf", "difficulty": "easy", "chapter": "ch-16",
+    "snippet": "val colors = listOf(\"red\", \"green\", \"blue\")\nprintln(colors[1])\nprintln(colors.size)",
+    "question": "What does this print?",
+    "choices": ["red then 3", "green then 3", "green then 2", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`listOf` creates a read-only list. Elements are accessed by 0-based index. `size` gives the element count.",
+      "lineByLine": ["`colors[1]` — index 1 is the second element: \"green\".", "`colors.size` — 3 elements.", "Output: green, then 3."],
+      "tip": "`listOf` returns an immutable list — you can read from it but not add or remove elements. For a list you need to modify, use `mutableListOf`."
+    }
+  },
+  {
+    "id": "ch16-q2", "topic": "mutableListOf", "difficulty": "easy", "chapter": "ch-16",
+    "snippet": "val nums = mutableListOf(1, 2, 3)\nnums.add(4)\nnums.remove(2)\nprintln(nums)",
+    "question": "What does this print?",
+    "choices": ["[1, 2, 3, 4]", "[1, 3, 4]", "[1, 2, 4]", "[1, 3]"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`mutableListOf` creates a list you can add to and remove from. `remove(2)` removes the element with value 2 (not the element at index 2).",
+      "lineByLine": ["Start: [1, 2, 3].", "`add(4)` → [1, 2, 3, 4].", "`remove(2)` — removes the element equal to 2 → [1, 3, 4].", "`println([1, 3, 4])` — prints [1, 3, 4]."],
+      "tip": "Watch out: `remove(value)` removes by value, while `removeAt(index)` removes by position. Confusing these is a common AI-generated bug."
+    }
+  },
+  {
+    "id": "ch16-q3", "topic": "mapOf", "difficulty": "easy", "chapter": "ch-16",
+    "snippet": "val ages = mapOf(\"Alice\" to 30, \"Bob\" to 25)\nprintln(ages[\"Alice\"])\nprintln(ages[\"Charlie\"])",
+    "question": "What does this print?",
+    "choices": ["30 then null", "30 then 0", "30 then Charlie", "Throws NoSuchElementException"],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "Map lookup with `[]` returns the value if found, or `null` if the key doesn't exist. It does not throw an exception.",
+      "lineByLine": ["`ages[\"Alice\"]` — key exists, returns 30.", "`ages[\"Charlie\"]` — key not found, returns null.", "Output: 30, then null."],
+      "tip": "Map lookup with `[]` always returns a nullable type. In AI code you'll see `ages[\"Alice\"] ?: 0` to provide a default when the key is missing."
+    }
+  },
+  {
+    "id": "ch16-q4", "topic": "setOf", "difficulty": "easy", "chapter": "ch-16",
+    "snippet": "val tags = setOf(\"kotlin\", \"android\", \"kotlin\", \"compose\")\nprintln(tags.size)",
+    "question": "What does this print?",
+    "choices": ["4", "3", "2", "Compilation error — duplicate elements"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "A Set automatically removes duplicate values. The duplicate \"kotlin\" is ignored, leaving 3 unique elements.",
+      "lineByLine": ["`setOf(\"kotlin\", \"android\", \"kotlin\", \"compose\")` — 4 values provided.", "Duplicates removed: \"kotlin\" appears once.", "Set: {kotlin, android, compose} — 3 elements.", "`tags.size` = 3."],
+      "tip": "Sets are used in AI code when uniqueness matters — tracking visited IDs, deduplicating tags, or checking membership. `in` operator with sets is O(1) lookup."
+    }
+  },
+  {
+    "id": "ch16-q5", "topic": "iterating a map", "difficulty": "easy", "chapter": "ch-16",
+    "snippet": "val scores = mapOf(\"Alice\" to 95, \"Bob\" to 87)\nfor ((name, score) in scores) {\n    println(\"$name: $score\")\n}",
+    "question": "What does this print?",
+    "choices": ["Alice then Bob", "Alice: 95 then Bob: 87 (each on its own line)", "(Alice, 95) then (Bob, 87)", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`for ((key, value) in map)` destructures each map entry into its key and value.",
+      "lineByLine": ["`for ((name, score) in scores)` — each entry is destructured.", "First iteration: name=\"Alice\", score=95 → prints Alice: 95.", "Second: name=\"Bob\", score=87 → prints Bob: 87."],
+      "tip": "Destructuring map entries in a `for` loop is one of the most common Kotlin patterns. Without destructuring, you'd write `for (entry in scores)` and use `entry.key` and `entry.value`."
+    }
+  }
+]

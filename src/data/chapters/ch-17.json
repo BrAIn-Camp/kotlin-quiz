@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch17-q1", "topic": "nullable type", "difficulty": "easy", "chapter": "ch-17",
+    "snippet": "val a: String = \"hello\"\nval b: String? = null\nprintln(a.length)\nprintln(b.length)",
+    "question": "What happens when this code is compiled?",
+    "choices": ["Prints 5 then 0", "Prints 5, then throws NullPointerException at runtime", "Compilation error on the last line — String? requires null check", "Prints 5 then null"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "Kotlin's type system distinguishes nullable (`String?`) from non-null (`String`). Calling `.length` directly on a nullable type is a compile error — not a runtime error.",
+      "lineByLine": ["`val a: String` — non-null, safe to call `.length`.", "`val b: String?` — nullable, cannot call `.length` directly.", "`a.length` — fine (a is non-null).", "`b.length` — COMPILE ERROR. Must use `b?.length` or a null check."],
+      "tip": "Kotlin catches null errors at compile time, not at runtime. This is the core of null safety. If the compiler lets the code through, you're guaranteed no NullPointerException from normal null handling."
+    }
+  },
+  {
+    "id": "ch17-q2", "topic": "safe call", "difficulty": "easy", "chapter": "ch-17",
+    "snippet": "val email: String? = null\nval domain = email?.substringAfter(\"@\")\nprintln(domain)",
+    "question": "What does this print?",
+    "choices": ["Throws NullPointerException", "@", "null", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`?.` is the safe-call operator. If the receiver is null, the entire expression evaluates to null without throwing an exception.",
+      "lineByLine": ["`email` is null.", "`email?.substringAfter(\"@\")` — `?.` checks for null first.", "Because email is null, the call is skipped and the result is null.", "`println(null)` — prints null."],
+      "tip": "`?.` is the most used Kotlin operator in AI code. It says: 'if this isn't null, do something with it; otherwise, just be null'. It chains: `a?.b?.c?.d` returns null as soon as any step is null."
+    }
+  },
+  {
+    "id": "ch17-q3", "topic": "elvis operator", "difficulty": "easy", "chapter": "ch-17",
+    "snippet": "fun getCity(input: String?): String {\n    return input ?: \"Unknown\"\n}\nprintln(getCity(null))\nprintln(getCity(\"Tokyo\"))",
+    "question": "What does this print?",
+    "choices": ["null then Tokyo", "Unknown then Tokyo", "Unknown then Unknown", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`?:` is the Elvis operator. It returns the left side if it's not null, otherwise the right side.",
+      "lineByLine": ["`getCity(null)`: input is null, `null ?: \"Unknown\"` → \"Unknown\".", "`getCity(\"Tokyo\")`: input is \"Tokyo\", `\"Tokyo\" ?: \"Unknown\"` → \"Tokyo\".", "Output: Unknown, then Tokyo."],
+      "tip": "`?:` is used in AI code everywhere a nullable value needs a fallback: `val name = user?.name ?: \"Guest\"`. It's Kotlin's concise null-coalescing operator."
+    }
+  },
+  {
+    "id": "ch17-q4", "topic": "non-null assertion", "difficulty": "easy", "chapter": "ch-17",
+    "snippet": "val value: String? = \"data\"\nval length = value!!.length\nprintln(length)",
+    "question": "What does this print?",
+    "choices": ["Throws NullPointerException", "4", "null", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`!!` asserts the value is not null. If it is null, it throws `NullPointerException`. Here, value is \"data\", so the assertion passes and `.length` returns 4.",
+      "lineByLine": ["`value` is \"data\" (not null).", "`value!!` — assertion passes, unwraps to String.", "`.length` on \"data\" = 4.", "`println(4)` — prints 4."],
+      "tip": "`!!` is a red flag in code review. It says: 'I promise this isn't null, but if I'm wrong, crash the program.' AI code sometimes uses it incorrectly. Prefer `?.` with `?:` or a null check."
+    }
+  },
+  {
+    "id": "ch17-q5", "topic": "smart cast after null check", "difficulty": "easy", "chapter": "ch-17",
+    "snippet": "fun printLength(s: String?) {\n    if (s == null) return\n    println(s.length)\n}\nprintLength(\"Kotlin\")",
+    "question": "What does this print?",
+    "choices": ["null", "6", "Compilation error — s is still String? after the check", "Throws NullPointerException"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "After a null check (`if (s == null) return`), Kotlin smart-casts `s` to the non-null type `String`. No `?.` or `!!` needed in the code below the check.",
+      "lineByLine": ["`if (s == null) return` — early return if null.", "After this, the compiler knows s is non-null.", "`s.length` — safe, s is smart-cast to String.", "\"Kotlin\" has 6 characters. `println(6)` — prints 6."],
+      "tip": "Smart casts after null checks are one of Kotlin's most useful features. They eliminate the need for `!!` or `?.` after you've verified a value isn't null — making intent clear and code clean."
+    }
+  }
+]

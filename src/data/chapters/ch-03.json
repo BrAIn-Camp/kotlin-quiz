@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch03-q1", "topic": "string template", "difficulty": "easy", "chapter": "ch-03",
+    "snippet": "val city = \"London\"\nprintln(\"Welcome to $city!\")",
+    "question": "What does this print?",
+    "choices": ["Welcome to $city!", "Welcome to city!", "Welcome to London!", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "The `$` prefix embeds a variable's value directly into a string literal.",
+      "lineByLine": ["`val city = \"London\"` — city holds the string London.", "`\"Welcome to $city!\"` — $city is replaced by its value at runtime.", "Output: Welcome to London!"],
+      "tip": "`$variableName` inside a string is one of the most common patterns in all Kotlin code. It's cleaner than Java's `+` concatenation."
+    }
+  },
+  {
+    "id": "ch03-q2", "topic": "string template expression", "difficulty": "easy", "chapter": "ch-03",
+    "snippet": "val a = 4\nval b = 5\nprintln(\"${a} times ${b} is ${a * b}\")",
+    "question": "What does this print?",
+    "choices": ["${a} times ${b} is ${a * b}", "a times b is a * b", "4 times 5 is 20", "4 times 5 is a * b"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`${}` evaluates any expression inside the braces and inserts the result into the string.",
+      "lineByLine": ["`${a}` — evaluates to 4.", "`${b}` — evaluates to 5.", "`${a * b}` — evaluates 4 * 5 = 20.", "Full string: \"4 times 5 is 20\"."],
+      "tip": "Use `$variable` for simple variable names and `${expression}` for anything more complex: arithmetic, property access, function calls."
+    }
+  },
+  {
+    "id": "ch03-q3", "topic": "multiline string", "difficulty": "easy", "chapter": "ch-03",
+    "snippet": "val text = \"\"\"\n    Hello\n    World\n\"\"\".trimIndent()\nprintln(text)",
+    "question": "What does this print?",
+    "choices": ["    Hello\\n    World", "Hello\\nWorld", "Hello\nWorld (two lines)", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "Triple-quoted strings preserve newlines and indentation. `trimIndent()` removes the common leading whitespace from all lines.",
+      "lineByLine": ["`\"\"\"...\"\"\"` — a raw multiline string that preserves all whitespace and newlines.", "`.trimIndent()` — strips the common leading spaces (4 spaces here) from every line.", "Result: Hello on one line, World on the next."],
+      "tip": "Multiline strings with `trimIndent()` are everywhere in AI-generated Kotlin for SQL queries, JSON templates, HTML snippets, and prompt strings."
+    }
+  },
+  {
+    "id": "ch03-q4", "topic": "string operations", "difficulty": "easy", "chapter": "ch-03",
+    "snippet": "val s = \"Kotlin\"\nprintln(s.length)\nprintln(s.uppercase())",
+    "question": "What does this code print?",
+    "choices": ["6 then Kotlin", "6 then KOTLIN", "Kotlin then 6", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`String.length` returns the character count. `String.uppercase()` returns a new string with all characters uppercased.",
+      "lineByLine": ["`s.length` — \"Kotlin\" has 6 characters → prints 6.", "`s.uppercase()` — returns \"KOTLIN\" (s itself is unchanged since val).", "Output: 6, then KOTLIN on the next line."],
+      "tip": "Kotlin strings are immutable — operations like `uppercase()` return a new string. `s` itself is unchanged after calling `s.uppercase()`."
+    }
+  },
+  {
+    "id": "ch03-q5", "topic": "string equality", "difficulty": "easy", "chapter": "ch-03",
+    "snippet": "val a = \"hello\"\nval b = \"hello\"\nprintln(a == b)",
+    "question": "What does this print?",
+    "choices": ["false — == compares object references, not content", "true", "Compilation error", "null"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "In Kotlin, `==` compares structural equality (content), not reference equality. For strings, this means it compares the characters. This is different from Java where `==` on Strings compares references.",
+      "lineByLine": ["`val a = \"hello\"` and `val b = \"hello\"` — two strings with the same content.", "`a == b` — Kotlin's `==` calls `.equals()` under the hood for objects.", "\"hello\" equals \"hello\" → true."],
+      "tip": "Kotlin's `==` is always content equality for data types. Use `===` if you ever need reference equality. AI code always uses `==` for comparing strings and objects."
+    }
+  }
+]

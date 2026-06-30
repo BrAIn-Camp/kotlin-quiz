@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch01-q1", "topic": "entry point", "difficulty": "easy", "chapter": "ch-01",
+    "snippet": "fun main() {\n    println(\"Hello, Kotlin!\")\n}",
+    "question": "What does this program print?",
+    "choices": ["Nothing — main() must be inside a class", "Hello, Kotlin!", "main", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "In Kotlin, `fun main()` is a top-level function — it does not need to live inside a class. The runtime finds it and calls it directly.",
+      "lineByLine": ["`fun main()` — the program entry point. No class required.", "`println(\"Hello, Kotlin!\")` — prints the string to the console."],
+      "tip": "AI-generated Kotlin code frequently uses top-level functions outside any class. This is idiomatic Kotlin, not a mistake."
+    }
+  },
+  {
+    "id": "ch01-q2", "topic": "top-level functions", "difficulty": "easy", "chapter": "ch-01",
+    "snippet": "fun greet() {\n    println(\"Hi!\")\n}\n\nfun main() {\n    greet()\n}",
+    "question": "What does this program print?",
+    "choices": ["Nothing", "Hi!", "greet", "Compilation error — functions must be inside a class"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Both `greet()` and `main()` are top-level functions. Kotlin doesn't require a class wrapper. `main()` calls `greet()`, which prints Hi!",
+      "lineByLine": ["`fun greet()` — a top-level helper function.", "`fun main()` — the entry point.", "`greet()` — calls the helper, which prints Hi!"],
+      "tip": "Kotlin lets you write utility functions at the top level of a file without wrapping them in a class. You'll see this constantly in AI-generated Kotlin."
+    }
+  },
+  {
+    "id": "ch01-q3", "topic": "println", "difficulty": "easy", "chapter": "ch-01",
+    "snippet": "fun main() {\n    println(\"Line 1\")\n    println(\"Line 2\")\n}",
+    "question": "What does this program print?",
+    "choices": ["Line 1 Line 2 (on one line)", "Line 1\\nLine 2 (literally)", "Line 1 then Line 2 on separate lines", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`println()` prints its argument and then moves to a new line. Two calls produce two lines of output.",
+      "lineByLine": ["`println(\"Line 1\")` — prints Line 1 and advances to the next line.", "`println(\"Line 2\")` — prints Line 2 on its own line."],
+      "tip": "`println` adds a newline after each call. `print` does not. AI code uses `println` for debug output and logging."
+    }
+  },
+  {
+    "id": "ch01-q4", "topic": "return type Unit", "difficulty": "easy", "chapter": "ch-01",
+    "snippet": "fun sayHello(): Unit {\n    println(\"Hello\")\n}",
+    "question": "What is `Unit` in this context?",
+    "choices": ["A compilation error — Unit is not a valid return type", "The equivalent of void — the function returns nothing meaningful", "A number type equal to 1", "A special object that must be returned explicitly"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`Unit` is Kotlin's equivalent of `void` in Java/C. A function that doesn't return a useful value has return type `Unit`. It can be omitted entirely — it's implicit.",
+      "lineByLine": ["`fun sayHello(): Unit` — explicitly declares the return type as Unit.", "The `: Unit` is optional and is almost always omitted in real Kotlin code.", "`println(\"Hello\")` executes, then the function returns Unit automatically."],
+      "tip": "You'll rarely see `: Unit` written explicitly in AI code — it's always omitted. But you'll see it in error messages and type signatures, so it's important to recognize."
+    }
+  },
+  {
+    "id": "ch01-q5", "topic": "function call", "difficulty": "easy", "chapter": "ch-01",
+    "snippet": "fun double(x: Int): Int {\n    return x * 2\n}\n\nfun main() {\n    println(double(5))\n}",
+    "question": "What does this program print?",
+    "choices": ["5", "10", "double(5)", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`double(5)` calls the function with argument 5, which returns 5 * 2 = 10. That result is passed to `println`.",
+      "lineByLine": ["`fun double(x: Int): Int` — takes an Int parameter, returns an Int.", "`return x * 2` — returns 5 * 2 = 10.", "`println(double(5))` — prints the return value, which is 10."],
+      "tip": "Function calls can be nested directly inside `println()`. AI code does this all the time to print computed results inline."
+    }
+  }
+]

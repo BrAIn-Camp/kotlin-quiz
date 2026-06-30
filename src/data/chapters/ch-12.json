@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch12-q1", "topic": "data class toString", "difficulty": "easy", "chapter": "ch-12",
+    "snippet": "data class Book(val title: String, val year: Int)\nval b = Book(\"Kotlin in Action\", 2017)\nprintln(b)",
+    "question": "What does this print?",
+    "choices": ["Book@hashcode", "Book(title=Kotlin in Action, year=2017)", "Kotlin in Action", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`data class` auto-generates `toString()` that shows the class name and all property values by name.",
+      "lineByLine": ["`data class Book(...)` — the `data` keyword auto-generates toString, equals, hashCode, copy.", "`println(b)` — calls auto-generated toString.", "Output: Book(title=Kotlin in Action, year=2017)."],
+      "tip": "Without `data`, `println(b)` would print something like `Book@3764951d`. With `data`, it prints a readable representation. AI code uses `data class` for any object primarily holding values."
+    }
+  },
+  {
+    "id": "ch12-q2", "topic": "copy", "difficulty": "easy", "chapter": "ch-12",
+    "snippet": "data class Point(val x: Int, val y: Int)\nval p1 = Point(3, 7)\nval p2 = p1.copy(y = 10)\nprintln(p1)\nprintln(p2)",
+    "question": "What does this print?",
+    "choices": ["Point(x=3, y=10) then Point(x=3, y=10)", "Point(x=3, y=7) then Point(x=3, y=10)", "Point(x=3, y=7) then Point(x=3, y=7)", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`copy()` creates a new instance with some properties changed. The original is unaffected.",
+      "lineByLine": ["`p1 = Point(3, 7)` — original point.", "`p1.copy(y = 10)` — new Point with x=3 (copied) and y=10 (changed).", "`p1` is still Point(x=3, y=7) — unchanged.", "`p2` is Point(x=3, y=10)."],
+      "tip": "`copy()` is the idiomatic way to create modified versions of data objects without mutation. AI code uses it constantly in functional-style updates: `state = state.copy(isLoading = false)`."
+    }
+  },
+  {
+    "id": "ch12-q3", "topic": "equals", "difficulty": "easy", "chapter": "ch-12",
+    "snippet": "data class Color(val r: Int, val g: Int, val b: Int)\nval c1 = Color(255, 0, 0)\nval c2 = Color(255, 0, 0)\nprintln(c1 == c2)",
+    "question": "What does this print?",
+    "choices": ["false — c1 and c2 are different objects", "true — data class equals compares property values", "Compilation error", "null"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`data class` auto-generates `equals()` that compares all constructor properties. Two instances with the same values are considered equal.",
+      "lineByLine": ["`c1` and `c2` are separate objects in memory.", "`c1 == c2` — calls auto-generated `equals()`.", "Both have r=255, g=0, b=0 → equal → true.", "`println(true)` — prints true."],
+      "tip": "Without `data`, `c1 == c2` would compare references and print false. With `data`, it compares values. This makes data classes safe to use as map keys and in equality checks."
+    }
+  },
+  {
+    "id": "ch12-q4", "topic": "destructuring", "difficulty": "easy", "chapter": "ch-12",
+    "snippet": "data class Person(val name: String, val age: Int)\nval (n, a) = Person(\"Sam\", 25)\nprintln(\"$n is $a\")",
+    "question": "What does this print?",
+    "choices": ["Person(name=Sam, age=25)", "Sam is 25", "n is a", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Data classes support destructuring declarations. `val (n, a) = person` unpacks properties in their declaration order.",
+      "lineByLine": ["`val (n, a) = Person(\"Sam\", 25)` — n gets name (\"Sam\"), a gets age (25).", "`println(\"$n is $a\")` — \"Sam is 25\".", "Output: Sam is 25."],
+      "tip": "Destructuring is commonly used in AI code with `for ((key, value) in map)` and in lambda parameters. Properties are destructured in declaration order — the names you pick don't matter, only the positions."
+    }
+  },
+  {
+    "id": "ch12-q5", "topic": "hashCode consistency", "difficulty": "easy", "chapter": "ch-12",
+    "snippet": "data class Tag(val name: String)\nval t1 = Tag(\"kotlin\")\nval t2 = Tag(\"kotlin\")\nprintln(t1.hashCode() == t2.hashCode())",
+    "question": "What does this print?",
+    "choices": ["false — different objects always have different hashCodes", "true — data class hashCode is based on property values", "Compilation error", "It depends on the JVM"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`data class` generates `hashCode()` based on the constructor properties. Two instances with equal values always produce the same hash code.",
+      "lineByLine": ["`t1` and `t2` are separate objects but have the same `name`.", "Auto-generated `hashCode()` for both is based on `name = \"kotlin\"`.", "Both produce the same hash → `==` returns true."],
+      "tip": "Consistent `hashCode` is required for data classes to work correctly as keys in `HashMap` or `HashSet`. The auto-generated implementation handles this correctly."
+    }
+  }
+]

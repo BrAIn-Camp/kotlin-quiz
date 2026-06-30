@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch02-q1", "topic": "val immutability", "difficulty": "easy", "chapter": "ch-02",
+    "snippet": "val score = 100\nscore = 200\nprintln(score)",
+    "question": "What happens when this code is compiled?",
+    "choices": ["Prints 100", "Prints 200", "Prints 300", "Compilation error — val cannot be reassigned"],
+    "correctIndex": 3,
+    "explanation": {
+      "summary": "`val` declares a read-only variable. After the first assignment, it cannot be changed. The compiler rejects `score = 200`.",
+      "lineByLine": ["`val score = 100` — declares score as read-only with value 100.", "`score = 200` — illegal! val cannot be reassigned. Compiler error here.", "`println` is never reached."],
+      "tip": "AI-generated Kotlin strongly prefers `val` over `var`. Most variables you'll see are `val`. This is intentional — immutability reduces bugs."
+    }
+  },
+  {
+    "id": "ch02-q2", "topic": "var mutability", "difficulty": "easy", "chapter": "ch-02",
+    "snippet": "var count = 0\ncount = count + 1\ncount = count + 1\nprintln(count)",
+    "question": "What does this code print?",
+    "choices": ["0", "1", "2", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "`var` declares a mutable variable. It can be reassigned as many times as needed.",
+      "lineByLine": ["`var count = 0` — starts at 0.", "`count = count + 1` — count becomes 1.", "`count = count + 1` — count becomes 2.", "`println(2)` — prints 2."],
+      "tip": "Use `var` only when the value genuinely needs to change over time. In AI code, `var` appears far less often than `val` — its presence signals intentional mutation."
+    }
+  },
+  {
+    "id": "ch02-q3", "topic": "type inference", "difficulty": "easy", "chapter": "ch-02",
+    "snippet": "val name = \"Alice\"\nval age = 30\nval height = 5.9\nprintln(name)",
+    "question": "What type does Kotlin infer for `height`?",
+    "choices": ["Int", "Float", "Double", "String"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "Kotlin infers types from the assigned value. A decimal literal like `5.9` is inferred as `Double` by default.",
+      "lineByLine": ["`val name = \"Alice\"` — inferred as String.", "`val age = 30` — inferred as Int.", "`val height = 5.9` — inferred as Double (all decimal literals are Double by default).", "`println(name)` — prints Alice."],
+      "tip": "Kotlin's type inference means you rarely need to write the type explicitly. But understanding what type gets inferred is important when reading AI code — `5.9` is a Double, `5.9f` is a Float."
+    }
+  },
+  {
+    "id": "ch02-q4", "topic": "explicit type annotation", "difficulty": "easy", "chapter": "ch-02",
+    "snippet": "val x: Int = 10\nval y: Double = 10.0\nprintln(x + y)",
+    "question": "What does this code print?",
+    "choices": ["20", "20.0", "Compilation error — cannot add Int and Double", "10 + 10.0"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Kotlin does not implicitly convert between numeric types. But `x + y` here works because Kotlin promotes the Int to Double for the addition, yielding a Double result.",
+      "lineByLine": ["`val x: Int = 10` — explicit Int annotation.", "`val y: Double = 10.0` — explicit Double annotation.", "`x + y` — x is promoted to Double, result is 20.0.", "`println(20.0)` — prints 20.0."],
+      "tip": "When Int and Double interact in arithmetic, the result is always Double. AI code uses explicit type annotations when inference might be ambiguous or when clarity matters."
+    }
+  },
+  {
+    "id": "ch02-q5", "topic": "val vs var choice", "difficulty": "easy", "chapter": "ch-02",
+    "snippet": "fun main() {\n    val message: String\n    message = \"Hello\"\n    println(message)\n}",
+    "question": "What does this code print?",
+    "choices": ["Compilation error — val must be initialized at declaration", "Hello", "null", "message"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`val` can be declared without an immediate value as long as it's assigned exactly once before first use. This is called a deferred initialization.",
+      "lineByLine": ["`val message: String` — declared without a value (type must be explicit here).", "`message = \"Hello\"` — assigned exactly once. This is valid for `val`.", "`println(message)` — prints Hello."],
+      "tip": "Deferred `val` initialization is common in AI code for variables assigned inside `when` branches or conditional logic. The compiler verifies it's assigned before use."
+    }
+  }
+]

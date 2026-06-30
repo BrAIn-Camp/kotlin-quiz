@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch14-q1", "topic": "object singleton", "difficulty": "easy", "chapter": "ch-14",
+    "snippet": "object AppConfig {\n    val version = \"1.0\"\n    val debug = false\n}\nprintln(AppConfig.version)",
+    "question": "What does this print?",
+    "choices": ["Compilation error — must instantiate first", "1.0", "AppConfig.version", "null"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`object` creates a singleton — you access it directly by name without creating an instance. There is exactly one `AppConfig` for the lifetime of the program.",
+      "lineByLine": ["`object AppConfig` — a singleton declaration.", "`val version = \"1.0\"` — a property on the singleton.", "`AppConfig.version` — accessed directly, no instantiation needed.", "`println(\"1.0\")` — prints 1.0."],
+      "tip": "`object` is Kotlin's built-in singleton. AI code uses it for app-wide configuration, registries, factories, and anything that should have only one instance."
+    }
+  },
+  {
+    "id": "ch14-q2", "topic": "companion object", "difficulty": "easy", "chapter": "ch-14",
+    "snippet": "class User(val name: String) {\n    companion object {\n        fun create(name: String) = User(name)\n    }\n}\nval u = User.create(\"Alice\")\nprintln(u.name)",
+    "question": "What does this print?",
+    "choices": ["Compilation error — create() is not a top-level function", "Alice", "User(name=Alice)", "null"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`companion object` holds members that belong to the class itself, not to instances. It's Kotlin's replacement for `static` methods.",
+      "lineByLine": ["`companion object` — attached to the `User` class.", "`User.create(\"Alice\")` — called on the class, not an instance.", "`create` returns `User(\"Alice\")`.", "`u.name` is \"Alice\". `println(\"Alice\")` — prints Alice."],
+      "tip": "Companion objects replace Java's `static`. Factory methods like `User.create(...)` are the most common pattern. AI code uses them for named constructors and utility functions tied to a class."
+    }
+  },
+  {
+    "id": "ch14-q3", "topic": "companion object property", "difficulty": "easy", "chapter": "ch-14",
+    "snippet": "class Circle {\n    companion object {\n        const val PI = 3.14159\n    }\n}\nprintln(Circle.PI)",
+    "question": "What does this print?",
+    "choices": ["Compilation error — PI must be declared outside the class", "3.14159", "Circle.PI", "null"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`const val` in a companion object is a compile-time constant. It's accessed via the class name, just like a static field in Java.",
+      "lineByLine": ["`const val PI = 3.14159` — compile-time constant in the companion.", "`Circle.PI` — accessed via the class name.", "`println(3.14159)` — prints 3.14159."],
+      "tip": "`const val` in a companion object is the Kotlin equivalent of Java's `public static final`. It must be a primitive type or String and known at compile time."
+    }
+  },
+  {
+    "id": "ch14-q4", "topic": "object shared state", "difficulty": "easy", "chapter": "ch-14",
+    "snippet": "object Counter {\n    var count = 0\n    fun increment() = ++count\n}\nCounter.increment()\nCounter.increment()\nprintln(Counter.count)",
+    "question": "What does this print?",
+    "choices": ["0", "1", "2", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "All accesses to an `object` touch the same single instance. State accumulates across calls.",
+      "lineByLine": ["`Counter.increment()` × 2 — count becomes 2.", "`Counter.count` — accesses the shared state.", "`println(2)` — prints 2."],
+      "tip": "Singleton objects retain their state for the entire program lifetime. This is powerful for caches and registries but can cause subtle bugs in tests if state is not reset between test runs."
+    }
+  },
+  {
+    "id": "ch14-q5", "topic": "companion vs instance", "difficulty": "easy", "chapter": "ch-14",
+    "snippet": "class Stamp(val label: String) {\n    companion object {\n        var total = 0\n    }\n    init { total++ }\n}\nStamp(\"A\")\nStamp(\"B\")\nprintln(Stamp.total)",
+    "question": "What does this print?",
+    "choices": ["0", "1", "2", "Compilation error"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "The companion object holds shared state across all instances. The `init` block runs for every new instance and increments `total`.",
+      "lineByLine": ["`Stamp.total` starts at 0.", "`Stamp(\"A\")` — creates an instance, init runs, total becomes 1.", "`Stamp(\"B\")` — creates another instance, init runs, total becomes 2.", "`Stamp.total` — the companion's shared var, now 2."],
+      "tip": "Companion properties shared across instances are like static counters in Java. Use them carefully — they hold state for the entire class lifetime."
+    }
+  }
+]

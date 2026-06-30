@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch19-q1", "topic": "map", "difficulty": "moderate", "chapter": "ch-19",
+    "snippet": "val words = listOf(\"hello\", \"world\", \"kotlin\")\nval lengths = words.map { it.length }\nprintln(lengths)",
+    "question": "What does this print?",
+    "choices": ["[hello, world, kotlin]", "[5, 5, 6]", "[5]", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`map` transforms every element by applying a lambda, returning a new list of the same size with transformed values.",
+      "lineByLine": ["`words.map { it.length }` — for each word, get its length.", "\"hello\".length=5, \"world\".length=5, \"kotlin\".length=6.", "Result: [5, 5, 6].", "`println([5, 5, 6])` — prints [5, 5, 6]."],
+      "tip": "`map` is the most used collection operation. It transforms every element. The output list is always the same size as the input."
+    }
+  },
+  {
+    "id": "ch19-q2", "topic": "filter", "difficulty": "moderate", "chapter": "ch-19",
+    "snippet": "val numbers = listOf(3, 7, 2, 9, 4, 1, 8)\nval big = numbers.filter { it > 5 }\nprintln(big)",
+    "question": "What does this print?",
+    "choices": ["[3, 7, 2, 9, 4, 1, 8]", "[7, 9, 8]", "[3, 2, 4, 1]", "[true, false, true...]"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`filter` returns a new list containing only elements where the lambda returns true.",
+      "lineByLine": ["`it > 5` — the condition.", "3, 2, 4, 1 → fail the condition.", "7, 9, 8 → pass the condition.", "`println([7, 9, 8])` — prints [7, 9, 8]."],
+      "tip": "`filter` reduces a list. Elements that don't match are excluded. Map and filter together (`list.filter { }.map { }`) are the bread and butter of Kotlin collection processing in AI code."
+    }
+  },
+  {
+    "id": "ch19-q3", "topic": "forEach", "difficulty": "moderate", "chapter": "ch-19",
+    "snippet": "val items = listOf(\"a\", \"b\", \"c\")\nitems.forEach { println(it.uppercase()) }",
+    "question": "What does this print?",
+    "choices": ["a b c (on one line)", "A then B then C (each on its own line)", "abc", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`forEach` calls the lambda for each element as a side effect. It returns `Unit`. `println` is called for each element.",
+      "lineByLine": ["`forEach { println(it.uppercase()) }` — runs the lambda for each element.", "\"a\" → \"A\" → println → prints A.", "\"b\" → \"B\" → println → prints B.", "\"c\" → \"C\" → println → prints C."],
+      "tip": "Use `forEach` for side effects (printing, logging, calling callbacks). Use `map` when you need a transformed list back. `forEach` always returns Unit — never assign its result."
+    }
+  },
+  {
+    "id": "ch19-q4", "topic": "chaining", "difficulty": "moderate", "chapter": "ch-19",
+    "snippet": "val result = listOf(1, 2, 3, 4, 5, 6)\n    .filter { it % 2 == 0 }\n    .map { it * 10 }\nprintln(result)",
+    "question": "What does this print?",
+    "choices": ["[1, 2, 3, 4, 5, 6]", "[2, 4, 6]", "[20, 40, 60]", "[10, 20, 30, 40, 50, 60]"],
+    "correctIndex": 2,
+    "explanation": {
+      "summary": "Chained operations: first `filter` keeps even numbers, then `map` multiplies each by 10.",
+      "lineByLine": ["`filter { it % 2 == 0 }` → [2, 4, 6].", "`map { it * 10 }` → [20, 40, 60].", "`println([20, 40, 60])` — prints [20, 40, 60]."],
+      "tip": "Chaining collection operations is the idiomatic Kotlin style. Read the chain top to bottom — each operation receives the output of the one above it. AI code often chains 3-5 operations."
+    }
+  },
+  {
+    "id": "ch19-q5", "topic": "firstOrNull", "difficulty": "moderate", "chapter": "ch-19",
+    "snippet": "val users = listOf(\"Alice\", \"Bob\", \"Carol\")\nval found = users.firstOrNull { it.length > 4 }\nprintln(found)",
+    "question": "What does this print?",
+    "choices": ["Alice", "Carol", "null", "[Alice, Carol]"],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "`firstOrNull` returns the first element matching the predicate, or null if none match. It stops searching as soon as it finds a match.",
+      "lineByLine": ["`it.length > 4` — looking for a name with more than 4 characters.", "\"Alice\" has 5 characters → 5 > 4 → true, match found immediately.", "Returns \"Alice\" without checking further.", "`println(\"Alice\")` — prints Alice."],
+      "tip": "`firstOrNull` is the safe version of `first()`. If no match exists, it returns null instead of throwing an exception. Always prefer `firstOrNull` unless a missing result is a bug."
+    }
+  }
+]

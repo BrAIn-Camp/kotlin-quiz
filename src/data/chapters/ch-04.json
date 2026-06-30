@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ch04-q1", "topic": "if as statement", "difficulty": "easy", "chapter": "ch-04",
+    "snippet": "val temp = 30\nif (temp > 25) {\n    println(\"Hot\")\n} else {\n    println(\"Cool\")\n}",
+    "question": "What does this print?",
+    "choices": ["Cool", "Hot", "true", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Standard if/else. `temp > 25` evaluates to `30 > 25` which is true, so the first branch runs.",
+      "lineByLine": ["`temp > 25` → `30 > 25` → true.", "True branch: `println(\"Hot\")` runs.", "Output: Hot."],
+      "tip": "Basic if/else works the same as in Java. The key difference in Kotlin is that `if` can also return a value."
+    }
+  },
+  {
+    "id": "ch04-q2", "topic": "if as expression", "difficulty": "easy", "chapter": "ch-04",
+    "snippet": "val score = 75\nval grade = if (score >= 60) \"Pass\" else \"Fail\"\nprintln(grade)",
+    "question": "What does this print?",
+    "choices": ["Pass", "Fail", "75", "Compilation error — if cannot assign to a variable"],
+    "correctIndex": 0,
+    "explanation": {
+      "summary": "In Kotlin, `if` is an expression — it returns a value. The result of the matching branch becomes the value of the whole expression.",
+      "lineByLine": ["`score >= 60` → `75 >= 60` → true.", "True branch returns \"Pass\".", "`val grade = \"Pass\"`.", "`println(\"Pass\")` — prints Pass."],
+      "tip": "Kotlin has no ternary operator (`condition ? a : b`). Instead, `if/else` as an expression plays that role. You'll see `val x = if (...) a else b` in every AI-generated Kotlin codebase."
+    }
+  },
+  {
+    "id": "ch04-q3", "topic": "if expression value", "difficulty": "easy", "chapter": "ch-04",
+    "snippet": "val x = 10\nval y = 20\nprintln(if (x > y) x else y)",
+    "question": "What does this print?",
+    "choices": ["10", "20", "true", "false"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "`if/else` inline as an expression directly inside `println`. The larger of x and y is returned.",
+      "lineByLine": ["`x > y` → `10 > 20` → false.", "False branch returns y (20).", "`println(20)` — prints 20."],
+      "tip": "You can use `if/else` expressions inline anywhere a value is expected — inside function calls, assignments, or even string templates like `\"${if (x > 0) \"positive\" else \"negative\"}\"`."
+    }
+  },
+  {
+    "id": "ch04-q4", "topic": "if without else", "difficulty": "easy", "chapter": "ch-04",
+    "snippet": "val isRaining = false\nif (isRaining) {\n    println(\"Take umbrella\")\n}\nprintln(\"Done\")",
+    "question": "What does this print?",
+    "choices": ["Take umbrella then Done", "Done", "Take umbrella", "Nothing"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "When `if` has no `else` branch and the condition is false, the body is skipped entirely. Execution continues after the if block.",
+      "lineByLine": ["`isRaining` is false.", "The if body is skipped.", "`println(\"Done\")` runs.", "Output: Done."],
+      "tip": "A standalone `if` without `else` cannot be used as a value-returning expression. It's only valid as a statement. If you need it to return a value, you must include the `else` branch."
+    }
+  },
+  {
+    "id": "ch04-q5", "topic": "nested if", "difficulty": "easy", "chapter": "ch-04",
+    "snippet": "val n = 15\nval result = if (n > 20) {\n    \"big\"\n} else if (n > 10) {\n    \"medium\"\n} else {\n    \"small\"\n}\nprintln(result)",
+    "question": "What does this print?",
+    "choices": ["big", "medium", "small", "Compilation error"],
+    "correctIndex": 1,
+    "explanation": {
+      "summary": "Chained `if/else if/else` expressions work as a multi-way branch. The first true condition wins.",
+      "lineByLine": ["`n > 20` → `15 > 20` → false.", "`n > 10` → `15 > 10` → true. This branch runs.", "Returns \"medium\".", "`println(\"medium\")` — prints medium."],
+      "tip": "For many branches on the same value, `when` is usually cleaner than chained `if/else if`. But `if/else if` is still used when conditions are unrelated or complex."
+    }
+  }
+]
